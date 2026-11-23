@@ -35046,7 +35046,7 @@ try {
         glowTubes.setMatrixAt(si, _m4);
         si++;
       }
-      for (const b of d.bones) {
+      for (const b of d.jointBones) {
         b.getWorldPosition(_v1);
         _off.copy(dancerFwds[di]).multiplyScalar(segOffset(b.name));
         _v1.add(_off);
@@ -35112,15 +35112,17 @@ try {
       if (o.isSkinnedMesh && !skinned) skinned = o;
     });
     const bones = skinned ? skinned.skeleton.bones : [];
+    const rootBone = bones.find((b) => !(b.parent && b.parent.isBone)) || null;
     const segs = [];
     for (const b of bones) {
-      if (b.parent && b.parent.isBone) segs.push([b.parent, b]);
+      if (b.parent && b.parent.isBone && b.parent !== rootBone) segs.push([b.parent, b]);
     }
+    const jointBones = bones.filter((b) => b !== rootBone);
     const chest = bones.find((b) => /chest/i.test(b.name)) || bones.find((b) => /spine/i.test(b.name)) || bones[2] || bones[0];
-    return { root, bones, segs, chest };
+    return { root, bones, jointBones, segs, chest };
   });
   const totalSegs = ledDancers.reduce((sum, d) => sum + d.segs.length, 0);
-  const totalBones = ledDancers.reduce((sum, d) => sum + d.bones.length, 0);
+  const totalBones = ledDancers.reduce((sum, d) => sum + d.jointBones.length, 0);
   const tubeGroup = new Group();
   tubeGroup.visible = false;
   scene.add(tubeGroup);
