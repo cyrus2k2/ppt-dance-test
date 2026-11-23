@@ -54,7 +54,7 @@
     </audio>
     <div class="btnrow">
       <button id="musicBtn" type="button">▶ 開音樂跳舞（120 BPM）</button>
-      <button id="ledBtn" type="button">💡 LED 燈管模式（L 鍵）</button>
+      <button id="ledBtn" type="button">💡 LED 燈衫模式（L 鍵）</button>
       <button id="logoBtn" type="button">✨ 胸前 Logo：開（G 鍵）</button>
     </div>
   </section>
@@ -76,7 +76,7 @@
       <li>開場 11 人 = 男女混合，輪流跳 6 支舞，相位按拍子錯開唔會機械同步</li>
       <li>背景音樂：原創合成 120 BPM 舞曲（Am–F–C–G），32 秒無縫循環，同舞步官方拍子對齊；-16.2 LUFS / 峰值 -3.6 dB</li>
       <li>按音樂掣或 M 鍵開關；翻去其他頁自動暫停，返嚟第一頁自動續播</li>
-      <li>LED 燈管模式（L 鍵）：全黑舞台＋骨架變發光燈管，顏色同亮度跟 BGM 低音即時變（參考 MJ2026 LED 舞蹈秀）</li>
+      <li>LED 燈衫模式（L 鍵）：舞者保留人型、著上黑色燈衫，沿骨架喺皮膚表面嘅發光燈管跟 BGM 低音變色變光暗（參考 MJ2026 LED 舞蹈秀）</li>
       <li>胸前 Logo（G 鍵）：發光徽章可獨立開關，之後可換上你嘅 Logo 圖／字</li>
     </ul>
   </section>
@@ -34965,12 +34965,21 @@ try {
     const t = new CanvasTexture(c);
     t.anisotropy = 4;
     return t;
+  }, segOffset = function(name) {
+    if (/chest|spine|neck|head|hips/i.test(name)) return 0.105;
+    if (/leg|foot|toe/i.test(name)) return 0.055;
+    return 0.05;
   }, applyLED = function() {
     tubeGroup.visible = ledOn;
-    dancerRoots.forEach((r) => r.visible = !ledOn);
+    dancerRoots.forEach((r) => r.traverse((o) => {
+      if (o.isMesh) {
+        if (o.userData.origMat === void 0) o.userData.origMat = o.material;
+        o.material = ledOn ? suitMat : o.userData.origMat;
+      }
+    }));
     floor.material.color.set(ledOn ? 197642 : 1514552);
     stageSlide.style.background = ledOn ? "#000" : "";
-    ledBtn.textContent = ledOn ? "\u{1F4A1} LED \u71C8\u7BA1\uFF1A\u958B\uFF08L \u9375\uFF09" : "\u{1F4A1} LED \u71C8\u7BA1\u6A21\u5F0F\uFF08L \u9375\uFF09";
+    ledBtn.textContent = ledOn ? "\u{1F4A1} LED \u71C8\u886B\uFF1A\u958B\uFF08L \u9375\uFF09" : "\u{1F4A1} LED \u71C8\u886B\u6A21\u5F0F\uFF08L \u9375\uFF09";
   }, applyLogo = function() {
     logos.forEach((m2) => m2.visible = logoOn);
     logoBtn.textContent = logoOn ? "\u2728 \u80F8\u524D Logo\uFF1A\u958B\uFF08G \u9375\uFF09" : "\u2728 \u80F8\u524D Logo\uFF1A\u95DC\uFF08G \u9375\uFF09";
@@ -35007,6 +35016,8 @@ try {
     for (let i = 0; i < ledDancers.length; i++) {
       const d = ledDancers[i];
       d.root.updateWorldMatrix(true, true);
+      d.root.getWorldQuaternion(_q);
+      dancerFwds[i].set(0, 0, 1).applyQuaternion(_q);
       if (d.chest && logos[i]) {
         d.chest.getWorldPosition(_v1);
         logos[i].position.set(_v1.x, _v1.y + 0.02, _v1.z + 0.17);
@@ -35014,25 +35025,31 @@ try {
     }
     if (!ledOn) return;
     let si = 0, ji = 0;
-    for (const d of ledDancers) {
+    for (let di = 0; di < ledDancers.length; di++) {
+      const d = ledDancers[di];
       for (const pair of d.segs) {
         pair[0].getWorldPosition(_v1);
         pair[1].getWorldPosition(_v2);
+        _off.copy(dancerFwds[di]).multiplyScalar(segOffset(pair[1].name));
+        _v1.add(_off);
+        _v2.add(_off);
         _mid.addVectors(_v1, _v2).multiplyScalar(0.5);
         _dir.subVectors(_v2, _v1);
         const len = Math.max(_dir.length(), 1e-3);
         _dir.divideScalar(len);
         _q.setFromUnitVectors(_up, _dir);
-        _s.set(0.013, len, 0.013);
+        _s.set(0.015, len, 0.015);
         _m4.compose(_mid, _q, _s);
         coreTubes.setMatrixAt(si, _m4);
-        _s.set(0.037, len, 0.037);
+        _s.set(0.042, len, 0.042);
         _m4.compose(_mid, _q, _s);
         glowTubes.setMatrixAt(si, _m4);
         si++;
       }
       for (const b of d.bones) {
         b.getWorldPosition(_v1);
+        _off.copy(dancerFwds[di]).multiplyScalar(segOffset(b.name));
+        _v1.add(_off);
         _s.set(0.021, 0.021, 0.021);
         _m4.compose(_v1, _qi, _s);
         joints.setMatrixAt(ji, _m4);
@@ -35126,10 +35143,13 @@ try {
     scene.add(mesh);
     return mesh;
   });
+  const dancerFwds = ledDancers.map(() => new Vector3(0, 0, 1));
+  const _off = new Vector3();
   let ledOn = false, logoOn = true, levelSm = 0.25, hueBase = 0.52;
   const ledBtn = document.getElementById("ledBtn");
   const logoBtn = document.getElementById("logoBtn");
   const stageSlide = document.getElementById("stage-slide");
+  const suitMat = new MeshStandardMaterial({ color: 460557, roughness: 0.92, metalness: 0 });
   ledBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleLED();
