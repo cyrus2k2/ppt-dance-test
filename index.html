@@ -34966,9 +34966,29 @@ try {
     t.anisotropy = 4;
     return t;
   }, segOffset = function(name) {
-    if (/chest|spine|neck|head|hips/i.test(name)) return 0.105;
-    if (/leg|foot|toe/i.test(name)) return 0.055;
-    return 0.05;
+    if (/chest/i.test(name)) return 0.105;
+    if (/spine/i.test(name)) return 0.1;
+    if (/hips/i.test(name)) return 0.085;
+    if (/neck/i.test(name)) return 0.085;
+    if (/head/i.test(name)) return 0.09;
+    if (/jaw/i.test(name)) return 0.07;
+    if (/thigh/i.test(name)) return 0.098;
+    if (/shin/i.test(name)) return 0.06;
+    if (/foot/i.test(name)) return 0.05;
+    if (/toe/i.test(name)) return 0.045;
+    if (/shoulder/i.test(name)) return 0.07;
+    if (/upperarm/i.test(name)) return 0.062;
+    if (/forearm/i.test(name)) return 0.052;
+    if (/hand|finger|thumb|pinky/i.test(name)) return 0.04;
+    return 0.055;
+  }, jointOffset = function(name) {
+    if (/shin/i.test(name)) return 0.088;
+    if (/thigh/i.test(name)) return 0.09;
+    if (/foot/i.test(name)) return 0.055;
+    if (/forearm/i.test(name)) return 0.058;
+    if (/upperarm/i.test(name)) return 0.07;
+    if (/hand/i.test(name)) return 0.048;
+    return segOffset(name);
   }, applyLED = function() {
     tubeGroup.visible = ledOn;
     dancerRoots.forEach((r) => r.traverse((o) => {
@@ -35030,7 +35050,7 @@ try {
       for (const pair of d.segs) {
         pair[0].getWorldPosition(_v1);
         pair[1].getWorldPosition(_v2);
-        _off.copy(dancerFwds[di]).multiplyScalar(segOffset(pair[1].name));
+        _off.copy(dancerFwds[di]).multiplyScalar(segOffset(pair[0].name));
         _v1.add(_off);
         _v2.add(_off);
         _mid.addVectors(_v1, _v2).multiplyScalar(0.5);
@@ -35048,7 +35068,7 @@ try {
       }
       for (const b of d.jointBones) {
         b.getWorldPosition(_v1);
-        _off.copy(dancerFwds[di]).multiplyScalar(segOffset(b.name));
+        _off.copy(dancerFwds[di]).multiplyScalar(jointOffset(b.name));
         _v1.add(_off);
         _s.set(0.021, 0.021, 0.021);
         _m4.compose(_v1, _qi, _s);
