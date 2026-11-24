@@ -34899,12 +34899,14 @@ scene.add(spot);
 var floor = new Mesh(new CircleGeometry(9, 48), new MeshStandardMaterial({ color: 1514552, roughness: 0.9 }));
 floor.rotation.x = -Math.PI / 2;
 scene.add(floor);
-var ring = new Mesh(new RingGeometry(3.4, 3.55, 64), new MeshBasicMaterial({ color: 16765286, side: DoubleSide }));
+var ring = new Mesh(new RingGeometry(3.85, 4, 96), new MeshBasicMaterial({ color: 16765286, side: DoubleSide, transparent: true, opacity: 0.35, depthWrite: false }));
 ring.rotation.x = -Math.PI / 2;
 ring.position.y = 0.01;
+ring.renderOrder = 2;
 scene.add(ring);
+var ringGold = new Color(16765286);
+var _ringHue = new Color();
 floor.visible = false;
-ring.visible = false;
 scene.background = new Color(9418973);
 var texLoader = new TextureLoader();
 function stageTex(url) {
@@ -35380,6 +35382,7 @@ try {
   const shadowGeo = new PlaneGeometry(1.4, 0.8);
   const shadows = dancerRoots.map((r) => {
     const m2 = new Mesh(shadowGeo, new MeshBasicMaterial({ map: shadowTex, transparent: true, opacity: 0.52, depthWrite: false }));
+    m2.renderOrder = 2;
     m2.rotation.x = -Math.PI / 2;
     m2.position.set(r.position.x, 0.02, r.position.z);
     scene.add(m2);
@@ -35454,11 +35457,18 @@ try {
     }
     tAcc += dt;
     updateLEDVisuals(tAcc);
+    _ringHue.setHSL(hueBase, 0.85, 0.58);
+    ring.material.color.lerpColors(ringGold, _ringHue, nightAmt);
     if (window.__BGM__ && !window.__BGM__.paused) {
       const bp = 1 - window.__BGM__.currentTime % 0.5 / 0.5;
       spot.intensity = 150 + 170 * bp;
-      const sc = 1 + 0.03 * bp;
+      const sc = 1 + 0.045 * bp;
       ring.scale.set(sc, sc, 1);
+      ring.material.opacity = 0.55 + 0.4 * bp;
+    } else {
+      const sc = ring.scale.x + (1 - ring.scale.x) * Math.min(1, dt * 4);
+      ring.scale.set(sc, sc, 1);
+      ring.material.opacity = 0.32 + nightAmt * 0.25;
     }
     renderer.render(scene, camera);
   });
