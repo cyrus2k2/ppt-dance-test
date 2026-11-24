@@ -24,7 +24,7 @@
   .deck{z-index:1}
   .cslide{padding:0}
   .glass{position:relative;width:93vw;height:92vh;border-radius:22px;padding:4.2vh 3.4vw;
-    background:linear-gradient(135deg,rgba(10,16,28,.58),rgba(10,16,28,.44));
+    background:linear-gradient(135deg,rgba(10,16,28,.47),rgba(10,16,28,.35));
     -webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3);
     border:1px solid rgba(255,255,255,.20);
     box-shadow:0 24px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.22);
@@ -77,6 +77,20 @@
   .bigcard p{font-size:2vh;color:#c9d6f2;line-height:1.6}
   .stmt{font-size:2.9vh;line-height:1.55;color:#eef2fb}
   .orgblank{flex:1;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
+  .cols2{display:grid;grid-template-columns:1.05fr 1fr;gap:2vw;flex:1;min-height:0;width:100%}
+  .rows.compact{gap:1.05vh}
+  .rows.compact .row{padding:1.3vh 1.1vw}
+  .rows.compact h3{font-size:2.05vh}
+  .rows.compact p{font-size:1.7vh}
+  .anim-panel{background:rgba(6,10,18,.45);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:1.4vh 1vw;display:flex;flex-direction:column;min-height:0}
+  .anim-panel canvas{flex:1;width:100%;min-height:0}
+  .anim-cap{font-size:1.55vh;color:#9fb2d8;text-align:center;padding-top:1vh;letter-spacing:.12em}
+  .bigcard{display:flex;flex-direction:column}
+  .bigcard canvas{margin-top:1.8vh;width:100%;flex:1;min-height:20vh;background:rgba(6,10,18,.35);border:1px solid rgba(255,255,255,.10);border-radius:10px}
+  .pac-band{margin-top:auto;background:rgba(6,10,18,.45);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:1.6vh 1.6vw}
+  .pac-band canvas{width:100%;height:11vh}
+  .pac-line{text-align:center;font-size:2.2vh;color:#cfe0ff;margin-top:1.1vh;letter-spacing:.06em}
+  .pac-line b{font-size:3.6vh;margin:0 .2em}
   kbd{background:#232842;border:1px solid #4a5170;border-bottom-width:3px;border-radius:6px;padding:1px 8px;font-family:inherit}
 </style>
 
@@ -105,17 +119,13 @@
   <!-- Part 1 · Page 2: the summary title poem -->
   <section class="slide cslide" data-slide>
     <div class="glass">
-      <div class="phead">
-        <div class="pover">第一部分 · 2026年总结</div>
-        <h1 class="ptitle neon-w">总结标题</h1>
-      </div>
       <div class="poem">
-        <div class="pline" style="--g:#6bc5ff"><span class="no">一</span>迎入侵艰难防御</div>
-        <div class="pline" style="--g:#ffb86b"><span class="no">二</span>硬件老性能满载</div>
-        <div class="pline" style="--g:#c39bff"><span class="no">三</span>项目多人手不够</div>
-        <div class="pline" style="--g:#eb6ea5"><span class="no">四</span>智能化筑基在望</div>
+        <div class="pline" style="--g:#6bc5ff">迎入侵艰难防御</div>
+        <div class="pline" style="--g:#ffb86b">硬件老性能满载</div>
+        <div class="pline" style="--g:#c39bff">项目多人手不够</div>
+        <div class="pline" style="--g:#eb6ea5">智能化筑基在望</div>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>02 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
@@ -138,25 +148,31 @@
           <div class="card"><h3>贝斯旺数字化转型项目申报</h3><div class="amt">30W+</div><span class="chip doing">进行中</span></div>
         </div>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>03 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
-  <!-- Part 1 · Page 4: 2. operations incidents -->
+  <!-- Part 1 · Page 4: 2. operations incidents + ransomware animation -->
   <section class="slide cslide" data-slide>
     <div class="glass">
       <div class="phead">
         <div class="pover">一、工作完成总结</div>
         <h1 class="ptitle neon-w">运维问题处理</h1>
       </div>
-      <div class="rows">
-        <div class="row"><div class="badge">1</div><div><h3>开工日 MES 服务崩溃<span class="tag">年度最大运维事故</span></h3><p>硬盘损毁 → 48 小时修复</p></div></div>
-        <div class="row"><div class="badge">2</div><div><h3>4月28日 勒索病毒攻破金蝶服务</h3><p>瞬间转用备用服务器 · 恢复备份 · 避免损失超百万</p></div></div>
-        <div class="row"><div class="badge">3</div><div><h3>10月16日 勒索病毒攻破 HR 人事服务器</h3><p>因此前经验已启用关键服务整机备份 · 恢复到前一天备份</p></div></div>
-        <div class="row"><div class="badge">4</div><div><h3>勒索病毒侵扰，网络波动</h3><p>网络共享盘紧急处理 · 宽带切换</p></div></div>
-        <div class="row"><div class="badge">5</div><div><h3>11月15日 OA 服务器短暂崩溃</h3><p>表单超出服务器设计（6000万条）· 卡顿 3 小时 · 紧急优化升级确保流畅</p></div></div>
+      <div class="cols2">
+        <div class="rows compact">
+          <div class="row"><div class="badge">1</div><div><h3>开工日 MES 服务崩溃<span class="tag">年度最大运维事故</span></h3><p>硬盘损毁 → 48 小时修复</p></div></div>
+          <div class="row"><div class="badge">2</div><div><h3>4月28日 勒索病毒攻破金蝶服务</h3><p>瞬间转用备用服务器 · 恢复备份 · 避免损失超百万</p></div></div>
+          <div class="row"><div class="badge">3</div><div><h3>10月16日 勒索病毒攻破 HR 人事服务器</h3><p>因此前经验已启用关键服务整机备份 · 恢复到前一天备份</p></div></div>
+          <div class="row"><div class="badge">4</div><div><h3>勒索病毒侵扰，网络波动</h3><p>网络共享盘紧急处理 · 宽带切换</p></div></div>
+          <div class="row"><div class="badge">5</div><div><h3>11月15日 OA 服务器短暂崩溃</h3><p>表单超出服务器设计（6000万条）· 卡顿 3 小时 · 紧急优化升级确保流畅</p></div></div>
+        </div>
+        <div class="anim-panel">
+          <canvas id="anim-ransom" width="760" height="430"></canvas>
+          <div class="anim-cap">勒索病毒攻击与整机备份恢复 · 示意动画</div>
+        </div>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>04 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
@@ -182,7 +198,7 @@
         </div>
         <p style="font-size:1.8vh;color:#9fb2d8;margin-top:1.6vh">GL 构成：本部 1315 · Th 42 · 线1 189 · 线2 73 · 线3 67</p>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>05 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
@@ -212,11 +228,11 @@
         <h3 style="font-size:2.5vh;margin-bottom:1vh">AI 布局</h3>
         <span class="chip">智能体 · 知识库</span><span class="chip">智能体 · 智能总管</span><span class="chip">智能体 · 光智体</span><span class="chip">智能体 · 安智体</span><span class="chip">数据湖</span><span class="chip">BI</span><span class="chip">敏感过滤器</span>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>06 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
-  <!-- Part 1 · Page 7: 5. server-room facilities -->
+  <!-- Part 1 · Page 7: 5. server-room facilities + firewall / congestion animations -->
   <section class="slide cslide" data-slide>
     <div class="glass">
       <div class="phead">
@@ -224,10 +240,10 @@
         <h1 class="ptitle neon-w">机房设施优化</h1>
       </div>
       <div class="bigcards">
-        <div class="bigcard"><h3>优化防火墙 / 行为管理器</h3><p>网络边界防护与上网行为管理优化，收紧外网入侵面，为全年防御打底。</p></div>
-        <div class="bigcard"><h3>优化各楼层交换机</h3><p>各楼层网络交换设备优化，提升内网接入的稳定性与性能余量。</p></div>
+        <div class="bigcard"><h3>优化防火墙 / 行为管理器</h3><p>网络边界防护与上网行为管理优化，收紧外网入侵面，为全年防御打底。</p><canvas id="anim-firewall" width="700" height="300"></canvas></div>
+        <div class="bigcard"><h3>优化各楼层交换机</h3><p>各楼层网络交换设备优化，解决网络阻塞，提升内网接入的稳定性与性能余量。</p><canvas id="anim-flow" width="700" height="300"></canvas></div>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>07 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
@@ -239,45 +255,49 @@
         <h1 class="ptitle neon-w">组织架构图</h1>
       </div>
       <div class="orgblank"></div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>08 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
-  <!-- Part 1 · Page 9: org status quo -->
+  <!-- Part 1 · Page 9: org status quo + token pac-man -->
   <section class="slide cslide" data-slide>
     <div class="glass">
       <div class="phead">
         <div class="pover">三、组织架构</div>
         <h1 class="ptitle neon-w">现状</h1>
       </div>
-      <div class="split">
-        <div>
-          <div class="bignum neon-pink">2.85<span style="font-size:4.2vh">W</span></div>
-          <p style="font-size:2.2vh;color:#c9d6f2;margin-top:1.4vh;line-height:1.6">截至 11 月<br>Token 消耗</p>
-        </div>
-        <div class="rows">
-          <div class="row"><div class="badge">·</div><div><h3>IT 男的通病，不善沟通</h3></div></div>
-          <div class="row"><div class="badge">·</div><div><h3>全员 Vibe coding</h3></div></div>
-          <div class="row"><div class="badge">·</div><div><h3>每人背负项目多</h3></div></div>
-          <div class="row"><div class="badge">·</div><div><h3>招聘不到人才</h3></div></div>
-        </div>
+      <div class="grid2" style="flex:none">
+        <div class="row"><div class="badge">·</div><div><h3>IT 男的通病，不善沟通</h3></div></div>
+        <div class="row"><div class="badge">·</div><div><h3>全员 Vibe coding</h3></div></div>
+        <div class="row"><div class="badge">·</div><div><h3>每人背负项目多</h3></div></div>
+        <div class="row"><div class="badge">·</div><div><h3>招聘不到人才</h3></div></div>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>09 / 10</span></div>
+      <div class="pac-band">
+        <canvas id="anim-pac" width="920" height="120"></canvas>
+        <div class="pac-line">截至 11 月 Token 消耗：<b id="tokenCount" class="neon-pink">0.00</b> W</div>
+      </div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
-  <!-- Part 1 · Page 10: problems & reflections -->
+  <!-- Part 1 · Page 10: problems & reflections + one-person desk animation -->
   <section class="slide cslide" data-slide>
     <div class="glass">
       <div class="phead">
         <h1 class="ptitle neon-w">四、问题与反思</h1>
       </div>
-      <div class="rows">
-        <div class="row"><div class="badge">1</div><div><p class="stmt">2026 年主要是数字化转型拖累整体开发进度</p></div></div>
-        <div class="row"><div class="badge">2</div><div><p class="stmt">AI 高速发展，骇客用 AI 攻击已经是常态，运维团队的思维也得进步</p></div></div>
-        <div class="row"><div class="badge">3</div><div><p class="stmt">怎样让大家安全用好 AI，是本年度一直考虑的问题</p></div></div>
+      <div class="cols2">
+        <div class="anim-panel">
+          <canvas id="anim-desk" width="700" height="430"></canvas>
+          <div class="anim-cap">一个人 · 一台电脑 · 越堆越多的文档</div>
+        </div>
+        <div class="rows">
+          <div class="row"><div class="badge">1</div><div><p class="stmt">2026 年主要是数字化转型拖累整体开发进度</p></div></div>
+          <div class="row"><div class="badge">2</div><div><p class="stmt">AI 高速发展，骇客用 AI 攻击已经是常态，运维团队的思维也得进步</p></div></div>
+          <div class="row"><div class="badge">3</div><div><p class="stmt">怎样让大家安全用好 AI，是本年度一直考虑的问题</p></div></div>
+        </div>
       </div>
-      <div class="pfoot"><span>第一部分 · 2026年总结</span><span>10 / 10</span></div>
+      <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
 
@@ -309,6 +329,214 @@
   });
   window.addEventListener('click',e=>{ if(e.target.closest('button')) return; if(e.clientX>window.innerWidth*0.5) navNext(); else navPrev(); });
   go(0);
+  // ---------- slide animations: small canvas cartoons, drawn only while their slide is active ----------
+  const __anims=[];
+  function regAnim(id, draw){ const c=document.getElementById(id); if(c) __anims.push({c, x:c.getContext('2d'), draw}); }
+  (function animLoop(now){
+    requestAnimationFrame(animLoop);
+    for(const a of __anims){
+      const sl=a.c.closest('.slide'); if(!sl || !sl.classList.contains('active')) continue;
+      a.draw(a.x, a.c.width, a.c.height, now/1000);
+    }
+  })(performance.now());
+  const FONT='"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif';
+  function rr(x,ctxX,ctxY,w,h,r){ x.beginPath(); x.roundRect(ctxX,ctxY,w,h,r); }
+
+  // --- ransomware: infection spreads across the server net, whole-machine backup restores it ---
+  regAnim('anim-ransom',(x,W,H,t)=>{
+    x.clearRect(0,0,W,H);
+    const tc=t%11;
+    const nodes=[
+      {id:'ext', label:'外网', nx:70, ny:66, inf:-1, rec:-1},
+      {id:'core', label:'核心交换', nx:380, ny:66, inf:2.2, rec:7.6},
+      {id:'mes', label:'MES', nx:118, ny:222, inf:3.1, rec:8.2},
+      {id:'erp', label:'金蝶 ERP', nx:305, ny:238, inf:3.9, rec:8.7},
+      {id:'hr', label:'HR 人事', nx:492, ny:238, inf:4.7, rec:9.2},
+      {id:'oa', label:'OA', nx:655, ny:222, inf:5.5, rec:9.7},
+      {id:'bak', label:'整机备份', nx:380, ny:360, inf:-1, rec:-1}
+    ];
+    const links=[[0,1],[1,2],[1,3],[1,4],[1,5],[6,1]];
+    const state=n=> n.inf<0 ? 'ok' : (tc<n.inf ? 'ok' : (n.rec>0 && tc>=n.rec ? 'ok' : 'bad'));
+    x.lineWidth=2;
+    for(const [a,b] of links){
+      const A=nodes[a], B=nodes[b], bad=state(A)==='bad'&&state(B)==='bad';
+      x.strokeStyle=bad?'rgba(255,93,93,.75)':'rgba(120,170,230,.4)';
+      x.beginPath(); x.moveTo(A.nx,A.ny); x.lineTo(B.nx,B.ny); x.stroke();
+      // traffic dots on healthy links
+      if(state(A)==='ok'&&state(B)==='ok'){
+        x.fillStyle='#7ce7ff';
+        for(let k=0;k<2;k++){ const p=((t*0.45+k*0.5)%1); const px=A.nx+(B.nx-A.nx)*p, py=A.ny+(B.ny-A.ny)*p;
+          x.beginPath(); x.arc(px,py,3,0,7); x.fill(); }
+      }
+    }
+    // travelling virus dots
+    function vdot(a,b,t0){ if(tc<t0||tc>t0+0.7) return; const A=nodes[a],B=nodes[b],p=(tc-t0)/0.7;
+      x.fillStyle='#ff4040'; x.shadowColor='#ff4040'; x.shadowBlur=12;
+      x.beginPath(); x.arc(A.nx+(B.nx-A.nx)*p, A.ny+(B.ny-A.ny)*p, 6, 0, 7); x.fill(); x.shadowBlur=0; }
+    vdot(0,1,1.5); vdot(1,2,2.4); vdot(1,3,3.2); vdot(1,4,4.0); vdot(1,5,4.8);
+    // backup shield pulse during recovery
+    if(tc>7.0&&tc<10.4){ const bak=nodes[6]; x.strokeStyle='rgba(107,197,255,'+(0.7-((tc-7.0)%1.1)/1.1*0.7)+')'; x.lineWidth=3;
+      x.beginPath(); x.arc(bak.nx,bak.ny,34+((tc-7.0)%1.1)*46,0,7); x.stroke(); }
+    for(const n of nodes){
+      const st=state(n), w2=n.id==='ext'||n.id==='bak'?104:96, h2=46;
+      x.fillStyle='rgba(16,26,42,.92)'; rr(x,n.nx-w2/2,n.ny-h2/2,w2,h2,9); x.fill();
+      x.strokeStyle=st==='bad'?'#ff5d5d':'rgba(124,231,255,.65)'; x.lineWidth=st==='bad'?2.5:1.5;
+      if(st==='bad'){ x.shadowColor='#ff5d5d'; x.shadowBlur=14; }
+      rr(x,n.nx-w2/2,n.ny-h2/2,w2,h2,9); x.stroke(); x.shadowBlur=0;
+      x.fillStyle=st==='bad'?'#ff8080':'#3ddc84'; x.beginPath(); x.arc(n.nx-w2/2+14,n.ny-8,4,0,7); x.fill();
+      x.fillStyle='#e8f1ff'; x.font='600 17px '+FONT; x.textAlign='center';
+      x.fillText(n.label, n.nx, n.ny+6);
+      if(st==='bad'){ x.fillStyle='#ff4040'; x.font='800 20px '+FONT; x.fillText('!', n.nx+w2/2-13, n.ny-2); }
+    }
+    x.font='600 19px '+FONT; x.textAlign='center';
+    if(tc<1.5){ x.fillStyle='#3ddc84'; x.fillText('网络运行正常', W/2, 28); }
+    else if(tc<7.0){ x.fillStyle='#ff6b6b'; x.fillText('勒索病毒入侵 · 正在扩散', W/2, 28); }
+    else if(tc<10.4){ x.fillStyle='#6bc5ff'; x.fillText('整机备份恢复中', W/2, 28); }
+    else { x.fillStyle='#3ddc84'; x.fillText('业务恢复正常', W/2, 28); }
+  });
+
+  // --- firewall: green traffic passes the gate, attacks burst on the wall ---
+  regAnim('anim-firewall',(x,W,H,t)=>{
+    x.clearRect(0,0,W,H);
+    if(!x._pk){ x._pk=[]; x._last=0; x._sp=[]; }
+    if(t-x._last>0.26){ x._last=t; x._pk.push({px:-14, py:[46,100,150,200,254][Math.floor(Math.random()*5)], good:Math.random()<0.55, dead:false}); }
+    // wall with a gate in the middle
+    const wx0=438, wx1=480;
+    for(let ry=0;ry<10;ry++) for(let bx=0;bx<2;bx++){
+      const bw=(wx1-wx0)/2, bh=H/10, ox=wx0+bx*bw+(ry%2? -4:0);
+      if(ry>=4&&ry<=5) continue; // the gate opening
+      x.fillStyle=(ry+bx)%2?'#a34a38':'#b85a41'; x.fillRect(Math.max(wx0,ox), ry*bh+1, bw-2, bh-2);
+    }
+    x.strokeStyle='#ffd76b'; x.lineWidth=3; x.strokeRect(wx0-4, 4*H/10-4, wx1-wx0+8, 2*H/10+8);
+    // shield above the gate
+    x.fillStyle='rgba(107,197,255,.2)'; x.strokeStyle='#6bc5ff'; x.lineWidth=2;
+    x.beginPath(); x.moveTo(459,18); x.lineTo(481,26); x.lineTo(481,48); x.quadraticCurveTo(481,66,459,76);
+    x.quadraticCurveTo(437,66,437,48); x.lineTo(437,26); x.closePath(); x.fill(); x.stroke();
+    x.fillStyle='#bfe3ff'; x.font='700 17px '+FONT; x.textAlign='center'; x.fillText('✓',459,54);
+    x.fillStyle='#9fb2d8'; x.font='15px '+FONT; x.textAlign='left'; x.fillText('外网流量',14,26);
+    x.textAlign='right'; x.fillText('内网',W-14,26);
+    // packets
+    x._pk=x._pk.filter(p=>!p.dead&&p.px<W+20);
+    for(const p of x._pk){
+      p.px+=2.6;
+      if(p.good){ p.py+=(150-p.py)*0.045; }
+      else if(p.px>=wx0-10&&p.px<=wx0+2){ p.dead=true;
+        for(let i=0;i<5;i++) x._sp.push({sx:wx0-4, sy:p.py, vx:-1-Math.random()*2, vy:(Math.random()-0.5)*3, life:1});
+        continue; }
+      x.fillStyle=p.good?'#3ddc84':'#ff5d5d'; x.shadowColor=x.fillStyle; x.shadowBlur=8;
+      rr(x,p.px,p.py-7,17,14,4); x.fill(); x.shadowBlur=0;
+    }
+    x._sp=x._sp.filter(s=>s.life>0);
+    for(const s of x._sp){ s.sx+=s.vx; s.sy+=s.vy; s.life-=0.05;
+      x.fillStyle='rgba(255,120,80,'+Math.max(0,s.life)+')'; x.fillRect(s.sx,s.sy,4,4); }
+  });
+
+  // --- switch optimisation: a chokepoint jams, widens, traffic flows ---
+  regAnim('anim-flow',(x,W,H,t)=>{
+    x.clearRect(0,0,W,H);
+    const tc=t%10;
+    let choke=46, cap='高峰时段 · 出口阻塞', capC='#ff6b6b';
+    if(tc<3.6) choke=12;
+    else if(tc<5.2){ const e=(tc-3.6)/1.6; choke=12+34*e; cap='交换机优化中…'; capC='#ffb86b'; }
+    else { choke=46; cap='网络畅通'; capC='#3ddc84'; }
+    const cy=170, x0=26, x1=W-26, cx0=318, cx1=382;
+    x.fillStyle='rgba(107,197,255,.07)'; x.fillRect(x0,cy-23,x1-x0,46);
+    x.strokeStyle='rgba(160,200,255,.55)'; x.lineWidth=2;
+    x.beginPath(); x.moveTo(x0,cy-23); x.lineTo(cx0,cy-23); x.lineTo(cx0,cy-choke/2); x.lineTo(cx1,cy-choke/2); x.lineTo(cx1,cy-23); x.lineTo(x1,cy-23); x.stroke();
+    x.beginPath(); x.moveTo(x0,cy+23); x.lineTo(cx0,cy+23); x.lineTo(cx0,cy+choke/2); x.lineTo(cx1,cy+choke/2); x.lineTo(cx1,cy+23); x.lineTo(x1,cy+23); x.stroke();
+    x.fillStyle='rgba(255,184,107,.16)'; x.fillRect(cx0,cy-choke/2,cx1-cx0,choke);
+    x.fillStyle='#9fb2d8'; x.font='15px '+FONT; x.textAlign='center'; x.fillText('楼层交换机', (cx0+cx1)/2, cy+52);
+    x.fillStyle=capC; x.font='600 20px '+FONT; x.fillText(cap, W/2, 40);
+    if(!x._pk){ x._pk=[]; x._last=0; }
+    if(t-x._last>0.2){ x._last=t; const last=x._pk[x._pk.length-1];
+      if(!last||last.px>34) x._pk.push({px:x0+4, py:cy+(Math.random()*30-15)}); }
+    x._pk=x._pk.filter(p=>p.px<x1+8);
+    x._pk.sort((a,b)=>b.px-a.px);
+    for(let i=0;i<x._pk.length;i++){ const p=x._pk[i];
+      let v=2.5; if(p.px>cx0-6&&p.px<cx1+6) v=2.5*choke/46+0.12;
+      const ahead=x._pk[i-1]; if(ahead&&ahead.px-p.px<17) v=Math.min(v, Math.max(0,(ahead.px-p.px-15)*0.4));
+      p.px+=v;
+      x.fillStyle='#7ce7ff'; x.shadowColor='#7ce7ff'; x.shadowBlur=6;
+      x.beginPath(); x.arc(p.px,p.py,5,0,7); x.fill(); x.shadowBlur=0; }
+  });
+
+  // --- pac-man eats the token beans; the consumption counter climbs to 2.85W ---
+  regAnim('anim-pac',(x,W,H,t)=>{
+    x.clearRect(0,0,W,H);
+    const N=44, X0=70, X1=880, Y=60, CYCLE=10.5, TRAVEL=8.6;
+    if(x._cyc===undefined){ x._cyc=-1; x._eaten=new Array(N).fill(false); x._count=0; }
+    const cyc=Math.floor(t/CYCLE), tc=t%CYCLE;
+    if(cyc!==x._cyc){ x._cyc=cyc; x._eaten=new Array(N).fill(false); x._count=0;
+      const el=document.getElementById('tokenCount'); if(el) el.textContent='0.00'; }
+    x.strokeStyle='rgba(124,231,255,.25)'; x.lineWidth=2;
+    x.beginPath(); x.moveTo(30,Y+34); x.lineTo(W-30,Y+34); x.stroke();
+    const px=-40+(W+80)*Math.min(1,tc/TRAVEL);
+    for(let i=0;i<N;i++){ const dx=X0+(X1-X0)*i/(N-1);
+      if(!x._eaten[i]&&px>dx){ x._eaten[i]=true; x._count++;
+        const el=document.getElementById('tokenCount');
+        if(el) el.textContent=(2.85*x._count/N).toFixed(2); }
+      if(!x._eaten[i]){ x.fillStyle='#ffd76b'; x.beginPath(); x.arc(dx,Y,4.5,0,7); x.fill(); } }
+    if(tc<TRAVEL){
+      const m=0.30*Math.abs(Math.sin(t*11));
+      x.fillStyle='#ffd83d'; x.shadowColor='#ffd83d'; x.shadowBlur=14;
+      x.beginPath(); x.moveTo(px,Y); x.arc(px,Y,23, m*Math.PI, (2-m)*Math.PI); x.closePath(); x.fill(); x.shadowBlur=0;
+    }
+  });
+
+  // --- one person at a computer; the document piles keep growing ---
+  regAnim('anim-desk',(x,W,H,t)=>{
+    x.clearRect(0,0,W,H);
+    const tc=t%16;
+    x.fillStyle='rgba(120,160,220,.06)'; x.fillRect(0,0,W,H);
+    // fast wall clock
+    x.strokeStyle='rgba(200,220,255,.7)'; x.lineWidth=3;
+    x.beginPath(); x.arc(578,76,30,0,7); x.stroke();
+    const ha=t*2.4, ma=t*0.5;
+    x.beginPath(); x.moveTo(578,76); x.lineTo(578+Math.cos(ma)*17,76+Math.sin(ma)*17); x.stroke();
+    x.beginPath(); x.moveTo(578,76); x.lineTo(578+Math.cos(ha)*24,76+Math.sin(ha)*24); x.stroke();
+    // desk
+    x.fillStyle='#5d4128'; x.fillRect(88,302,W-176,10);
+    x.fillRect(104,312,10,74); x.fillRect(W-114,312,10,74);
+    x.fillStyle='rgba(0,0,0,.25)'; x.fillRect(88,386,W-176,6);
+    // monitor with scrolling code
+    x.fillStyle='#1c2733'; rr(x,208,178,196,126,8); x.fill();
+    x.fillStyle='#0d1520'; x.fillRect(218,188,176,106);
+    const cols=['#6bc5ff','#3ddc84','#ffb86b','#c39bff'];
+    for(let i=0;i<11;i++){ const yy=196+i*9-((t*26)%9); if(yy<196||yy>288) continue;
+      let sx=226; const seed=Math.sin(i*37.7)*0.5+0.5;
+      for(let d=0;d<3;d++){ const w=18+((seed*(d+3)*29)%34); x.fillStyle=cols[(i+d)%4];
+        x.fillRect(sx,yy,w,4); sx+=w+9; if(sx>380) break; } }
+    x.fillStyle='#1c2733'; x.fillRect(292,304,28,10);
+    // keyboard
+    x.fillStyle='#2a3644'; rr(x,246,292,124,10,4); x.fill();
+    // person: chair, body, head, typing arm, legs
+    x.fillStyle='#26303c'; rr(x,512,232,16,96,7); x.fill();
+    x.strokeStyle='#33404f'; x.lineWidth=10; x.lineCap='round';
+    x.beginPath(); x.moveTo(486,306); x.lineTo(524,306); x.lineTo(524,344); x.stroke();
+    x.fillStyle='#3a5a8c'; rr(x,452,232,52,76,16); x.fill();
+    x.fillStyle='#e8b48c'; x.beginPath(); x.arc(474,204,18,0,7); x.fill();
+    x.fillStyle='#22242c'; x.beginPath(); x.arc(474,198,18,Math.PI,0); x.fill();
+    const bob=Math.sin(t*10)*3;
+    x.strokeStyle='#e8b48c'; x.lineWidth=9;
+    x.beginPath(); x.moveTo(492,252); x.lineTo(462,282); x.lineTo(430+bob,290); x.stroke();
+    x.lineCap='butt';
+    // paper stacks grow as sheets fly over from the monitor
+    const stacks=[{bx:118,by:302,n:0},{bx:586,by:302,n:0},{bx:600,by:386,n:0}];
+    const arrivals=Math.min(36, Math.floor(tc/0.85));
+    for(let i=0;i<arrivals;i++){ const s=stacks[i%3]; if(s.n<13) s.n++; }
+    const flyI=arrivals<36?arrivals:-1, flyP=(tc%0.85)/0.85;
+    stacks.forEach((s,si)=>{
+      for(let i=0;i<s.n;i++){ x.fillStyle=i%2?'#dfe7f2':'#f4f7fb';
+        x.fillRect(s.bx+((i*7)%5)-2, s.by-6-i*6, 66, 5); }
+      if(si===flyI%3&&flyI>=0){ const fx=404+(s.bx+30-404)*flyP, fy=210+((s.by-6-s.n*6)-210)*flyP-Math.sin(flyP*Math.PI)*36;
+        x.save(); x.translate(fx,fy); x.rotate(flyP*1.2); x.fillStyle='#ffffff'; x.fillRect(-16,-11,32,22);
+        x.strokeStyle='#b9c6da'; x.strokeRect(-16,-11,32,22); x.restore(); }
+    });
+    const fade=tc>15?(16-tc):1;
+    x.fillStyle='rgba(10,16,28,'+(1-fade)*0.0+')'; // (kept simple: hard reset each cycle)
+    x.fillStyle='#9fb2d8'; x.font='15px '+FONT; x.textAlign='left';
+    x.fillText('文档越堆越多……', 24, 34);
+  });
 </script>
 
 <script type="module">
@@ -35497,6 +35725,65 @@ try {
     }
   }, glideTo = function(d, to) {
     d.glide = { from: d.root.position.clone(), to: to.clone(), t: 0, dur: 1.6 };
+  }, updateFountain = function(dt) {
+    fountT += dt;
+    const W2 = fountC.width, H2 = fountC.height, t = fountT;
+    fx2.clearRect(0, 0, W2, H2);
+    fx2.fillStyle = "rgba(8,14,24,0.85)";
+    fx2.beginPath();
+    fx2.ellipse(W2 / 2, H2 - 16, W2 * 0.47, 15, 0, 0, 7);
+    fx2.fill();
+    fx2.strokeStyle = "rgba(150,200,255,0.5)";
+    fx2.lineWidth = 2;
+    fx2.beginPath();
+    fx2.ellipse(W2 / 2, H2 - 16, W2 * 0.47, 15, 0, Math.PI, 0);
+    fx2.stroke();
+    for (let i = 0; i < FOUNT_N; i++) {
+      const bx = (i + 0.5) / FOUNT_N * W2;
+      const ph = (t * 0.3 + i * 0.173) % 1;
+      const e = Math.sin(Math.PI * Math.min(1, ph * 1.12));
+      if (e <= 0.04) continue;
+      const hue = (0.52 + i * 0.045 + t * 0.013) % 1;
+      const g = fx2.createRadialGradient(bx, H2 - 14, 2, bx, H2 - 14, 64 * e + 16);
+      g.addColorStop(0, "hsla(" + hue * 360 + ",95%,62%," + 0.5 * e + ")");
+      g.addColorStop(1, "hsla(" + hue * 360 + ",95%,62%,0)");
+      fx2.fillStyle = g;
+      fx2.fillRect(bx - 90, H2 - 120, 180, 120);
+      const ah = 80 + 200 * e;
+      const mg = fx2.createLinearGradient(0, H2 - 16, 0, H2 - 16 - ah);
+      mg.addColorStop(0, "hsla(" + hue * 360 + ",90%,72%," + 0.2 * e + ")");
+      mg.addColorStop(1, "hsla(" + hue * 360 + ",90%,72%,0)");
+      fx2.fillStyle = mg;
+      fx2.beginPath();
+      fx2.moveTo(bx - 7, H2 - 16);
+      fx2.lineTo(bx - 30, H2 - 16 - ah);
+      fx2.lineTo(bx + 30, H2 - 16 - ah);
+      fx2.lineTo(bx + 7, H2 - 16);
+      fx2.closePath();
+      fx2.fill();
+      const rate = (i === 5 ? 130 : 85) * e;
+      let nsp = Math.floor(rate * dt) + (Math.random() < rate * dt % 1 ? 1 : 0);
+      for (let k = 0; k < nsp; k++) {
+        if (fountParts.length > 750) break;
+        const tall = (i === 5 ? 1.25 : 1) * (0.85 + 0.3 * Math.sin(i * 2.7));
+        fountParts.push({ x: bx + (Math.random() * 6 - 3), y: H2 - 16, vx: (Math.random() - 0.5) * 22, vy: -(240 + 130 * e) * tall * (0.9 + Math.random() * 0.2), hue });
+      }
+    }
+    for (let i = fountParts.length - 1; i >= 0; i--) {
+      const pt = fountParts[i];
+      pt.vy += 360 * dt;
+      pt.x += pt.vx * dt;
+      pt.y += pt.vy * dt;
+      if (pt.y > H2 - 12) {
+        fountParts.splice(i, 1);
+        continue;
+      }
+      fx2.fillStyle = "hsla(" + pt.hue * 360 + ",85%,78%,0.75)";
+      fx2.fillRect(pt.x, pt.y, 3, 7);
+    }
+    fountTex.needsUpdate = true;
+    fount.material.opacity = 0.1 + 0.9 * nightAmt;
+    window.__FOUNT__ = () => ({ parts: fountParts.length, t: +fountT.toFixed(1) });
   }, burst = function(x, y) {
     const col = FW_COLORS[Math.floor(Math.random() * FW_COLORS.length)];
     const n = 64 + Math.floor(Math.random() * 26);
@@ -35843,6 +36130,17 @@ try {
       order.forEach((d, i) => glideTo(d, slots[i]));
     }
   };
+  const fountC = document.createElement("canvas");
+  fountC.width = 1012;
+  fountC.height = 400;
+  const fx2 = fountC.getContext("2d");
+  const fountTex = new CanvasTexture(fountC);
+  fountTex.colorSpace = SRGBColorSpace;
+  fountTex.anisotropy = 4;
+  const fount = facadePlane(fountTex, { x0: 0.355, y0: 0.585, x1: 0.685, y1: 0.775 }, 1, 3);
+  const FOUNT_N = 11;
+  let fountT = 0;
+  const fountParts = [];
   const skyC = document.createElement("canvas");
   skyC.width = 1280;
   skyC.height = 853;
@@ -35908,6 +36206,7 @@ try {
     tAcc += dt;
     updateLEDVisuals(tAcc);
     updRemoval(dt);
+    updateFountain(dt);
     updateSky(dt);
     stageAmt += (stageTarget - stageAmt) * Math.min(1, dt * 1.7);
     if (Math.abs(stageTarget - stageAmt) < 3e-3) stageAmt = stageTarget;
