@@ -35279,8 +35279,8 @@ try {
     finale: () => {
       const order = [...window.__TEST__.dancerCtl || []].sort((a, b) => a.root.position.x - b.root.position.x);
       const slots = [];
-      for (let k = 4; k >= 0; k--) slots.push(new Vector3(-0.8 * k, 0, -1.7 + 0.58 * k));
-      for (let k = 1; k <= 6; k++) slots.push(new Vector3(0.8 * k, 0, -1.7 + 0.58 * k));
+      for (let k = 4; k >= 0; k--) slots.push(new Vector3(-0.72 * k, 0, -1.7 + 0.52 * k));
+      for (let k = 1; k <= 6; k++) slots.push(new Vector3(0.72 * k, 0, -1.7 + 0.52 * k));
       order.forEach((d, i) => glideTo(d, slots[i]));
     }
   };
