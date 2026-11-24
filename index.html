@@ -51,7 +51,7 @@
       <li>開場 11 人 = 男女混合，輪流跳 6 支舞，相位按拍子錯開唔會機械同步</li>
       <li>背景音樂：原創合成 120 BPM 舞曲（Am–F–C–G），32 秒一節，同舞步官方拍子對齊；-16.2 LUFS / 峰值 -3.6 dB</li>
       <li>翻頁筆㩒「下一頁」：背景相由白天漸變入夜（大樓燈火著起）、舞者著 LED 燈衫開跳、幕牆霓虹字同探射燈著起；再㩒「下一頁」即刻收尾排 V 字隊形（左 5 右 6），玻璃幕牆 Microshine／微觀科技招牌同步亮燈（藍+洋紅+白，跟真招牌原色）；㩒「上一頁」可逐步退回</li>
-      <li>LED 燈衫：入夜自動著上——舞者保留人型、著上黑色燈衫，沿骨架喺皮膚表面嘅發光燈管跟 BGM 低音變色變光暗（參考 MJ2026 LED 舞蹈秀）</li>
+      <li>LED 燈衫：入夜自動著上——舞者保留人型、著上黑色燈衫，沿骨架喺皮膚表面嘅發光燈管每根各自不同顏色、亮度跟 BGM 低音脈動（參考 MJ2026 LED 舞蹈秀）</li>
       <li>幕牆霓虹：真招牌下方紫色霓虹大字「拥抱智能化变革。激发行业前沿活力」鋪滿幕牆 80% 闊置中，下方白色霓虹小字「数智化创新部2026年总结与计划」；兩支對角探射燈喺招牌同標題之間慢慢交叉掃動</li>
     </ul>
   </section>
@@ -35139,9 +35139,9 @@ try {
   }, updateLEDVisuals = function(t) {
     const lv = computeLevel(t);
     hueBase = (hueBase + 9e-4 + lv * 16e-4) % 1;
-    coreMat.color.setHSL(hueBase, 0.9, 0.7 + lv * 0.22);
-    jointMat.color.copy(coreMat.color);
-    glowMat.color.setHSL(hueBase, 1, 0.52);
+    const bright = 0.78 + lv * 0.5;
+    coreMat.color.setScalar(bright);
+    jointMat.color.setScalar(bright);
     glowMat.opacity = 0.1 + lv * 0.24;
     for (let i = 0; i < ledDancers.length; i++) {
       const d = ledDancers[i];
@@ -35313,18 +35313,37 @@ try {
   const tubeGroup = new Group();
   tubeGroup.visible = false;
   scene.add(tubeGroup);
-  const coreMat = new MeshBasicMaterial({ color: 12582143 });
-  const glowMat = new MeshBasicMaterial({ color: 53247, transparent: true, opacity: 0.16, blending: AdditiveBlending, depthWrite: false });
+  const coreMat = new MeshBasicMaterial({ color: 16777215 });
+  const glowMat = new MeshBasicMaterial({ color: 16777215, transparent: true, opacity: 0.16, blending: AdditiveBlending, depthWrite: false });
   const cylGeo = new CylinderGeometry(1, 1, 1, 6, 1, true);
   const coreTubes = new InstancedMesh(cylGeo, coreMat, Math.max(totalSegs, 1));
   const glowTubes = new InstancedMesh(cylGeo, glowMat, Math.max(totalSegs, 1));
   coreTubes.frustumCulled = false;
   glowTubes.frustumCulled = false;
   tubeGroup.add(coreTubes, glowTubes);
-  const jointMat = new MeshBasicMaterial({ color: 12582143 });
+  const jointMat = new MeshBasicMaterial({ color: 16777215 });
   const joints = new InstancedMesh(new SphereGeometry(1, 8, 6), jointMat, Math.max(totalBones, 1));
   joints.frustumCulled = false;
   tubeGroup.add(joints);
+  const _ic = new Color();
+  {
+    let si = 0;
+    for (let d = 0; d < ledDancers.length; d++) for (let k = 0; k < ledDancers[d].segs.length; k++) {
+      _ic.setHSL((d * 0.61803 + k * 0.145) % 1, 0.95, 0.6);
+      coreTubes.setColorAt(si, _ic);
+      glowTubes.setColorAt(si, _ic);
+      si++;
+    }
+    let ji = 0;
+    for (let d = 0; d < ledDancers.length; d++) for (let k = 0; k < ledDancers[d].jointBones.length; k++) {
+      _ic.setHSL((d * 0.61803 + k * 0.145 + 0.33) % 1, 0.95, 0.66);
+      joints.setColorAt(ji, _ic);
+      ji++;
+    }
+    if (coreTubes.instanceColor) coreTubes.instanceColor.needsUpdate = true;
+    if (glowTubes.instanceColor) glowTubes.instanceColor.needsUpdate = true;
+    if (joints.instanceColor) joints.instanceColor.needsUpdate = true;
+  }
   const shadowGeo = new PlaneGeometry(1.4, 0.8);
   const shadows = dancerRoots.map((r) => {
     const m2 = new Mesh(shadowGeo, new MeshBasicMaterial({ map: shadowTex, transparent: true, opacity: 0.52, depthWrite: false }));
