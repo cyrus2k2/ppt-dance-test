@@ -35272,6 +35272,135 @@ try {
     }
   }, glideTo = function(d, to) {
     d.glide = { from: d.root.position.clone(), to: to.clone(), t: 0, dur: 1.6 };
+  }, burst = function(x, y) {
+    const col = FW_COLORS[Math.floor(Math.random() * FW_COLORS.length)];
+    const n = 64 + Math.floor(Math.random() * 26);
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * Math.PI * 2, sp = 90 + Math.random() * 175;
+      sky.sparks.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0, max: R(1.4, 2.4), col, sz: R(1.4, 2.6) });
+    }
+  }, drawUFO = function(u) {
+    const W = skyC.width, H = skyC.height;
+    const x = u.x * W, y = (u.y + Math.sin(u.t * 2.2) * 4e-3) * H;
+    const gl = skyG.createRadialGradient(x, y + 12, 2, x, y + 12, 48);
+    gl.addColorStop(0, "rgba(140,255,190,0.20)");
+    gl.addColorStop(1, "rgba(140,255,190,0)");
+    skyG.fillStyle = gl;
+    skyG.beginPath();
+    skyG.ellipse(x, y + 12, 48, 17, 0, 0, 7);
+    skyG.fill();
+    skyG.fillStyle = "rgba(175,225,255,0.92)";
+    skyG.beginPath();
+    skyG.ellipse(x, y - 5, 13, 9, 0, Math.PI, 0);
+    skyG.fill();
+    const bg = skyG.createLinearGradient(x, y - 5, x, y + 9);
+    bg.addColorStop(0, "#e8eef5");
+    bg.addColorStop(0.55, "#aeb9c6");
+    bg.addColorStop(1, "#6e7a89");
+    skyG.fillStyle = bg;
+    skyG.beginPath();
+    skyG.ellipse(x, y + 2, 30, 9, 0, 0, 7);
+    skyG.fill();
+    const cols = ["#ff5a5a", "#ffd166", "#7cfc98", "#6bc5ff", "#ff9ff3"];
+    for (let i = 0; i < 5; i++) {
+      skyG.globalAlpha = Math.sin(u.t * 7 + i * 1.7) > 0 ? 1 : 0.15;
+      skyG.fillStyle = cols[i];
+      skyG.beginPath();
+      skyG.arc(x - 24 + i * 12, y + 5, 2.6, 0, 7);
+      skyG.fill();
+    }
+    skyG.globalAlpha = 1;
+  }, updateSky = function(dt) {
+    const W = skyC.width, H = skyC.height;
+    skyG.clearRect(0, 0, W, H);
+    if (nightAmt < 0.55) {
+      skyPlane.material.opacity = 0;
+      return;
+    }
+    skyPlane.material.opacity = Math.min(1, nightAmt);
+    sky.tMeteor -= dt;
+    sky.tFire -= dt;
+    sky.tUfo -= dt;
+    if (sky.tMeteor <= 0) {
+      sky.tMeteor = R(6, 15);
+      const dir = Math.random() < 0.5 ? -1 : 1, sp = R(620, 840), an = 0.56;
+      sky.meteors.push({ x: R(0.15, 0.85) * W, y: R(0.03, 0.1) * H, vx: dir * Math.cos(an) * sp, vy: Math.sin(an) * sp, life: 0 });
+    }
+    if (sky.tFire <= 0) {
+      sky.tFire = R(9, 22);
+      const z = FW_ZONES[Math.floor(Math.random() * FW_ZONES.length)];
+      const bx = (z.x + R(-0.03, 0.03)) * W, by = (z.y + R(-0.015, 0.015)) * H;
+      sky.rockets.push({ x: bx, y: by + R(70, 120), ty: by, v: -R(170, 215) });
+    }
+    if (sky.tUfo <= 0 && !sky.ufo) {
+      sky.tUfo = R(26, 55);
+      const dir = Math.random() < 0.5 ? 1 : -1;
+      sky.ufo = { x: dir > 0 ? -0.04 : 1.04, y: R(0.055, 0.13), vx: dir * R(0.03, 0.042), t: 0 };
+    }
+    sky.meteors = sky.meteors.filter((m2) => m2.life < 1.1 && m2.x > -80 && m2.x < W + 80 && m2.y < H * 0.45);
+    for (const m2 of sky.meteors) {
+      m2.life += dt;
+      m2.x += m2.vx * dt;
+      m2.y += m2.vy * dt;
+      const tx = m2.x - m2.vx * 0.14, ty = m2.y - m2.vy * 0.14;
+      const gr = skyG.createLinearGradient(tx, ty, m2.x, m2.y);
+      gr.addColorStop(0, "rgba(255,255,255,0)");
+      gr.addColorStop(1, "rgba(255,255,255,0.95)");
+      skyG.strokeStyle = gr;
+      skyG.lineWidth = 2.6;
+      skyG.lineCap = "round";
+      skyG.shadowColor = "#cfe6ff";
+      skyG.shadowBlur = 10;
+      skyG.beginPath();
+      skyG.moveTo(tx, ty);
+      skyG.lineTo(m2.x, m2.y);
+      skyG.stroke();
+      skyG.shadowBlur = 0;
+    }
+    if (sky.ufo) {
+      const u = sky.ufo;
+      u.t += dt;
+      u.x += u.vx * dt;
+      if (u.x < -0.08 || u.x > 1.08) sky.ufo = null;
+      else drawUFO(u);
+    }
+    sky.rockets = sky.rockets.filter((r) => r.y > r.ty);
+    for (const r of sky.rockets) {
+      r.y += r.v * dt;
+      skyG.fillStyle = "rgba(255,215,140,0.9)";
+      skyG.shadowColor = "#ffd166";
+      skyG.shadowBlur = 8;
+      skyG.beginPath();
+      skyG.arc(r.x, r.y, 2.1, 0, 7);
+      skyG.fill();
+      skyG.shadowBlur = 0;
+      skyG.fillStyle = "rgba(255,190,110,0.35)";
+      skyG.beginPath();
+      skyG.arc(r.x, r.y + 7, 1.4, 0, 7);
+      skyG.fill();
+      if (r.y <= r.ty) burst(r.x, r.ty);
+    }
+    sky.sparks = sky.sparks.filter((sp) => sp.life < sp.max);
+    for (const sp of sky.sparks) {
+      sp.life += dt;
+      sp.vy += 112 * dt;
+      sp.x += sp.vx * dt;
+      sp.y += sp.vy * dt;
+      const a = 1 - sp.life / sp.max;
+      skyG.globalAlpha = a;
+      skyG.strokeStyle = sp.col;
+      skyG.lineWidth = sp.sz;
+      skyG.lineCap = "round";
+      skyG.shadowColor = sp.col;
+      skyG.shadowBlur = 7;
+      skyG.beginPath();
+      skyG.moveTo(sp.x - sp.vx * 0.03, sp.y - sp.vy * 0.03);
+      skyG.lineTo(sp.x, sp.y);
+      skyG.stroke();
+    }
+    skyG.globalAlpha = 1;
+    skyG.shadowBlur = 0;
+    skyTex.needsUpdate = true;
   };
   const [m, f] = await Promise.all([loader.parseAsync(__ab(HumanM_default), ""), loader.parseAsync(__ab(HumanF_default), "")]);
   const templates = [
@@ -35417,11 +35546,25 @@ try {
     finale: () => {
       const order = [...window.__TEST__.dancerCtl || []].sort((a, b) => a.root.position.x - b.root.position.x);
       const slots = [];
-      for (let k = 4; k >= 0; k--) slots.push(new Vector3(-0.55 * k, 0, 0.5 + 0.3 * k));
-      for (let k = 1; k <= 6; k++) slots.push(new Vector3(0.55 * k, 0, 0.5 + 0.3 * k));
+      const DX = -0.55;
+      for (let k = 4; k >= 0; k--) slots.push(new Vector3(DX - 0.55 * k, 0, 0.5 + 0.3 * k));
+      for (let k = 1; k <= 6; k++) slots.push(new Vector3(DX + 0.55 * k, 0, 0.5 + 0.3 * k));
       order.forEach((d, i) => glideTo(d, slots[i]));
     }
   };
+  const skyC = document.createElement("canvas");
+  skyC.width = 1280;
+  skyC.height = 853;
+  const skyG = skyC.getContext("2d");
+  const skyTex = new CanvasTexture(skyC);
+  skyTex.colorSpace = SRGBColorSpace;
+  const skyPlane = facadePlane(skyTex, { x0: 0, y0: 0, x1: 1, y1: 1 }, 1, 4);
+  layoutBackdrop();
+  const sky = { meteors: [], ufo: null, rockets: [], sparks: [], tMeteor: 3.5, tUfo: 13, tFire: 4.5 };
+  window.__SKY__ = sky;
+  const R = (a, b) => a + Math.random() * (b - a);
+  const FW_ZONES = [{ x: 0.3, y: 0.15 }, { x: 0.47, y: 0.1 }, { x: 0.58, y: 0.13 }, { x: 0.68, y: 0.11 }, { x: 0.38, y: 0.17 }];
+  const FW_COLORS = ["#ffd166", "#ff6b9d", "#7cfc98", "#6bc5ff", "#c39bff", "#ff9f68"];
   const timer = new Timer();
   let tAcc = 0;
   renderer.setAnimationLoop(() => {
@@ -35457,6 +35600,7 @@ try {
     }
     tAcc += dt;
     updateLEDVisuals(tAcc);
+    updateSky(dt);
     _ringHue.setHSL(hueBase, 0.85, 0.58);
     ring.material.color.lerpColors(ringGold, _ringHue, nightAmt);
     if (window.__BGM__ && !window.__BGM__.paused) {
