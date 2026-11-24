@@ -24,8 +24,8 @@
   .deck{z-index:1}
   .cslide{padding:0}
   .glass{position:relative;width:93vw;height:92vh;border-radius:22px;padding:4.2vh 3.4vw;
-    background:linear-gradient(135deg,rgba(10,16,28,.32),rgba(10,16,28,.22));
-    -webkit-backdrop-filter:blur(6px) saturate(1.25);backdrop-filter:blur(6px) saturate(1.25);
+    background:linear-gradient(135deg,rgba(10,16,28,.47),rgba(10,16,28,.35));
+    -webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3);
     border:1px solid rgba(255,255,255,.20);
     box-shadow:0 24px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.22);
     opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;
@@ -91,6 +91,9 @@
   .pac-band canvas{width:100%;height:11vh}
   .pac-line{text-align:center;font-size:2.2vh;color:#cfe0ff;margin-top:1.1vh;letter-spacing:.06em}
   .pac-line b{font-size:3.6vh;margin:0 .2em}
+  .glass-logo{position:absolute;top:2.4vh;right:2.0vw;height:4.4vh;aspect-ratio:370/47;z-index:5;pointer-events:none;
+    background:url("data:image/webp;base64,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") center/contain no-repeat;
+    filter:drop-shadow(0 0 5px rgba(170,215,255,.95)) drop-shadow(0 0 16px rgba(235,110,165,.55)) drop-shadow(0 0 30px rgba(0,129,204,.35))}
   kbd{background:#232842;border:1px solid #4a5170;border-bottom-width:3px;border-radius:6px;padding:1px 8px;font-family:inherit}
 </style>
 
@@ -119,6 +122,7 @@
   <!-- Part 1 · Page 2: the summary title poem -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="poem">
         <div class="pline" style="--g:#6bc5ff">迎入侵艰难防御</div>
         <div class="pline" style="--g:#ffb86b">硬件老性能满载</div>
@@ -132,6 +136,7 @@
   <!-- Part 1 · Page 3: 1. digital-transformation assistance -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <div class="pover">一、工作完成总结</div>
         <h1 class="ptitle neon-w">协助数字化转型</h1>
@@ -155,6 +160,7 @@
   <!-- Part 1 · Page 4: 2. operations incidents + ransomware animation -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <div class="pover">一、工作完成总结</div>
         <h1 class="ptitle neon-w">运维问题处理</h1>
@@ -179,6 +185,7 @@
   <!-- Part 1 · Page 5: 3. ERP projects -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <div class="pover">一、工作完成总结</div>
         <h1 class="ptitle neon-w">ERP 项目相关</h1>
@@ -205,6 +212,7 @@
   <!-- Part 1 · Page 6: 4. project development & optimisation -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <div class="pover">一、工作完成总结</div>
         <h1 class="ptitle neon-w">项目开发和优化完成情况</h1>
@@ -235,6 +243,7 @@
   <!-- Part 1 · Page 7: 5. server-room facilities + firewall / congestion animations -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <div class="pover">一、工作完成总结</div>
         <h1 class="ptitle neon-w">机房设施优化</h1>
@@ -250,6 +259,7 @@
   <!-- Part 1 · Page 8: org chart (blank, chart to be added by the user later) -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <div class="pover">三、组织架构</div>
         <h1 class="ptitle neon-w">组织架构图</h1>
@@ -262,6 +272,7 @@
   <!-- Part 1 · Page 9: org status quo + token pac-man -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <div class="pover">三、组织架构</div>
         <h1 class="ptitle neon-w">现状</h1>
@@ -283,6 +294,7 @@
   <!-- Part 1 · Page 10: problems & reflections + one-person desk animation -->
   <section class="slide cslide" data-slide>
     <div class="glass">
+      <i class="glass-logo"></i>
       <div class="phead">
         <h1 class="ptitle neon-w">四、问题与反思</h1>
       </div>
@@ -35638,7 +35650,7 @@ try {
     coreMat.color.setHSL(hueBase, 0.9, 0.7 + lv * 0.22);
     jointMat.color.copy(coreMat.color);
     glowMat.color.setHSL(hueBase, 1, 0.52);
-    glowMat.opacity = (0.1 + lv * 0.24) * stageAmt;
+    glowMat.opacity = (0.1 + lv * 0.24) * (1 - abdFade);
     for (let i = 0; i < ledDancers.length; i++) {
       const d = ledDancers[i];
       d.root.updateWorldMatrix(true, true);
@@ -35680,6 +35692,31 @@ try {
         _m4.compose(_v1, _qi, _s);
         joints.setMatrixAt(ji, _m4);
         ji++;
+      }
+    }
+    if (abdK > 0) {
+      const e = abdK, sc = 1 - 0.8 * e, ca = Math.cos(e * 1.3), sa = Math.sin(e * 1.3);
+      for (const mesh of [coreTubes, glowTubes, joints]) {
+        for (let i2 = 0; i2 < mesh.count; i2++) {
+          mesh.getMatrixAt(i2, _m4);
+          _v1.setFromMatrixPosition(_m4);
+          _v1.lerp(_beamTop, e);
+          const dx = _v1.x, dz = _v1.z - 1.4;
+          _v1.x = dx * ca - dz * sa;
+          _v1.z = 1.4 + dx * sa + dz * ca;
+          _m4.setPosition(_v1);
+          const el = _m4.elements;
+          el[0] *= sc;
+          el[1] *= sc;
+          el[2] *= sc;
+          el[4] *= sc;
+          el[5] *= sc;
+          el[6] *= sc;
+          el[8] *= sc;
+          el[9] *= sc;
+          el[10] *= sc;
+          mesh.setMatrixAt(i2, _m4);
+        }
       }
     }
     coreTubes.instanceMatrix.needsUpdate = true;
@@ -35727,6 +35764,13 @@ try {
     d.glide = { from: d.root.position.clone(), to: to.clone(), t: 0, dur: 1.6 };
   }, updateFountain = function(dt) {
     fountT += dt;
+    if (fountAmt < 0.02) {
+      if (fountParts.length) fountParts.length = 0;
+      fx2.clearRect(0, 0, fountC.width, fountC.height);
+      fountTex.needsUpdate = true;
+      fount.material.opacity = 0;
+      return;
+    }
     const W2 = fountC.width, H2 = fountC.height, t = fountT;
     fx2.clearRect(0, 0, W2, H2);
     fx2.fillStyle = "rgba(8,14,24,0.85)";
@@ -35782,8 +35826,9 @@ try {
       fx2.fillRect(pt.x, pt.y, 3, 7);
     }
     fountTex.needsUpdate = true;
-    fount.material.opacity = 0.1 + 0.9 * nightAmt;
+    fount.material.opacity = fountAmt * (0.1 + 0.9 * nightAmt);
     window.__FOUNT__ = () => ({ parts: fountParts.length, t: +fountT.toFixed(1) });
+    window.__LED2__ = { coreTubes, glowTubes, joints };
   }, burst = function(x, y) {
     const col = FW_COLORS[Math.floor(Math.random() * FW_COLORS.length)];
     const n = 64 + Math.floor(Math.random() * 26);
@@ -35926,12 +35971,70 @@ try {
     }
     skyTex.needsUpdate = true;
   }, startRemoval = function() {
-    if (!removal && neon1.visible) removal = { t: 0 };
+    if (!removal && neon1.visible) {
+      removal = { t: 0 };
+      removalDone = false;
+    }
   }, restoreNeons = function() {
     removal = null;
     restoring = true;
+    removalDone = false;
     neon1.visible = true;
     neon2.visible = true;
+  }, startAbduction = function() {
+    if (abd || skeletonGone) return;
+    const side = Math.random() < 0.5 ? -1 : 1, side2 = Math.random() < 0.5 ? -1 : 1;
+    abd = {
+      t: -(0.8 + Math.random() * 1.7),
+      from: new Vector3(side * 13, 4.6, 1.4),
+      exit: new Vector3(side2 * 11, 6.8, -2)
+    };
+    abdK = 0;
+  }, resetAbduction = function() {
+    abd = null;
+    abdK = 0;
+    abdFade = 0;
+    skeletonGone = false;
+    coreTubes.visible = glowTubes.visible = joints.visible = true;
+    ufoG.visible = false;
+    beamMat.opacity = 0;
+  }, updAbduction = function(dt) {
+    abdFade = abdK <= 0 ? 0 : sstep(0.65, 1, abdK);
+    if (!abd) return;
+    abd.t += dt;
+    const t = abd.t;
+    if (t < 0) return;
+    ufoG.visible = true;
+    ufoLights.forEach((lm, i) => lm.material.color.setHSL((t * 0.7 + i / 6) % 1, 0.9, 0.62));
+    if (t < 1.5) {
+      const e = 1 - Math.pow(1 - t / 1.5, 3);
+      ufoG.position.lerpVectors(abd.from, _hovPos, e);
+      beamMat.opacity = 0;
+    } else if (t < 2) {
+      ufoG.position.copy(_hovPos);
+      ufoG.position.y += Math.sin(t * 2.2) * 0.03;
+      beamMat.opacity = (t - 1.5) / 0.5 * 0.3;
+    } else if (t < 4.4) {
+      ufoG.position.copy(_hovPos);
+      ufoG.position.y += Math.sin(t * 2.2) * 0.03;
+      beamMat.opacity = 0.3 + 0.05 * Math.sin(t * 17);
+      abdK = sstep(2, 4.4, t);
+    } else if (t < 5) {
+      abdK = 1;
+      if (!skeletonGone) {
+        skeletonGone = true;
+        coreTubes.visible = glowTubes.visible = joints.visible = false;
+      }
+      beamMat.opacity = 0.3 * (1 - (t - 4.4) / 0.6);
+      ufoG.position.copy(_hovPos);
+    } else if (t < 6.4) {
+      const e = (t - 5) / 1.4;
+      ufoG.position.lerpVectors(_hovPos, abd.exit, e * e);
+      beamMat.opacity = 0;
+    } else {
+      abd = null;
+      ufoG.visible = false;
+    }
   }, updRemoval = function(dt) {
     if (restoring) {
       const k = Math.min(1, dt * 2.4);
@@ -35968,6 +36071,7 @@ try {
       neonOff.w.y = u2.y - aW.y;
     } else {
       removal = null;
+      removalDone = true;
       neon1.visible = false;
       neon2.visible = false;
       neonOff.p.x = neonOff.p.y = neonOff.w.x = neonOff.w.y = 0;
@@ -36157,15 +36261,52 @@ try {
   const FW_COLORS = ["#ffd166", "#ff6b9d", "#7cfc98", "#6bc5ff", "#c39bff", "#ff9f68"];
   let stageAmt = 1, stageTarget = 1;
   const neonOff = { p: { x: 0, y: 0 }, w: { x: 0, y: 0 } };
-  let removal = null, restoring = false;
+  let removal = null, restoring = false, removalDone = false, fountAmt = 0;
   window.__stageLeave = () => {
     stageTarget = 0;
     startRemoval();
+    startAbduction();
   };
-  window.__STAGE__ = () => ({ amt: +stageAmt.toFixed(3), neon1: neon1.visible, neon2: neon2.visible, removing: !!removal });
+  window.__STAGE__ = () => ({ amt: +stageAmt.toFixed(3), neon1: neon1.visible, neon2: neon2.visible, removing: !!removal, coreO: +coreMat.opacity.toFixed(3), glowO: +glowMat.opacity.toFixed(3), tubesVis: coreTubes.visible });
   window.__stageRestore = () => {
     stageTarget = 1;
     restoreNeons();
+    resetAbduction();
+  };
+  let abd = null, abdK = 0, abdFade = 0, skeletonGone = false;
+  const _beamTop = new Vector3(0, 2.95, 1.4);
+  const ufoG = new Group();
+  const ufoBody = new Mesh(
+    new SphereGeometry(0.62, 24, 12),
+    new MeshStandardMaterial({ color: 12109012, metalness: 0.85, roughness: 0.35, emissive: 2240580 })
+  );
+  ufoBody.scale.set(1, 0.32, 1);
+  ufoG.add(ufoBody);
+  const ufoDome = new Mesh(
+    new SphereGeometry(0.3, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+    new MeshStandardMaterial({ color: 10475775, metalness: 0.1, roughness: 0.15, transparent: true, opacity: 0.8, emissive: 1849941 })
+  );
+  ufoDome.position.y = 0.1;
+  ufoG.add(ufoDome);
+  const ufoLights = [];
+  for (let i = 0; i < 6; i++) {
+    const lm = new Mesh(new SphereGeometry(0.05, 8, 8), new MeshBasicMaterial({ color: 8257456 }));
+    const a = i / 6 * Math.PI * 2;
+    lm.position.set(Math.cos(a) * 0.55, -0.1, Math.sin(a) * 0.55);
+    ufoG.add(lm);
+    ufoLights.push(lm);
+  }
+  const beamMat = new MeshBasicMaterial({ color: 11465408, transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, side: DoubleSide });
+  const beamMesh = new Mesh(new CylinderGeometry(0.35, 1.55, 2.95, 24, 1, true), beamMat);
+  beamMesh.position.y = -1.52;
+  ufoG.add(beamMesh);
+  ufoG.visible = false;
+  scene.add(ufoG);
+  const _hovPos = new Vector3(0, 3.15, 1.4);
+  window.__ABD__ = () => ({ t: abd ? +abd.t.toFixed(2) : null, k: +abdK.toFixed(2), gone: skeletonGone, fountAmt: +fountAmt.toFixed(2), removalDone });
+  window.__ABD_NOW__ = () => {
+    startAbduction();
+    if (abd && abd.t < 2.1) abd.t = 2.1;
   };
   const PC = { x: 0.5825, y: 0.4585 }, WC = { x: 0.5825, y: 0.5325 };
   const easeIO = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
@@ -36204,19 +36345,22 @@ try {
       }
     }
     tAcc += dt;
+    updAbduction(dt);
     updateLEDVisuals(tAcc);
     updRemoval(dt);
     updateFountain(dt);
     updateSky(dt);
     stageAmt += (stageTarget - stageAmt) * Math.min(1, dt * 1.7);
-    if (Math.abs(stageTarget - stageAmt) < 3e-3) stageAmt = stageTarget;
+    if (Math.abs(stageTarget - stageAmt) < 0.02) stageAmt = stageTarget;
+    fountAmt += ((removalDone ? 1 : 0) - fountAmt) * Math.min(1, dt * 1.4);
+    if (Math.abs((removalDone ? 1 : 0) - fountAmt) < 0.01) fountAmt = removalDone ? 1 : 0;
     const svis = stageAmt > 0.02;
     for (const m2 of suitMats) {
       m2.transparent = stageAmt < 0.999;
       m2.opacity = stageAmt;
     }
-    coreMat.opacity = stageAmt;
-    jointMat.opacity = stageAmt;
+    coreMat.opacity = 1 - abdFade;
+    jointMat.opacity = 1 - abdFade;
     for (const d of window.__TEST__.dancerCtl || []) d.root.visible = svis;
     for (const sh of shadows) {
       sh.visible = svis;
