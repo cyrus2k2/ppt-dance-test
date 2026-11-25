@@ -786,6 +786,7 @@
   const slides=[...document.querySelectorAll('[data-slide]')];
   let cur=0;
   function go(n){
+    if(closing && n!==slides.length-1) exitClosing();
     cur=Math.max(0,Math.min(slides.length-1,n));
     slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
     window.__SLIDE__=cur;
@@ -794,8 +795,8 @@
   // Slide 1 is a three-step show (day standby -> night dance -> V finale) driven by
   // the same clicker keys: while on slide 1 the show module gets first claim on
   // next/prev; only when it declines does the deck change slides.
-  function navNext(){ if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.next()) return; } go(cur+1); }
-  function navPrev(){ if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.prev()) return; } go(cur-1); }
+  function navNext(){ if(closing) return; if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.next()) return; } if(cur===slides.length-1){ enterClosing(); return; } go(cur+1); }
+  function navPrev(){ if(closing){ exitClosing(); return; } if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.prev()) return; } go(cur-1); }
   const NEXT=new Set(['PageDown','ArrowRight','ArrowDown',' ','Spacebar','Enter']);
   const PREV=new Set(['PageUp','ArrowLeft','ArrowUp','Backspace']);
   window.addEventListener('keydown',e=>{
@@ -805,6 +806,58 @@
     else if(e.key==='End'){e.preventDefault();go(slides.length-1)}
   });
   window.addEventListener('click',e=>{ if(e.target.closest('button')) return; if(e.clientX>window.innerWidth*0.5) navNext(); else navPrev(); });
+
+  // ---------- closing view: one more "next" on the last slide shatters its frosted
+  // ---------- glass, leaving only the backdrop with the hoisted neon signs ----------
+  let closing=false; window.__closing=false;
+  const shC=document.createElement('canvas'); shC.id='shatterC';
+  shC.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:999;display:none';
+  document.body.appendChild(shC);
+  const shX=shC.getContext('2d');
+  let shards=[], shT0=0, shRun=false;
+  function sizeShatter(){ shC.width=innerWidth; shC.height=innerHeight; }
+  addEventListener('resize',sizeShatter); sizeShatter();
+  function enterClosing(){
+    if(closing) return; closing=true; window.__closing=true;
+    const g=slides[slides.length-1].querySelector('.glass'); if(!g) return;
+    const r=g.getBoundingClientRect();
+    g.style.transition='opacity .18s ease'; g.style.opacity='0';
+    shards=[]; const cols=9, rows=6, j=()=>(Math.random()-0.5)*14;
+    const pts=[];
+    for(let y=0;y<=rows;y++){ pts.push([]); for(let x=0;x<=cols;x++) pts[y].push([r.left+r.width*x/cols+(x&&x<cols?j():0), r.top+r.height*y/rows+(y&&y<rows?j():0)]); }
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){
+      const tris=[[pts[y][x],pts[y][x+1],pts[y+1][x]],[pts[y][x+1],pts[y+1][x+1],pts[y+1][x]]];
+      for(const tri of tris){
+        const mx=(tri[0][0]+tri[1][0]+tri[2][0])/3, my=(tri[0][1]+tri[1][1]+tri[2][1])/3;
+        shards.push({ tri, mx, my, vx:(mx-cx)*0.55+(Math.random()-0.5)*60, vy:(my-cy)*0.28-120-Math.random()*120, vr:(Math.random()-0.5)*5.2, bright:Math.random()<0.16 });
+      }
+    }
+    shC.style.display='block'; shT0=performance.now(); if(!shRun){ shRun=true; requestAnimationFrame(shTick); }
+  }
+  function shTick(now){
+    const t=(now-shT0)/1000;
+    shX.clearRect(0,0,shC.width,shC.height);
+    let alive=false;
+    for(const sd of shards){
+      const lt=t-0.16;
+      let x=sd.mx, y=sd.my, rot=0, a=1;
+      if(lt>0){ if(lt>=2.0) continue; alive=true; x=sd.mx+sd.vx*lt; y=sd.my+sd.vy*lt+700*lt*lt; rot=sd.vr*lt; a=Math.max(0,1-Math.max(0,lt-1.35)/0.65); }
+      else alive=true;
+      shX.save(); shX.translate(x,y); shX.rotate(rot); shX.globalAlpha=a;
+      shX.beginPath(); shX.moveTo(sd.tri[0][0]-sd.mx,sd.tri[0][1]-sd.my); shX.lineTo(sd.tri[1][0]-sd.mx,sd.tri[1][1]-sd.my); shX.lineTo(sd.tri[2][0]-sd.mx,sd.tri[2][1]-sd.my); shX.closePath();
+      shX.fillStyle=sd.bright?'rgba(205,230,255,0.46)':'rgba(165,200,245,0.27)'; shX.fill();
+      shX.strokeStyle='rgba(230,245,255,'+(lt<0?'0.98':'0.78')+')'; shX.lineWidth=1.6; shX.stroke();
+      shX.restore();
+    }
+    if(alive) requestAnimationFrame(shTick);
+    else { shRun=false; shC.style.display='none'; }
+  }
+  function exitClosing(){
+    if(!closing) return; closing=false; window.__closing=false;
+    const g=slides[slides.length-1].querySelector('.glass'); if(g){ g.style.opacity=''; }
+    shards=[]; shC.style.display='none'; shX.clearRect(0,0,shC.width,shC.height);
+  }
   go(0);
   // ---------- slide animations: small canvas cartoons, drawn only while their slide is active ----------
   const __anims=[];
@@ -36238,12 +36291,13 @@ try {
           continue;
         }
         let segShrink = 1;
-        if (abd && abd.di === di && abdK > 0) {
-          const e = abdK;
-          _mid.lerp(abd.top, e);
-          const dx = _mid.x - abd.hov.x, dz = _mid.z - abd.hov.z, ca = Math.cos(e * 1.3), sa = Math.sin(e * 1.3);
-          _mid.x = abd.hov.x + dx * ca - dz * sa;
-          _mid.z = abd.hov.z + dx * sa + dz * ca;
+        const sk = abd && abd.di === di && abdK > 0 ? { e: abdK, top: abd.top, hov: abd.hov } : blitz && blitz.tops[di] ? { e: blitz.k, top: blitz.tops[di].top, hov: blitz.tops[di].hov } : null;
+        if (sk) {
+          const e = sk.e;
+          _mid.lerp(sk.top, e);
+          const dx = _mid.x - sk.hov.x, dz = _mid.z - sk.hov.z, ca = Math.cos(e * 1.3), sa = Math.sin(e * 1.3);
+          _mid.x = sk.hov.x + dx * ca - dz * sa;
+          _mid.z = sk.hov.z + dx * sa + dz * ca;
           segShrink = 1 - 0.85 * e;
         }
         _dir.subVectors(_v2, _v1);
@@ -36258,18 +36312,19 @@ try {
         glowTubes.setMatrixAt(si, _m4);
         si++;
       }
+      const sk2 = abd && abd.di === di && abdK > 0 ? { e: abdK, top: abd.top, hov: abd.hov } : blitz && blitz.tops[di] ? { e: blitz.k, top: blitz.tops[di].top, hov: blitz.tops[di].hov } : null;
       for (const b of d.jointBones) {
         b.getWorldPosition(_v1);
         _off.copy(dancerFwds[di]).multiplyScalar(jointOffset(b.name));
         _v1.add(_off);
         if (abdTaken.has(di)) {
           _s.set(0, 0, 0);
-        } else if (abd && abd.di === di && abdK > 0) {
-          const e = abdK;
-          _v1.lerp(abd.top, e);
-          const dx = _v1.x - abd.hov.x, dz = _v1.z - abd.hov.z, ca = Math.cos(e * 1.3), sa = Math.sin(e * 1.3);
-          _v1.x = abd.hov.x + dx * ca - dz * sa;
-          _v1.z = abd.hov.z + dx * sa + dz * ca;
+        } else if (sk2) {
+          const e = sk2.e;
+          _v1.lerp(sk2.top, e);
+          const dx = _v1.x - sk2.hov.x, dz = _v1.z - sk2.hov.z, ca = Math.cos(e * 1.3), sa = Math.sin(e * 1.3);
+          _v1.x = sk2.hov.x + dx * ca - dz * sa;
+          _v1.z = sk2.hov.z + dx * sa + dz * ca;
           const js = 0.021 * (1 - 0.85 * e);
           _s.set(js, js, js);
         } else _s.set(0.021, 0.021, 0.021);
@@ -36637,24 +36692,58 @@ try {
     if (!fin) fin = { amt: 0, dir: 1, t: 0, signs: abdTaken.size >= 11 };
     fin.dir = 1;
     finGlass(true);
-    if (abdTaken.size < 11) {
-      finRush = true;
-      if (abdWait > 0.05) abdWait = 0.05;
-    }
     nightTarget = 1;
+    if (abdTaken.size < 11 && !blitz) {
+      const tops = [], list = [];
+      for (let i = 0; i < 11; i++) {
+        if (abdTaken.has(i)) {
+          tops.push(null);
+          continue;
+        }
+        const ctl = (window.__TEST__.dancerCtl || [])[i];
+        if (!ctl) {
+          tops.push(null);
+          continue;
+        }
+        const px = ctl.root.position.x, pz = ctl.root.position.z;
+        tops.push({ hov: new Vector3(px, 3.15, pz), top: new Vector3(px, 2.95, pz) });
+        list.push(i);
+      }
+      if (list.length) blitz = { t: 0, k: 0, tops, list };
+      else fin.signs = true;
+    }
   }, finStop = function() {
     finGlass(false);
     if (fin) fin.dir = -1;
-    if (finRush) {
-      finRush = false;
-      if (abdSeries && abdTaken.size < 11) scheduleAbd();
+    if (blitz) {
+      blitz = null;
+      if (!abd) {
+        ufoG.visible = false;
+        beamMat.opacity = 0;
+      }
     }
   }, updFinale = function(dt) {
     if (!fin) return;
     fin.t += dt;
-    if (finRush && abdTaken.size >= 11) {
-      finRush = false;
-      fin.signs = true;
+    if (blitz) {
+      blitz.t += dt;
+      blitz.k = sstep(0, 1, Math.min(1, blitz.t / 2.2));
+      if (!abd) {
+        ufoG.visible = true;
+        ufoG.position.set(0, 3.3, 1.4);
+        ufoG.position.y += Math.sin(blitz.t * 2.2) * 0.04;
+        beamMat.opacity = 0.2 + 0.05 * Math.sin(blitz.t * 17);
+        ufoLights.forEach((lm, i) => lm.material.color.setHSL((blitz.t * 0.7 + i / 6) % 1, 0.9, 0.62));
+      }
+      if (blitz.t >= 2.2) {
+        for (const di of blitz.list) abdTaken.add(di);
+        blitz = null;
+        fin.signs = true;
+        if (!abd) {
+          ufoG.visible = false;
+          beamMat.opacity = 0;
+        }
+      }
     }
     if (fin.dir > 0 && fin.signs) fin.amt = Math.min(1, fin.amt + dt / 2.4);
     else if (fin.dir < 0) {
@@ -36940,7 +37029,7 @@ try {
     restoreNeons();
     resetAbduction();
     fin = null;
-    finRush = false;
+    blitz = null;
   };
   let abd = null, abdK = 0, abdWait = -1, abdSeries = false;
   const abdTaken = /* @__PURE__ */ new Set();
@@ -36977,9 +37066,9 @@ try {
     if (!abd) startAbdVisit();
     if (abd && abd.t < 1.8) abd.t = 1.8;
   };
-  let fin = null;
+  let fin = null, blitz = null;
   window.__finaleCtl = { start: finStart, stop: finStop };
-  window.__FIN__ = () => ({ active: !!fin, amt: fin ? +fin.amt.toFixed(2) : 0, signs: fin ? fin.signs : false, rush: finRush, taken: abdTaken.size });
+  window.__FIN__ = () => ({ active: !!fin, amt: fin ? +fin.amt.toFixed(2) : 0, signs: fin ? fin.signs : false, blitz: !!blitz, taken: abdTaken.size });
   const PC = { x: 0.5825, y: 0.4585 }, WC = { x: 0.5825, y: 0.5325 };
   const easeIO = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   const lerp2 = (a, b, e) => ({ x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e });
