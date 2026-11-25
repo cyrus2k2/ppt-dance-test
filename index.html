@@ -117,7 +117,35 @@
   .goal-card{padding:0;overflow:hidden;display:flex;flex-direction:column}
   .goal-card img{width:100%;flex:1;min-height:0;object-fit:cover;display:block}
   .slide .goal-txt{padding:1.7vh 1vw 2vh;text-align:center;font-size:3.3vh;line-height:1.45;color:#eef2fb}
-  .orgblank{flex:1;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
+  .orgslide .glass{padding-top:3vh;padding-bottom:2.6vh}
+.orgslide .ptitle{font-size:4.7vh}
+.org-root{margin-bottom:.4vh}
+.orghead{padding:.42vh .9vw}
+.orgcol{gap:.36vh}
+.pcard{padding:.34vh .75vw}
+.pname{margin-bottom:.15vh}
+.pgrp{margin:.3vh 0 .15vh}
+.ptags i{margin-bottom:.16vh}
+.orgfoot{padding:.45vh .9vw}
+.ptags{line-height:1.32}
+.ptags i{font-size:1.2vh}
+.pname{font-size:1.66vh}
+.orgslide .glass{padding-bottom:2.2vh}
+.orgslide .ptitle{font-size:4.4vh}
+.orghead{font-size:1.9vh}
+.orgcol{gap:.3vh}
+.pcard{padding:.26vh .75vw}
+.ptags i{padding:.02vh .34vw;margin-bottom:.12vh}
+.orgslide .org-root{margin-bottom:.4vh}
+.orgslide .orghead{padding:.42vh .9vw;font-size:1.9vh}
+.orgslide .orgcol{gap:.3vh}
+.orgslide .pcard{padding:.26vh .75vw}
+.orgslide .pname{font-size:1.66vh;margin-bottom:.15vh}
+.orgslide .pgrp{margin:.3vh 0 .15vh}
+.orgslide .ptags{line-height:1.32}
+.orgslide .ptags i{font-size:1.2vh;padding:.02vh .34vw;margin-bottom:.12vh}
+.orgslide .orgfoot{padding:.45vh .9vw}
+.orgblank{flex:1;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
   .cols2{display:grid;grid-template-columns:1.05fr 1fr;gap:2vw;flex:1;min-height:0;width:100%}
   .rows.compact{gap:1.05vh}
   .rows.compact .row{padding:1.3vh 1.1vw}
@@ -377,7 +405,7 @@
   </section>
 
   <!-- Part 1 · Page 8: org chart (data: upload.pdf, 2026-11-25) -->
-  <section class="slide cslide" data-slide>
+  <section class="slide cslide orgslide" data-slide>
     <div class="glass">
       <i class="glass-logo"></i>
       <div class="phead">
@@ -400,6 +428,7 @@
             <div class="pgrp" style="color:#3ddc84">其他</div>
             <div class="ptags"><i>行政事务</i></div>
           </div>
+          <div class="orgfoot" style="border:1px dashed rgba(61,220,132,.55);color:#a7f3cd">统筹系统与事项 共 <b style="color:#fff;font-size:1.9vh">23</b> 个</div>
         </div>
         <div class="orgcol">
           <div class="orghead" style="background:linear-gradient(90deg,#ff6b6b,#f0524f)">运维<small>4 人</small></div>
@@ -413,6 +442,7 @@
           <div class="orghead" style="background:linear-gradient(90deg,#ffb35c,#f28c28)">ERP<small>2 人</small></div>
           <div class="pcard"><div class="pname">温子娟</div><div class="pstat">问题处理 <b>2965</b> 项</div><div class="ptags"><i>ERP 实施 <b>6 项</b></i><i>报表开发 <b>25 项</b></i><i>功能开发 <b>16 项</b></i></div></div>
           <div class="pcard"><div class="pname">杨晨禹</div><div class="ptags"><i>ERP 权限</i><i>问题处理 <b>11 项</b></i></div></div>
+          <div class="orgfoot" style="border:1px dashed rgba(255,179,92,.55);color:#ffd9ae">全年处理合计 共 <b style="color:#fff;font-size:1.9vh">3023</b> 项</div>
         </div>
         <div class="orgcol">
           <div class="orghead" style="background:linear-gradient(90deg,#ffd166,#f5b921)">开发<small>4 人</small></div>
@@ -420,6 +450,7 @@
           <div class="pcard"><div class="pname">高嘉桐</div><div class="pstat">OA 开发 <b>60</b> 项</div><div class="ptags"><i>ERP 二开 <b>2 项</b></i><i>BK CRM 开发</i><i>BK SRM 开发</i><i>GM CRM 开发</i><i>Po CMS 开发</i><i>BSW MES 开发</i><i>发票系统开发</i><i>固定资产系统开发</i><i>AI 编程</i></div></div>
           <div class="pcard"><div class="pname">王旭</div><div class="ptags"><i>报表开发 <b>37 项</b></i><i>ERP 二开 <b>26 项</b></i><i>OA 开发 <b>31 项</b></i><i>OA 接口 <b>33 项</b></i><i>AI 辅助</i></div></div>
           <div class="pcard"><div class="pname">梁雯科</div><div class="pstat">大屏开发 <b>19</b> 项</div><div class="ptags"><i>GM WMS 开发</i><i>GM MES 开发</i><i>GM MES APP 开发</i><i>GM APS 开发</i><i>BSW WMS 开发</i><i>数据采集开发</i><i>AI 编程</i></div></div>
+          <div class="orgfoot" style="border:1px dashed rgba(255,209,102,.55);color:#ffe9a8">全年开发合计 共 <b style="color:#fff;font-size:1.9vh">297</b> 项</div>
         </div>
       </div>
       <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
@@ -531,6 +562,17 @@
     </div>
   </section>
 
+  <section class="slide cslide" data-slide>
+    <div class="glass">
+      <i class="glass-logo"></i>
+      <div class="phead">
+        <div class="pover">一、AI漫谈</div>
+        <h1 class="ptitle neon-w">开源灵巧手展示</h1>
+      </div>
+      <div class="genie"><video class="slidevid" src="assets/mentor-hand.mp4" muted loop playsinline controls preload="auto"></video></div>
+      <div class="pfoot"><span>第二部分 · 2027年计划</span><span></span></div>
+    </div>
+  </section>
   <section class="slide cslide" data-slide>
     <div class="glass">
       <i class="glass-logo"></i>
@@ -37936,40 +37978,109 @@ three/build/three.module.js:
 
   // ---------- AI monitoring: sweeping cameras, person tracking, zone alert ----------
   setup('anim-aimon',(x,W,H,t)=>{
-    const T=12, ph=t%T; x.clearRect(0,0,W,H);
-    rr(x,36,30,688,410,12); x.fillStyle='rgba(107,197,255,.05)'; x.fill(); x.strokeStyle='#35507a'; x.lineWidth=1.6; x.stroke();
-    rr(x,520,30,204,150,4); x.fillStyle='rgba(195,155,255,.07)'; x.fill(); x.strokeStyle='rgba(195,155,255,.4)'; x.stroke();
-    x.fillStyle='#c9a8ff'; x.font='600 14px '+FONT; x.textAlign='center'; x.fillText('服务器机房', 622, 200);
-    rr(x,36,300,240,140,4); x.strokeStyle='rgba(107,197,255,.3)'; x.stroke(); x.fillStyle='#9fb4dd'; x.fillText('办公区', 156, 462-6);
-    // camera sweep cones
-    const cams=[{x:36,y:30,b:0.5},{x:724,y:30,b:2.2},{x:36,y:440,b:-0.5}];
-    cams.forEach((c,i)=>{ const a=c.b+Math.sin(t*0.7+i*2)*0.55;
-      x.fillStyle='rgba(107,197,255,.10)'; x.beginPath(); x.moveTo(c.x,c.y); x.arc(c.x,c.y,215,a-0.32,a+0.32); x.closePath(); x.fill();
-      x.fillStyle='#6bc5ff'; x.fillRect(c.x-5,c.y-5,10,10);
-      x.fillStyle='#9fb4dd'; x.font='12px '+FONT; x.textAlign='center'; x.fillText('CAM 0'+(i+1), c.x+(i===1?-26:26), c.y+(i===2?-12:20)); });
-    // person path: A(120,390) -> B(600,390) -> C(622,105) inside the server room, then back
-    function lerp(a,b,f){ return a+(b-a)*f; }
-    let px,py;
-    if(ph<4){ px=lerp(120,600,ph/4); py=390; }
-    else if(ph<6.5){ px=lerp(600,622,(ph-4)/2.5); py=lerp(390,105,(ph-4)/2.5); }
-    else if(ph<10){ px=622; py=105; }
-    else { px=lerp(622,600,(ph-10)/2); py=lerp(105,390,(ph-10)/2); }
-    const alert = px>520 && py<180;
-    // AGV run
-    const agx = 90 + (0.5-0.5*Math.cos(t*0.55))*340;
-    rr(x,agx,404,44,20,5); x.fillStyle='#2a3c5f'; x.fill(); x.strokeStyle='#6bc5ff'; x.stroke(); x.fillStyle='#9fd0ff'; x.font='11px '+FONT; x.textAlign='center'; x.fillText('AGV', agx+22, 418);
-    // tracked person
-    x.fillStyle='#ffd166'; x.beginPath(); x.arc(px,py-8,7,0,7); x.fill(); x.fillRect(px-2,py-2,4,12);
-    const bc = alert ? '#fb4d6d' : '#7cfc98';
-    x.strokeStyle=bc; x.lineWidth=2.4; const bw=30,bh=38,bx=px-bw/2,by=py-22;
-    [[bx,by,1,1],[bx+bw,by,-1,1],[bx,by+bh,1,-1],[bx+bw,by+bh,-1,-1]].forEach(([cx2,cy2,sx,sy])=>{ x.beginPath(); x.moveTo(cx2+10*sx,cy2); x.lineTo(cx2,cy2); x.lineTo(cx2,cy2+10*sy); x.stroke(); });
-    x.fillStyle=bc; x.font='600 13.5px '+FONT; x.textAlign='center'; x.fillText(alert?'未授权进入！':'AI 识别 · 人员', px, by-8);
-    if(alert && Math.sin(t*9)>0){ x.fillStyle='#fb4d6d'; x.beginPath(); x.arc(688,66,9,0,7); x.fill(); x.fillStyle='#fff'; x.font='700 13px '+FONT; x.fillText('!', 688, 71); }
-    if(Math.sin(t*4)>0){ x.fillStyle='#fb4d6d'; x.beginPath(); x.arc(56,56,5,0,7); x.fill(); }
-    x.fillStyle='#9fb4dd'; x.font='13px '+FONT; x.textAlign='left'; x.fillText('REC', 68, 60);
-    const st = alert ? ['异常报警：未授权人员进入机房 · 已推送管理员','#fb4d6d'] : ['AI 监控值守中 · 人员 / 车辆自动识别追踪','#7cfc98'];
-    x.fillStyle=st[1]; x.font='600 17px '+FONT; x.textAlign='center'; x.fillText(st[0], 380, 486);
-    x.fillStyle='#9fb4dd'; x.font='13px '+FONT; x.fillText('24 小时不间断值守', 380, 512);
+    const T=18, ph=t%T, alert=ph>=6.6&&ph<11.5, resolved=ph>=11.5&&ph<14.5;
+    const bg=x.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#0a1424'); bg.addColorStop(1,'#0d1a30');
+    x.fillStyle=bg; x.fillRect(0,0,W,H);
+    x.strokeStyle='rgba(107,197,255,.05)'; x.lineWidth=1;
+    for(let gx=0; gx<W; gx+=38){ x.beginPath(); x.moveTo(gx,0); x.lineTo(gx,H); x.stroke(); }
+    const tag=(tx,ty,txt,c)=>{ x.font='600 11px '+FONT; const w=x.measureText(txt).width+12; rr(x,tx,ty,w,16,4); x.fillStyle=c; x.fill(); x.fillStyle='#0a1420'; x.textAlign='left'; x.fillText(txt,tx+6,ty+12); };
+    const dbox=(bx,by,bw,bh,c,label)=>{ x.strokeStyle=c; x.lineWidth=2; const L=9;
+      [[bx,by,1,1],[bx+bw,by,-1,1],[bx,by+bh,1,-1],[bx+bw,by+bh,-1,-1]].forEach(q=>{ x.beginPath(); x.moveTo(q[0]+q[2]*L,q[1]); x.lineTo(q[0],q[1]); x.lineTo(q[0],q[1]+q[3]*L); x.stroke(); });
+      x.globalAlpha=.10; x.fillStyle=c; x.fillRect(bx,by,bw,bh); x.globalAlpha=1;
+      if(label) tag(bx,Math.max(by-19,2),label,c); };
+    const person=(px,py,sc,vest)=>{ const sw=Math.sin(t*7)*5*sc;
+      x.strokeStyle='#232a35'; x.lineWidth=4.4*sc; x.lineCap='round';
+      x.beginPath(); x.moveTo(px,py-30*sc); x.lineTo(px+sw,py); x.moveTo(px,py-30*sc); x.lineTo(px-sw,py); x.stroke();
+      const bd=x.createLinearGradient(px,py-58*sc,px,py-28*sc); bd.addColorStop(0,vest?'#b7e04a':'#4a6fa5'); bd.addColorStop(1,vest?'#7ba32e':'#33507c');
+      x.fillStyle=bd; rr(x,px-8*sc,py-58*sc,16*sc,30*sc,5*sc); x.fill();
+      if(vest){ x.fillStyle='rgba(230,240,255,.85)'; x.fillRect(px-8*sc,py-46*sc,16*sc,3*sc); x.fillRect(px-8*sc,py-36*sc,16*sc,3*sc); }
+      x.fillStyle='#e8b98d'; x.beginPath(); x.arc(px,py-66*sc,7.4*sc,0,7); x.fill();
+      x.fillStyle='#2b2f36'; x.beginPath(); x.arc(px,py-69.5*sc,7.4*sc,Math.PI,0); x.fill(); };
+    x.fillStyle='#eaf3ff'; x.font='700 17px '+FONT; x.textAlign='left'; x.fillText('AI 视频分析平台 · 实时监控',16,24);
+    if(Math.floor(t*1.5)%2===0){ x.fillStyle='#ff5252'; x.beginPath(); x.arc(548,17,5,0,7); x.fill(); }
+    x.fillStyle='#ff9a9a'; x.font='600 12px '+FONT; x.fillText('REC',560,21);
+    rr(x,612,7,132,21,10); x.fillStyle='rgba(124,252,152,.13)'; x.fill(); x.strokeStyle='rgba(124,252,152,.5)'; x.lineWidth=1; x.stroke();
+    x.fillStyle='#7cfc98'; x.textAlign='center'; x.fillText('CAM 01-12 全部在线',678,21); x.textAlign='left';
+    const FX=16,FY=42,FW=452,FH=292;
+    x.save(); rr(x,FX,FY,FW,FH,8); x.clip();
+    const wg=x.createLinearGradient(0,FY,0,FY+FH); wg.addColorStop(0,'#263850'); wg.addColorStop(.6,'#2f4560'); wg.addColorStop(.61,'#454a4a'); wg.addColorStop(1,'#5b6058');
+    x.fillStyle=wg; x.fillRect(FX,FY,FW,FH);
+    x.strokeStyle='rgba(255,255,255,.07)';
+    for(let i=0;i<6;i++){ x.beginPath(); x.moveTo(FX+40+i*76,FY+FH*.61); x.lineTo(FX-30+i*100,FY+FH); x.stroke(); }
+    for(let r=0;r<3;r++){ const sy=FY+66+r*44; x.fillStyle='#1d2a3d'; x.fillRect(FX+14,sy,120,10);
+      for(let b=0;b<4;b++){ const bx=FX+20+b*29; const cg=x.createLinearGradient(bx,sy-24,bx,sy); cg.addColorStop(0,'#7d8aa0'); cg.addColorStop(1,'#4c5a70'); x.fillStyle=cg; x.fillRect(bx,sy-24,24,24); } }
+    x.fillStyle='#141f30'; x.fillRect(FX+10,FY+52,6,150); x.fillRect(FX+132,FY+52,6,150);
+    const ZX=FX+302;
+    x.fillStyle='rgba(255,82,82,.08)'; x.fillRect(ZX,FY,FX+FW-ZX,FH);
+    x.save(); x.beginPath(); x.rect(ZX,FY,FX+FW-ZX,FH); x.clip(); x.strokeStyle='rgba(255,82,82,.13)';
+    for(let hx=-FH; hx<FW; hx+=16){ x.beginPath(); x.moveTo(ZX+hx,FY+FH); x.lineTo(ZX+hx+FH,FY); x.stroke(); } x.restore();
+    x.strokeStyle='rgba(255,82,82,.4)'; x.setLineDash([6,6]); x.beginPath(); x.moveTo(ZX,FY+8); x.lineTo(ZX,FY+FH-8); x.stroke(); x.setLineDash([]);
+    const dg=x.createLinearGradient(FX+356,0,FX+412,0); dg.addColorStop(0,'#5a6a80'); dg.addColorStop(.5,'#7c8ea6'); dg.addColorStop(1,'#4c5c72');
+    x.fillStyle=dg; x.fillRect(FX+356,FY+118,56,150); x.strokeStyle='#2c3a4e'; x.strokeRect(FX+356,FY+118,56,150);
+    x.fillStyle='rgba(180,220,255,.25)'; x.fillRect(FX+364,FY+130,40,54);
+    tag(ZX+8,FY+10,'机房重地 · 授权区','#ff8a8a');
+    if(ph>13.3&&ph<17.8){ const fk=(ph-13.3)/4.5, fx2=FX+FW+50-fk*(FW+150), fy2=FY+FH-46;
+      x.fillStyle='rgba(0,0,0,.25)'; x.beginPath(); x.ellipse(fx2,fy2+16,44,6,0,0,7); x.fill();
+      const fg2=x.createLinearGradient(fx2,fy2-52,fx2,fy2+14); fg2.addColorStop(0,'#f5b921'); fg2.addColorStop(1,'#c07f10');
+      x.fillStyle=fg2; rr(x,fx2-34,fy2-16,58,26,5); x.fill(); x.fillRect(fx2+18,fy2-52,7,40); x.fillRect(fx2-40,fy2-52,6,42);
+      x.fillStyle='#2b2f36'; x.fillRect(fx2-44,fy2-56,52,5);
+      x.fillStyle='#22262e'; [-22,16].forEach(o=>{ x.beginPath(); x.arc(fx2+o,fy2+12,9,0,7); x.fill(); });
+      x.fillStyle='#8b95a5'; [-22,16].forEach(o=>{ x.beginPath(); x.arc(fx2+o,fy2+12,4,0,7); x.fill(); });
+      dbox(fx2-48,fy2-60,102,84,'#ffd166','叉车 96.7%'); }
+    let px; const py=FY+FH-30;
+    if(ph<6.6) px=FX+52+(ph/6.6)*296; else if(ph<11.5) px=FX+356+Math.sin(t*1.3)*10; else if(ph<14.2) px=FX+356-((ph-11.5)/2.7)*196; else px=FX+160+Math.sin(t*.8)*6;
+    person(px,py,1.06,true);
+    dbox(px-19,py-84,38,88,alert?'#ff5252':'#7cfc98',alert?'入侵者 99.1%':'人员 98.2%');
+    const sy2=FY+((t*46)%(FH-8))+4; const sg=x.createLinearGradient(FX,0,FX+FW,0); sg.addColorStop(0,'rgba(107,197,255,0)'); sg.addColorStop(.5,'rgba(107,197,255,.45)'); sg.addColorStop(1,'rgba(107,197,255,0)');
+    x.fillStyle=sg; x.fillRect(FX,sy2,FW,2);
+    x.restore();
+    rr(x,FX,FY,FW,FH,8); x.strokeStyle=alert?(Math.floor(t*3)%2?'#ff5252':'#ff9a9a'):'#3d5a80'; x.lineWidth=alert?2.6:1.6; x.stroke();
+    tag(FX+10,FY+10,'CAM 01 · 仓库主通道','#6bc5ff');
+    x.fillStyle='rgba(234,243,255,.85)'; x.font='600 12px '+FONT; x.textAlign='right';
+    x.fillText('09:41:'+String(Math.floor(3+ph*2.2)%60).padStart(2,'0'),FX+FW-10,FY+FH-10); x.textAlign='left';
+    if(alert){ rr(x,FX+106,FY+FH-34,240,24,6); x.fillStyle='rgba(255,60,60,.9)'; x.fill(); x.fillStyle='#fff'; x.font='700 13px '+FONT; x.textAlign='center'; x.fillText('⚠ 未授权进入机房 · 已触发告警',FX+226,FY+FH-18); x.textAlign='left'; }
+    const feedT=(fx,fy,txt)=>{ x.fillStyle='rgba(8,16,30,.62)'; x.fillRect(fx+5,fy+5,118,15); x.fillStyle='rgba(234,243,255,.85)'; x.font='600 10px '+FONT; x.fillText(txt,fx+9,fy+16); };
+    const feedB=(fx,fy,fw,fh)=>{ rr(x,fx,fy,fw,fh,6); x.fillStyle='#101c2e'; x.fill(); x.strokeStyle='#33507a'; x.lineWidth=1.2; x.stroke(); x.save(); rr(x,fx,fy,fw,fh,6); x.clip(); };
+    feedB(482,42,262,94);
+    for(let r2=0;r2<3;r2++){ const rx=492+r2*62; const rg=x.createLinearGradient(rx,0,rx+52,0); rg.addColorStop(0,'#39465c'); rg.addColorStop(1,'#232f42'); x.fillStyle=rg; x.fillRect(rx,58,52,72);
+      for(let ly=0;ly<6;ly++) for(let lx=0;lx<3;lx++){ const on=Math.sin(t*3+r2*7+ly*3+lx*11)>0; x.fillStyle=on?'#7cfc98':'rgba(124,252,152,.18)'; x.fillRect(rx+7+lx*15,66+ly*11,7,5); } }
+    x.fillStyle='#141f30'; x.fillRect(676,58,58,72);
+    if(alert){ person(700,126,.6,false); dbox(700-12,126-56,24,60,'#ff5252','入侵 99.1%'); }
+    feedT(482,42,'CAM 02 · 机房'); x.restore();
+    feedB(482,146,262,94);
+    x.fillStyle='#26334a'; x.fillRect(490,196,246,10); x.fillStyle='#171e2a'; x.fillRect(490,188,246,9);
+    for(let b2=0;b2<3;b2++){ const bx2=490+((t*36+b2*86)%250); const cg3=x.createLinearGradient(bx2,170,bx2,188); cg3.addColorStop(0,'#93a5bd'); cg3.addColorStop(1,'#57657c'); x.fillStyle=cg3; x.fillRect(bx2,170,26,18); }
+    person(700,214,.78,true); dbox(700-15,214-66,30,70,'#7cfc98','人员 97.4%');
+    feedT(482,146,'CAM 03 · 车间产线'); x.restore();
+    feedB(482,250,262,94);
+    x.fillStyle='#1c2a40'; x.fillRect(490,262,246,66);
+    x.fillStyle='rgba(255,255,255,.08)'; x.fillRect(490,318,246,4);
+    x.fillStyle='#39465c'; x.fillRect(700,268,10,52);
+    x.save(); x.translate(705,272); x.rotate(ph>2&&ph<5.5?-0.85:0); x.fillStyle='#ffd166'; x.fillRect(-4,-3,86,6); x.restore();
+    if(ph>1.2&&ph<7){ const cx2=462+((ph-1.2)/5.8)*300, cy2=312;
+      x.fillStyle='rgba(0,0,0,.3)'; x.beginPath(); x.ellipse(cx2,cy2+12,32,5,0,0,7); x.fill();
+      const cg2=x.createLinearGradient(cx2,cy2-24,cx2,cy2+8); cg2.addColorStop(0,'#aebdd2'); cg2.addColorStop(1,'#5f7189'); x.fillStyle=cg2; rr(x,cx2-30,cy2-12,60,18,6); x.fill(); rr(x,cx2-17,cy2-24,34,14,5); x.fill();
+      x.fillStyle='#bfe3ff'; x.fillRect(cx2-13,cy2-22,12,10); x.fillRect(cx2+2,cy2-22,12,10);
+      x.fillStyle='#22262e'; [-18,18].forEach(o=>{ x.beginPath(); x.arc(cx2+o,cy2+7,6,0,7); x.fill(); });
+      if(ph>2.2&&ph<6.4) tag(cx2-40,cy2+16,'粤B·D8866 · 99.3%','#6bc5ff'); }
+    feedT(482,250,'CAM 04 · 厂区大门'); x.restore();
+    rr(x,16,346,452,124,8); x.fillStyle='rgba(13,24,42,.92)'; x.fill(); x.strokeStyle='#33507a'; x.lineWidth=1.2; x.stroke();
+    x.fillStyle='#9fc3ee'; x.font='700 13px '+FONT; x.fillText('智能事件日志',30,368);
+    const EV=[[0.5,'09:41:03  人员进入 A 区 · 行为正常','#cfe3ff'],[3.0,'09:41:11  车辆 粤B·D8866 通过大门 · 已放行','#cfe3ff'],[5.2,'09:41:18  叉车进入 B 通道 · 安全帽佩戴 ✓','#cfe3ff'],[6.6,'09:41:24  未授权人员进入机房 · 告警推送','#ff9a9a'],[9.2,'09:41:31  已通知安保到场处理','#ffd166'],[11.5,'09:41:47  人员已离开机房 · 告警解除','#7cfc98'],[14.8,'09:41:55  叉车通过主通道 · 路径正常','#cfe3ff']];
+    const vis=EV.filter(e=>ph>=e[0]); const show=vis.slice(-5);
+    x.font='12.5px '+FONT;
+    show.forEach((e,i)=>{ const ey=390+i*18.5, last=i===show.length-1;
+      if(last){ rr(x,26,ey-13,432,17,4); x.fillStyle='rgba(107,197,255,.10)'; x.fill(); }
+      x.fillStyle=e[2]; x.beginPath(); x.arc(36,ey-4,3,0,7); x.fill(); x.fillText(e[1],48,ey); });
+    rr(x,482,346,262,124,8); x.fillStyle='rgba(13,24,42,.92)'; x.fill(); x.strokeStyle='#33507a'; x.stroke();
+    x.fillStyle='#9fc3ee'; x.font='700 13px '+FONT; x.fillText('告警抓拍存档',496,368);
+    if(ph<6.6){ x.fillStyle='rgba(207,227,255,.4)'; x.font='12.5px '+FONT; x.fillText('暂无告警抓拍',496,404); }
+    else { const th=(tx,ty,cap)=>{ rr(x,tx,ty,104,62,5); x.fillStyle='#1a2942'; x.fill(); x.strokeStyle='#ff5252'; x.lineWidth=1.6; x.stroke(); person(tx+52,ty+54,.58,false); x.fillStyle='#ffb3b3'; x.font='600 10.5px '+FONT; x.fillText(cap,tx+2,ty+76); };
+      th(496,380,'09:41:24 机房入口'); if(ph>=9.2) th(622,380,'09:41:31 机房内'); }
+    const chip=(cx,txt,c)=>{ x.font='600 12px '+FONT; const w=x.measureText(txt).width+16; rr(x,cx,486,w,20,10); x.fillStyle='rgba(255,255,255,.06)'; x.fill(); x.strokeStyle=c; x.lineWidth=1; x.stroke(); x.fillStyle=c; x.fillText(txt,cx+8,500); return cx+w+10; };
+    let cx3=16; cx3=chip(cx3,'在线摄像头 12/12','#7cfc98'); cx3=chip(cx3,'今日事件 36','#6bc5ff'); cx3=chip(cx3,alert?'告警 1 · 处理中':'告警 1 · 已解除',alert?'#ff9a9a':'#ffd166');
+    x.font='700 14.5px '+FONT; x.textAlign='center'; x.fillStyle=alert?'#ff9a9a':(resolved?'#7cfc98':'#9fc3ee');
+    x.fillText(alert?'⚠ 告警处理中 · 已推送安保与系统管理员':(resolved?'告警已解除 · 事件全程录像已存档':'系统运行正常 · AI 行为分析 / 周界防范 / 车辆识别运行中'),380,528); x.textAlign='left';
   });
 
   // ---------- team growth: five members level up into FDE guides ----------
@@ -38005,41 +38116,115 @@ three/build/three.module.js:
 
   // ---------- smart factory: conveyor + robot arm + AGV ----------
   setup('anim-factory',(x,W,H,t)=>{
-    const T=10, ph=t%T; x.clearRect(0,0,W,H);
-    x.strokeStyle='rgba(255,255,255,.18)'; x.beginPath(); x.moveTo(20,110); x.lineTo(740,110); x.stroke();
-    chip(x,380,58,150,'智能车间','rgba(38,64,110,.9)','#bfe3ff');
-    // conveyor
-    rr(x,50,318,400,26,6); x.fillStyle='#22314f'; x.fill(); x.strokeStyle='#35507a'; x.lineWidth=1.6; x.stroke();
-    for(let i=0;i<9;i++){ const rx=72+i*44; x.strokeStyle='#48638f'; x.beginPath(); x.arc(rx,331,7,0,7); x.stroke(); x.beginPath(); x.moveTo(rx,331); x.lineTo(rx+6*Math.cos(t*3+i), 331+6*Math.sin(t*3+i)); x.stroke(); }
-    for(let k=0;k<3;k++){ const bx=58+((t*52+k*150)%430); if(bx<428){ rr(x,bx,290,36,28,3); x.fillStyle='#8a6b3a'; x.fill(); x.strokeStyle='#c9a35f'; x.stroke(); } }
-    chip(x,250,282,92,'传送带','rgba(38,64,110,.85)','#bfe3ff');
-    // robot arm
-    const bx0=540, by0=352;
-    rr(x,bx0-28,by0,56,42,6); x.fillStyle='#2a3c5f'; x.fill(); x.strokeStyle='#48638f'; x.stroke();
-    const a1=-1.65+Math.sin(t*0.9)*0.62, a2=a1+0.95+Math.sin(t*1.3+1)*0.5;
-    const jx=bx0+92*Math.cos(a1), jy=by0+92*Math.sin(a1), ex=jx+74*Math.cos(a2), ey=jy+74*Math.sin(a2);
-    x.strokeStyle='#ffb35c'; x.lineWidth=13; x.lineCap='round';
-    x.beginPath(); x.moveTo(bx0,by0); x.lineTo(jx,jy); x.lineTo(ex,ey); x.stroke();
-    x.fillStyle='#ffd166'; [ [bx0,by0],[jx,jy] ].forEach(p=>{ x.beginPath(); x.arc(p[0],p[1],9,0,7); x.fill(); });
-    const go2=0.35+0.3*Math.sin(t*2.2);
-    x.strokeStyle='#ffd166'; x.lineWidth=4; x.beginPath(); x.moveTo(ex,ey); x.lineTo(ex+12*Math.cos(a2-go2), ey+12*Math.sin(a2-go2)); x.moveTo(ex,ey); x.lineTo(ex+12*Math.cos(a2+go2), ey+12*Math.sin(a2+go2)); x.stroke();
-    chip(x,bx0,168,92,'机器手','rgba(110,74,20,.9)','#ffe1a8');
-    // pallet stack grows
-    const n=Math.floor(ph/2.5)%4;
-    for(let i=0;i<n;i++){ rr(x,650,352-i*26,52,24,3); x.fillStyle='#8a6b3a'; x.fill(); x.strokeStyle='#c9a35f'; x.stroke(); }
-    x.fillStyle='#48638f'; x.fillRect(640,378,72,8);
-    // AGV
-    const dirf=(ph%5)/5, tri=dirf<0.5?dirf*2:2-dirf*2, ax=110+tri*360;
-    x.strokeStyle='rgba(107,197,255,.35)'; x.setLineDash([7,7]); x.beginPath(); x.moveTo(60,478); x.lineTo(700,478); x.stroke(); x.setLineDash([]);
-    const sweep=t*1.8%6.28;
-    x.fillStyle='rgba(124,252,152,.10)'; x.beginPath(); x.moveTo(ax+48,398); x.arc(ax+48,398,58,sweep-0.4,sweep+0.4); x.closePath(); x.fill();
-    rr(x,ax,424,96,40,12); x.fillStyle='#2a3c5f'; x.fill(); x.strokeStyle='#6bc5ff'; x.lineWidth=1.8; x.stroke();
-    x.fillStyle='#0e1626'; x.beginPath(); x.arc(ax+22,468,9,0,7); x.arc(ax+74,468,9,0,7); x.fill();
-    x.strokeStyle='#6bc5ff'; x.beginPath(); x.moveTo(ax+48,424); x.lineTo(ax+48,402); x.stroke(); x.fillStyle='#7cfc98'; x.beginPath(); x.arc(ax+48,398,5,0,7); x.fill();
-    if(dirf>=0.5){ rr(x,ax+22,398,52,24,3); x.fillStyle='#8a6b3a'; x.fill(); x.strokeStyle='#c9a35f'; x.stroke(); }
-    chip(x,ax+48,368,128,'智能小车 AGV','rgba(21,80,52,.9)','#b9fbc0');
-    x.strokeStyle='rgba(255,255,255,.25)'; x.beginPath(); x.moveTo(20,486); x.lineTo(740,486); x.stroke();
-    x.fillStyle='#dbe7ff'; x.font='600 17px '+FONT; x.textAlign='center'; x.fillText('机器手 × AGV 协同作业 · 产线不停机', 380, 522);
+    const T=16, ph=t%T, slot=ph%4, slotIx=Math.floor(t/4), defect=slotIx%4===3, k4=Math.floor(ph/4);
+    const sstep=(a,b,v)=>{ const kk=Math.min(1,Math.max(0,(v-a)/(b-a))); return kk*kk*(3-2*kk); };
+    const lerp=(a,b,kk)=>a+(b-a)*kk;
+    const bg=x.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#141f33'); bg.addColorStop(.55,'#1a2740'); bg.addColorStop(.56,'#232c3d'); bg.addColorStop(1,'#12161f');
+    x.fillStyle=bg; x.fillRect(0,0,W,H);
+    for(let i=0;i<3;i++){ const wx=36+i*150; const wg2=x.createLinearGradient(0,30,0,150); wg2.addColorStop(0,'rgba(150,200,255,.30)'); wg2.addColorStop(1,'rgba(150,200,255,.06)'); x.fillStyle=wg2; x.fillRect(wx,30,120,120);
+      x.strokeStyle='rgba(160,205,255,.35)'; x.lineWidth=1; x.strokeRect(wx,30,120,120); x.beginPath(); x.moveTo(wx+60,30); x.lineTo(wx+60,150); x.moveTo(wx,90); x.lineTo(wx+120,90); x.stroke();
+      x.fillStyle='rgba(160,205,255,.05)'; x.beginPath(); x.moveTo(wx+8,150); x.lineTo(wx+112,150); x.lineTo(wx+150,300); x.lineTo(wx-30,300); x.closePath(); x.fill(); }
+    x.strokeStyle='rgba(255,255,255,.06)';
+    for(let i=0;i<7;i++){ x.beginPath(); x.moveTo(60+i*106,302); x.lineTo(20+i*124,540); x.stroke(); }
+    x.beginPath(); x.moveTo(0,372); x.lineTo(W,372); x.stroke();
+    const tag=(tx,ty,txt,c)=>{ x.font='600 11px '+FONT; const w=x.measureText(txt).width+12; rr(x,tx,ty,w,16,4); x.fillStyle=c; x.fill(); x.fillStyle='#0a1420'; x.fillText(txt,tx+6,ty+12); };
+    const dbox=(bx,by,bw,bh,c,label)=>{ x.strokeStyle=c; x.lineWidth=2; const L=9;
+      [[bx,by,1,1],[bx+bw,by,-1,1],[bx,by+bh,1,-1],[bx+bw,by+bh,-1,-1]].forEach(q=>{ x.beginPath(); x.moveTo(q[0]+q[2]*L,q[1]); x.lineTo(q[0],q[1]); x.lineTo(q[0],q[1]+q[3]*L); x.stroke(); });
+      x.globalAlpha=.10; x.fillStyle=c; x.fillRect(bx,by,bw,bh); x.globalAlpha=1;
+      if(label) tag(bx,Math.max(by-19,2),label,c); };
+    const person=(px,py,sc,vest)=>{ const sw=Math.sin(t*7)*5*sc;
+      x.strokeStyle='#232a35'; x.lineWidth=4.4*sc; x.lineCap='round';
+      x.beginPath(); x.moveTo(px,py-30*sc); x.lineTo(px+sw,py); x.moveTo(px,py-30*sc); x.lineTo(px-sw,py); x.stroke();
+      const bd=x.createLinearGradient(px,py-58*sc,px,py-28*sc); bd.addColorStop(0,vest?'#b7e04a':'#4a6fa5'); bd.addColorStop(1,vest?'#7ba32e':'#33507c');
+      x.fillStyle=bd; rr(x,px-8*sc,py-58*sc,16*sc,30*sc,5*sc); x.fill();
+      if(vest){ x.fillStyle='rgba(230,240,255,.85)'; x.fillRect(px-8*sc,py-46*sc,16*sc,3*sc); x.fillRect(px-8*sc,py-36*sc,16*sc,3*sc); }
+      x.fillStyle='#e8b98d'; x.beginPath(); x.arc(px,py-66*sc,7.4*sc,0,7); x.fill();
+      x.fillStyle='#2b2f36'; x.beginPath(); x.arc(px,py-69.5*sc,7.4*sc,Math.PI,0); x.fill(); };
+    const part=(px,py,def)=>{ const pg=x.createLinearGradient(px,py-11,px,py+11); pg.addColorStop(0,'#c7d2e0'); pg.addColorStop(.5,'#8fa1b8'); pg.addColorStop(1,'#66788f'); x.fillStyle=pg; rr(x,px-17,py-11,34,22,4); x.fill();
+      x.fillStyle='#2c3646'; x.beginPath(); x.arc(px,py,5,0,7); x.fill();
+      x.fillStyle='#e8eef6'; [[-11,-6],[11,-6],[-11,6],[11,6]].forEach(o=>{ x.beginPath(); x.arc(px+o[0],py+o[1],1.8,0,7); x.fill(); });
+      if(def){ x.strokeStyle='#ff5252'; x.lineWidth=2; x.beginPath(); x.moveTo(px-10,py+6); x.lineTo(px+2,py-4); x.lineTo(px+11,py+3); x.stroke(); } };
+    const full=Math.floor(t/4), goodFull=full-Math.floor(full/4);
+    const done=128+goodFull+((slot>=3.4&&!defect)?1:0);
+    const chip=(cx,txt,c)=>{ x.font='600 12.5px '+FONT; const w=x.measureText(txt).width+18; rr(x,cx,10,w,22,11); x.fillStyle='rgba(10,20,36,.72)'; x.fill(); x.strokeStyle=c; x.lineWidth=1; x.stroke(); x.fillStyle=c; x.fillText(txt,cx+9,25); return cx+w+10; };
+    let ccx=16; ccx=chip(ccx,'产量 '+done+' 件','#7cfc98'); ccx=chip(ccx,'节拍 4.0 s/件','#6bc5ff'); ccx=chip(ccx,'OEE 96.8%','#ffd166');
+    rr(x,596,54,148,106,8); x.fillStyle='#0b1524'; x.fill(); x.strokeStyle='#4a6fa5'; x.lineWidth=1.6; x.stroke();
+    x.fillStyle='#39465c'; x.fillRect(664,160,10,110);
+    x.fillStyle='#6bc5ff'; x.font='700 12.5px '+FONT; x.fillText('AI-ESOP · 作业指导',608,74);
+    const steps=['上料定位','VLM 质检','机器手装配','码垛入库'];
+    steps.forEach((st,i)=>{ const ey=94+i*16, dn=i<k4, ac=i===k4;
+      x.fillStyle=dn?'#7cfc98':(ac?'#ffd166':'rgba(207,227,255,.35)'); x.font='600 11.5px '+FONT;
+      x.fillText((dn?'✓ ':ac?'▶ ':'· ')+st,608,ey); });
+    rr(x,608,146,124,5,2); x.fillStyle='rgba(255,255,255,.15)'; x.fill(); rr(x,608,146,124*(ph/T),5,2); x.fillStyle='#6bc5ff'; x.fill();
+    x.fillStyle='rgba(0,0,0,.3)'; x.beginPath(); x.ellipse(228,366,220,10,0,0,7); x.fill();
+    const frame=x.createLinearGradient(0,296,0,344); frame.addColorStop(0,'#5d6f88'); frame.addColorStop(.4,'#39465c'); frame.addColorStop(1,'#232f42');
+    x.fillStyle=frame; rr(x,26,300,404,40,6); x.fill();
+    x.fillStyle='#171e2a'; x.fillRect(26,288,404,13);
+    const beltOff=(Math.floor(t/4)*150)+(Math.min(slot,1.2)/1.2)*150;
+    x.strokeStyle='rgba(255,255,255,.13)';
+    for(let sl=-(beltOff%26); sl<404; sl+=26){ x.beginPath(); x.moveTo(26+sl+26,289); x.lineTo(26+sl+26,300); x.stroke(); }
+    x.fillStyle='#232f42'; x.fillRect(44,340,12,26); x.fillRect(400,340,12,26);
+    x.fillStyle='#c9a227'; x.fillRect(404,300,26,40); x.fillStyle='#22262e';
+    for(let wy=0; wy<3; wy++){ x.beginPath(); x.moveTo(404,312+wy*13); x.lineTo(430,300+wy*13); x.lineTo(430,306+wy*13); x.lineTo(404,318+wy*13); x.closePath(); x.fill(); }
+    const heroX=210+(Math.min(slot,1.2)/1.2)*150;
+    [-170,-340].forEach(off=>{ const bx=heroX+off; if(bx>44) part(bx,277,false); });
+    x.fillStyle='#4a5a72'; x.fillRect(272,196,10,92); x.fillRect(338,196,10,92); x.fillRect(266,188,88,12);
+    const camg=x.createLinearGradient(292,200,292,226); camg.addColorStop(0,'#7c8ea6'); camg.addColorStop(1,'#46586e'); x.fillStyle=camg; rr(x,294,200,32,24,4); x.fill();
+    x.fillStyle='#0e1624'; x.beginPath(); x.arc(310,224,5,0,7); x.fill(); x.fillStyle='#6bc5ff'; x.beginPath(); x.arc(310,224,2.2,0,7); x.fill();
+    tag(258,166,'VLM 视觉检测','#c39bff');
+    if(slot<2.0&&heroX>276&&heroX<344){ x.fillStyle='rgba(195,155,255,.10)'; x.beginPath(); x.moveTo(300,226); x.lineTo(320,226); x.lineTo(346,282); x.lineTo(274,282); x.closePath(); x.fill(); }
+    x.fillStyle='#5a2e2e'; rr(x,392,318,70,42,4); x.fill(); x.strokeStyle='rgba(255,138,138,.6)'; x.lineWidth=1.2; x.stroke();
+    x.fillStyle='#ff9a9a'; x.font='600 11px '+FONT; x.textAlign='center'; x.fillText('不合格品',427,342); x.textAlign='left';
+    const rejK=defect?sstep(1.7,2.2,slot):0;
+    if(defect){ x.fillStyle='#39465c'; x.fillRect(362,232,16,18); x.fillStyle='#8fa1b8'; x.fillRect(366,250,8,8+rejK*26); }
+    const picked=!defect&&slot>=2.0&&slot<3.4, placed=!defect&&slot>=3.4;
+    if(!(picked||placed||rejK>=1)){ if(rejK>0){ x.globalAlpha=1-rejK*.35; part(heroX+8*rejK,277+42*rejK,true); x.globalAlpha=1; } else part(heroX,277,defect); }
+    if(slot>=1.0&&slot<2.0) dbox(heroX-21,277-17,42,34,defect?'#ff5252':'#7cfc98',defect?'缺陷·划痕 87.5%':'合格 99.2%');
+    x.fillStyle='#8a6b42'; x.fillRect(612,352,116,9); x.fillStyle='#6e5636'; x.fillRect(612,361,116,6);
+    x.fillStyle='rgba(255,209,102,.75)'; x.font='600 11px '+FONT; x.fillText('码垛区',618,384);
+    const stackN=(k4===3?3:k4)+(placed?1:0);
+    for(let i=0;i<stackN;i++) part(636+(i%2)*36,341-Math.floor(i/2)*23,false);
+    const n0=k4===3?2:k4, plX=636+(n0%2)*36, plY=341-Math.floor(n0/2)*23;
+    const keys=defect?[[0,448,232],[4,448+Math.sin(t*1.2)*6,232]]:[[0,448,232],[0.5,448,232],[1.5,360,196],[2.0,360,262],[2.4,360,184],[3.0,plX,plY-64],[3.4,plX,plY-14],[4.0,448,232]];
+    let T2={x:keys[0][1],y:keys[0][2]};
+    for(let i=0;i<keys.length-1;i++){ const a=keys[i], b=keys[i+1]; if(slot>=a[0]&&slot<=b[0]){ const kk2=sstep(a[0],b[0],slot); T2={x:lerp(a[1],b[1],kk2), y:lerp(a[2],b[2],kk2)}; } }
+    if(slot>keys[keys.length-1][0]) T2={x:keys[keys.length-1][1], y:keys[keys.length-1][2]};
+    const B={x:512,y:366}, L1=104, L2=96;
+    let dx=T2.x-B.x, dy=T2.y-B.y, dd=Math.min(Math.hypot(dx,dy),L1+L2-2);
+    const a1=Math.atan2(dy,dx), a2=Math.acos(Math.max(-1,Math.min(1,(L1*L1+dd*dd-L2*L2)/(2*L1*dd))));
+    const E={x:B.x+L1*Math.cos(a1-a2), y:B.y+L1*Math.sin(a1-a2)};
+    x.fillStyle='rgba(0,0,0,.35)'; x.beginPath(); x.ellipse(512,374,46,8,0,0,7); x.fill();
+    const ped=x.createLinearGradient(486,0,538,0); ped.addColorStop(0,'#5d6f88'); ped.addColorStop(.5,'#8fa1b8'); ped.addColorStop(1,'#39465c');
+    x.fillStyle=ped; rr(x,488,318,48,50,6); x.fill(); x.fillRect(478,364,68,8);
+    const seg=(p,q,w,c)=>{ x.strokeStyle='rgba(10,16,26,.55)'; x.lineWidth=w+5; x.lineCap='round'; x.beginPath(); x.moveTo(p.x,p.y); x.lineTo(q.x,q.y); x.stroke(); x.strokeStyle=c; x.lineWidth=w; x.beginPath(); x.moveTo(p.x,p.y); x.lineTo(q.x,q.y); x.stroke(); };
+    seg(B,E,17,'#d97b2f'); seg(E,T2,13,'#e8933f');
+    [[B,14],[E,11]].forEach(pr=>{ x.fillStyle='#2c3646'; x.beginPath(); x.arc(pr[0].x,pr[0].y,pr[1],0,7); x.fill(); x.fillStyle='#8fa1b8'; x.beginPath(); x.arc(pr[0].x,pr[0].y,pr[1]*.45,0,7); x.fill(); });
+    x.fillStyle='#2c3646'; x.beginPath(); x.arc(T2.x,T2.y,7,0,7); x.fill();
+    const go2=picked?3:8;
+    x.strokeStyle='#39465c'; x.lineWidth=4; x.beginPath(); x.moveTo(T2.x-3,T2.y+2); x.lineTo(T2.x-go2-3,T2.y+15); x.moveTo(T2.x+3,T2.y+2); x.lineTo(T2.x+go2+3,T2.y+15); x.stroke();
+    if(picked) part(T2.x,T2.y+16,false);
+    x.strokeStyle='rgba(107,197,255,.4)'; x.lineWidth=3; x.setLineDash([14,12]); x.lineDashOffset=-t*36;
+    x.beginPath(); x.moveTo(30,478); x.lineTo(730,478); x.stroke(); x.setLineDash([]);
+    const blocked=ph>=6.8&&ph<9.4, cross=ph>6.2&&ph<9.8;
+    let ax; if(ph<6.8) ax=60+ph*46.8; else if(ph<9.4) ax=60+6.8*46.8; else ax=60+6.8*46.8+(ph-9.4)*46.8;
+    if(ax<706){ x.fillStyle='rgba(0,0,0,.35)'; x.beginPath(); x.ellipse(ax,470,50,7,0,0,7); x.fill();
+      const ag=x.createLinearGradient(ax,428,ax,466); ag.addColorStop(0,'#ffd166'); ag.addColorStop(1,'#d99a17'); x.fillStyle=ag; rr(x,ax-44,434,88,30,8); x.fill();
+      x.fillStyle='#2c3646'; x.fillRect(ax-44,458,88,6);
+      x.fillStyle='#22262e'; [-26,26].forEach(o=>{ x.beginPath(); x.arc(ax+o,466,7,0,7); x.fill(); });
+      if(ph<11){ const cg4=x.createLinearGradient(ax,406,ax,432); cg4.addColorStop(0,'#a9805a'); cg4.addColorStop(1,'#7a5a38'); x.fillStyle=cg4; rr(x,ax-20,408,40,24,3); x.fill(); x.strokeStyle='rgba(0,0,0,.3)'; x.strokeRect(ax-20,408,40,24); }
+      x.fillStyle='#39465c'; x.fillRect(ax-5,420,10,14);
+      const la=t*2.6; x.fillStyle='rgba(107,197,255,.13)'; x.beginPath(); x.moveTo(ax,420); x.arc(ax,420,44,la,la+.7); x.closePath(); x.fill();
+      x.fillStyle='#0e1624'; x.beginPath(); x.arc(ax,420,5,0,7); x.fill(); x.fillStyle='#6bc5ff'; x.beginPath(); x.arc(ax,420,2.4,0,7); x.fill();
+      x.fillStyle=blocked?(Math.floor(t*4)%2?'#ffb35c':'#7a4d12'):'#7cfc98'; x.beginPath(); x.arc(ax+34,440,4,0,7); x.fill();
+      tag(ax-30,382,'AGV-01','#ffd166');
+      if(blocked) tag(ax-56,404,'行人通过 · 避障停车','#ffb35c'); }
+    if(cross){ const ck=(ph-6.2)/3.6, wy2=386+ck*128; person(430,wy2,.92,true); dbox(430-16,wy2-76,32,80,'#ffd166','行人 98.8%'); }
+    let st, sc2;
+    if(defect&&slot>=1.7&&slot<3.2){ st='VLM 视觉检测 · 发现表面划痕缺陷 → 气动剔除至不合格品区'; sc2='#ff9a9a'; }
+    else if(blocked){ st='AGV 激光雷达避障 · 检测到行人 → 停车等待'; sc2='#ffd166'; }
+    else if(!defect&&slot>=1.5&&slot<3.4){ st='机器手视觉引导抓取 · 重复定位精度 ±0.1 mm'; sc2='#6bc5ff'; }
+    else { st='智能产线运行中 · 机器手 × AGV × VLM 视觉协同作业'; sc2='#9fc3ee'; }
+    x.font='700 14.5px '+FONT; x.textAlign='center'; x.fillStyle=sc2; x.fillText(st,380,528); x.textAlign='left';
   });
 })();
 </script>
