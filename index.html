@@ -785,6 +785,7 @@
   addEventListener('resize',sizeShatter); sizeShatter();
   function enterClosing(){
     if(closing) return; closing=true; window.__closing=true;
+    if(window.__finaleCtl) window.__finaleCtl.reveal();
     const g=slides[slides.length-1].querySelector('.glass'); if(!g) return;
     const r=g.getBoundingClientRect();
     g.style.transition='opacity .18s ease'; g.style.opacity='0';
@@ -36640,24 +36641,9 @@ try {
       ufoG.visible = false;
       scheduleAbd();
     }
-  }, finGlass = function(on) {
-    const secs = document.querySelectorAll("[data-slide]");
-    const g = secs.length && secs[secs.length - 1].querySelector(".glass");
-    if (!g) return;
-    g.style.transition = "background 1.4s ease, backdrop-filter 1.4s ease, -webkit-backdrop-filter 1.4s ease";
-    if (on) {
-      g.style.background = "linear-gradient(160deg, rgba(16,24,44,.20), rgba(10,14,28,.13))";
-      g.style.backdropFilter = "blur(5px) saturate(1.35)";
-      g.style.webkitBackdropFilter = "blur(5px) saturate(1.35)";
-    } else {
-      g.style.background = "";
-      g.style.backdropFilter = "";
-      g.style.webkitBackdropFilter = "";
-    }
   }, finStart = function() {
-    if (!fin) fin = { amt: 0, dir: 1, t: 0, signs: abdTaken.size >= 11 };
+    if (!fin) fin = { amt: 0, dir: 1, t: 0, signs: false, reveal: false, revealIn: 0 };
     fin.dir = 1;
-    finGlass(true);
     nightTarget = 1;
     if (abdTaken.size < 11 && !blitz) {
       const tops = [], list = [];
@@ -36676,11 +36662,13 @@ try {
         list.push(i);
       }
       if (list.length) blitz = { t: 0, k: 0, tops, list };
-      else fin.signs = true;
     }
   }, finStop = function() {
-    finGlass(false);
-    if (fin) fin.dir = -1;
+    if (fin) {
+      fin.dir = -1;
+      fin.reveal = false;
+      fin.revealIn = 0;
+    }
     if (blitz) {
       blitz = null;
       if (!abd) {
@@ -36704,13 +36692,14 @@ try {
       if (blitz.t >= 2.2) {
         for (const di of blitz.list) abdTaken.add(di);
         blitz = null;
-        fin.signs = true;
         if (!abd) {
           ufoG.visible = false;
           beamMat.opacity = 0;
         }
       }
     }
+    if (fin.reveal && fin.revealIn > 0) fin.revealIn -= dt;
+    if (fin.reveal && fin.revealIn <= 0 && !blitz && !fin.signs) fin.signs = true;
     if (fin.dir > 0 && fin.signs) fin.amt = Math.min(1, fin.amt + dt / 2.4);
     else if (fin.dir < 0) {
       fin.amt = Math.max(0, fin.amt - dt / 0.8);
@@ -36754,9 +36743,13 @@ try {
     }
     skyG.restore();
     neonText("\uFF5E\u8C22\u8C22\u89C2\u770B\uFF5E", B.cx, B.cy + yOff + bob, 88, "#eb6ea5", "#ffe3f0", alpha);
-    neonText("\u795D\uFF1A2027\u5E74\u52BF\u5982\u7834\u7AF9", Sm.cx, Sm.cy + yOff + bob, 41, "#ffd166", "#fff3d0", alpha);
+    neonText("\u795D\uFF1A2027\u5E74\u7F8A\u7709\u5410\u6C14", Sm.cx, Sm.cy + yOff + bob, 41, "#ffd166", "#fff3d0", alpha);
     for (let i = 0; i < 2; i++) drawUFO({ x: B.ufoX[i], y: B.ufoY + yOff + bob, t: fin.t + i * 1.3 }, B.sc);
     for (let i = 0; i < 2; i++) drawUFO({ x: Sm.ufoX[i], y: Sm.ufoY + yOff + bob, t: fin.t + 0.6 + i * 1.7 }, Sm.sc);
+  }, finReveal = function() {
+    if (!fin) finStart();
+    fin.reveal = true;
+    fin.revealIn = 0.9;
   }, updRemoval = function(dt) {
     if (restoring) {
       const k = Math.min(1, dt * 2.4);
@@ -37033,8 +37026,8 @@ try {
     if (abd && abd.t < 1.8) abd.t = 1.8;
   };
   let fin = null, blitz = null;
-  window.__finaleCtl = { start: finStart, stop: finStop };
-  window.__FIN__ = () => ({ active: !!fin, amt: fin ? +fin.amt.toFixed(2) : 0, signs: fin ? fin.signs : false, blitz: !!blitz, taken: abdTaken.size });
+  window.__finaleCtl = { start: finStart, stop: finStop, reveal: finReveal };
+  window.__FIN__ = () => ({ active: !!fin, amt: fin ? +fin.amt.toFixed(2) : 0, signs: fin ? fin.signs : false, reveal: fin ? !!fin.reveal : false, blitz: !!blitz, taken: abdTaken.size });
   const PC = { x: 0.5825, y: 0.4585 }, WC = { x: 0.5825, y: 0.5325 };
   const easeIO = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   const lerp2 = (a, b, e) => ({ x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e });
