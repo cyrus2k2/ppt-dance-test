@@ -95,6 +95,16 @@
   .genie{flex:1;min-height:0;display:flex}
   .genie video{width:100%;height:100%;object-fit:contain;background:#000;border-radius:12px}
   .slide .crit-desc{font-size:1.6vh;line-height:1.5;color:#b9c8e8;margin-top:.9vh}
+  .archwrap{flex:1;min-height:0;display:flex}
+  .archpanel{flex:1;min-width:0;background:#fff;border-radius:14px;padding:1.2vh 1vw;position:relative;display:flex;align-items:center;justify-content:center}
+  .archpanel svg{width:100%;height:100%;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif}
+  .arch-step{position:absolute;top:1.4vh;left:1.1vw;z-index:3;color:#fff;font-size:1.75vh;font-weight:700;padding:.6vh 1.05vw;border-radius:99px;background:#334155;box-shadow:0 .4vh 1.4vh rgba(15,23,42,.35);transition:background .3s}
+  #architecture-svg .arch-node{transition:opacity .25s ease}
+  #architecture-svg .arch-edge{transition:opacity .25s ease}
+  #architecture-svg .dimmed{opacity:.13 !important}
+  #architecture-svg path.active-flow{stroke-dasharray:9 6;animation:archFlow .7s linear infinite;stroke-width:3.2px !important}
+  #architecture-svg path.flow-on{stroke-width:3.2px !important}
+  @keyframes archFlow{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
   .orgblank{flex:1;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
   .cols2{display:grid;grid-template-columns:1.05fr 1fr;gap:2vw;flex:1;min-height:0;width:100%}
   .rows.compact{gap:1.05vh}
@@ -597,7 +607,485 @@
         <div class="pover">三、计划 · 人工智能底座与架构</div>
         <h1 class="ptitle neon-w">系统架构图</h1>
       </div>
-      <div class="orgblank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6vh"><div style="font-size:3.4vh;color:#8fa3c8;letter-spacing:.6em">系 统 架 构 图</div></div>
+      <div class="archwrap"><div class="archpanel"><span id="archStepLabel" class="arch-step">全景视图</span><svg id="architecture-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1340 960" class="arch-svg">
+              <defs>
+                <!-- 渐变填充 -->
+                <linearGradient id="grad-oa" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#1d4ed8" />
+                  <stop offset="50%" stop-color="#2563eb" />
+                  <stop offset="100%" stop-color="#1e40af" />
+                </linearGradient>
+                <linearGradient id="grad-master" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#4f46e5" />
+                  <stop offset="100%" stop-color="#6d28d9" />
+                </linearGradient>
+                <linearGradient id="grad-security" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#fff7ed" />
+                  <stop offset="100%" stop-color="#ffedd5" />
+                </linearGradient>
+                <linearGradient id="grad-ext" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#faf5ff" />
+                  <stop offset="100%" stop-color="#f3e8ff" />
+                </linearGradient>
+                <linearGradient id="grad-base" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="100%" stop-color="#f0fdfa" />
+                </linearGradient>
+                <linearGradient id="grad-datalake" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ccfbf1" />
+                  <stop offset="100%" stop-color="#99f6e4" />
+                </linearGradient>
+                <linearGradient id="grad-local" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#eef2ff" />
+                  <stop offset="50%" stop-color="#e0e7ff" />
+                  <stop offset="100%" stop-color="#ede9fe" />
+                </linearGradient>
+                <linearGradient id="grad-ot" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="100%" stop-color="#ecfdf5" />
+                </linearGradient>
+                <linearGradient id="grad-deny" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#fff1f2" />
+                  <stop offset="100%" stop-color="#ffe4e6" />
+                </linearGradient>
+
+                <!-- 卡片阴影 -->
+                <filter id="card-shadow" x="-8%" y="-8%" width="116%" height="122%">
+                  <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.08" />
+                </filter>
+
+                <!-- 箭头标记 -->
+                <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#2563eb" />
+                </marker>
+                <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#7c3aed" />
+                </marker>
+                <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#d97706" />
+                </marker>
+                <marker id="arrow-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#0d9488" />
+                </marker>
+                <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#e11d48" />
+                </marker>
+                <marker id="arrow-indigo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#4f46e5" />
+                </marker>
+                <marker id="arrow-emerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#059669" />
+                </marker>
+                <marker id="arrow-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#475569" />
+                </marker>
+              </defs>
+              <!-- 左下角：V1.2 核心协同说明卡片 -->
+              <g class="zone-group" data-flows="all ext int-ok int-deny local ot">
+                <rect x="36" y="754" width="246" height="168" rx="14" fill="#eef2ff" fill-opacity="0.6" stroke="#a5b4fc" stroke-width="1.4" />
+                <rect x="52" y="743" width="154" height="22" rx="11" fill="#4f46e5" />
+                <text x="129" y="758" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="700">V1.2 统一安全协同亮点</text>
+                <text x="50" y="786" fill="#1e1b4b" font-size="11" font-weight="700">权限审核 → 本地 AI 服务器统一中枢</text>
+                <text x="50" y="808" fill="#334155" font-size="10.2">1. 内部业务与产线联动均先过权限审计</text>
+                <text x="50" y="828" fill="#334155" font-size="10.2">2. 放行后由本地 AI 服务器统筹推理</text>
+                <text x="50" y="848" fill="#334155" font-size="10.2">3. 向下协同 10 大底座生成报表/表单</text>
+                <text x="50" y="868" fill="#334155" font-size="10.2">4. 向右联动产线装备并反馈设备或 OA</text>
+                <text x="50" y="894" fill="#4338ca" font-size="10" font-weight="600">IT 业务 + OT 产线全程内网鉴权闭环</text>
+              </g>
+
+              <!-- 分区 B：内部业务数据、权限与私有算力闭环 -->
+              <g class="zone-group" data-flows="int-ok int-deny local ot">
+                <rect x="304" y="264" width="686" height="658" rx="16" fill="#f0fdfa" fill-opacity="0.55" stroke="#5eead4" stroke-width="1.5" />
+                <rect x="324" y="252" width="380" height="24" rx="12" fill="#0f766e" />
+                <text x="514" y="268" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="700">路径 B / C / D · 权限审计、本地 AI 算力与底座安全闭环</text>
+              </g>
+
+              
+
+              <!-- 分区 B：内部业务数据与权限闭环 -->
+              <g class="zone-group" data-flows="int-ok int-deny local">
+                <rect x="304" y="264" width="686" height="658" rx="16" fill="#f0fdfa" fill-opacity="0.55" stroke="#5eead4" stroke-width="1.5" />
+                <rect x="324" y="252" width="356" height="24" rx="12" fill="#0f766e" />
+                <text x="502" y="268" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="700">路径 B / C · 企业内部业务协同与私有算力安全闭环</text>
+              </g>
+
+              <!-- 分区 B 子区域：智能体基座容器 -->
+              <g class="zone-group" data-flows="int-ok">
+                <rect x="330" y="548" width="638" height="232" rx="14" fill="#ffffff" fill-opacity="0.95" stroke="#14b8a6" stroke-width="1.8" />
+                <rect x="348" y="558" width="276" height="22" rx="11" fill="#0d9488" />
+                <text x="486" y="573" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">智能体基座（10 大企业业务与数据底座）</text>
+                <text x="950" y="573" text-anchor="end" fill="#0f766e" font-size="10.5" font-weight="600">供本地 AI 服务器跨系统协同调度</text>
+              </g>
+
+              <!-- 分区 B 子区域：数据湖外联核心源系统 -->
+              <g class="zone-group" data-flows="int-ok">
+                <rect x="642" y="808" width="326" height="98" rx="14" fill="#f8fafc" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5 3" />
+                <rect x="660" y="797" width="160" height="22" rx="11" fill="#475569" />
+                <text x="740" y="812" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">数据湖外联核心源系统</text>
+              </g>
+
+              <!-- 分区 B 左下角图例与安全原则卡片 -->
+              <g class="zone-group" data-flows="all ext int-ok int-deny local ot">
+                <rect x="330" y="808" width="294" height="98" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                <text x="346" y="829" fill="#0f172a" font-size="11.5" font-weight="700">图例与架构流向说明</text>
+                <line x1="346" y1="848" x2="380" y2="848" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)" />
+                <text x="388" y="852" fill="#334155" font-size="10.5">请求指令 / 协同调度流（实线）</text>
+                <line x1="346" y1="870" x2="380" y2="870" stroke="#059669" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arrow-emerald)" />
+                <text x="388" y="874" fill="#334155" font-size="10.5">报表/表单/查询结果反馈 OA（虚线）</text>
+                <line x1="346" y1="892" x2="380" y2="892" stroke="#e11d48" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrow-red)" />
+                <text x="388" y="896" fill="#be123c" font-size="10.5">无权限阻断与拦截提示反馈（红虚线）</text>
+              </g>
+
+              <!-- 分区 D：产线与智能装备联动（OT） -->
+              <g class="zone-group" data-flows="ot">
+                <rect x="1024" y="264" width="280" height="658" rx="16" fill="#ecfdf5" fill-opacity="0.72" stroke="#6ee7b7" stroke-width="1.5" />
+                <rect x="1042" y="252" width="224" height="24" rx="12" fill="#059669" />
+                <text x="1154" y="268" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="700">路径 D · 产线与智能装备联动 (OT)</text>
+                <text x="1164" y="298" text-anchor="middle" fill="#047857" font-size="11" font-weight="500">经权限审计与本地 AI 调度后反馈设备/OA</text>
+                <rect x="1046" y="866" width="238" height="38" rx="9" fill="#ffffff" fill-opacity="0.88" stroke="#a7f3d0" stroke-width="1" />
+                <text x="1165" y="889" text-anchor="middle" fill="#065f46" font-size="10.2" font-weight="600">指令下发设备执行 · 状态反馈至 AI / OA</text>
+              </g>
+
+              <!-- ==================== 连线层（零交叉路由与反馈总线） ==================== -->
+
+              <!-- 1. OA系统 -> 智能体总管 -->
+              <g class="arch-edge" data-flows="ext int-ok int-deny local ot">
+                <path d="M 650 86 L 650 122" fill="none" stroke="#2563eb" stroke-width="2.6" marker-end="url(#arrow-blue)" />
+                <rect x="572" y="94" width="70" height="20" rx="10" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" />
+                <text x="607" y="108" text-anchor="middle" fill="#1d4ed8" font-size="10.5" font-weight="600">发起AI对话</text>
+              </g>
+
+              <!-- 2. 智能体总管 -> 敏感词过滤智能体 (路径 A) -->
+              <g class="arch-edge" data-flows="ext">
+                <path d="M 450 163 L 175 163 Q 159 163 159 179 L 159 314" fill="none" stroke="#7c3aed" stroke-width="2.3" marker-end="url(#arrow-purple)" />
+                <rect x="200" y="149" width="212" height="26" rx="13" fill="#ffffff" stroke="#ddd6fe" stroke-width="1.2" />
+                <text x="306" y="166" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600">普通对话 (写PPT/文案/生图等)</text>
+              </g>
+
+              <!-- 3. 敏感词过滤 -> 外部大模型 (路径 A) -->
+              <g class="arch-edge" data-flows="ext">
+                <path d="M 159 406 L 159 468" fill="none" stroke="#d97706" stroke-width="2.3" marker-end="url(#arrow-amber)" />
+                <rect x="120" y="427" width="78" height="20" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1" />
+                <text x="159" y="441" text-anchor="middle" fill="#b45309" font-size="10.5" font-weight="600">过滤通过</text>
+              </g>
+
+              <!-- 4. 外部大模型 -> 左侧反馈总线 -> OA系统 (路径 A 反馈) -->
+              <g class="arch-edge" data-flows="ext">
+                <path d="M 54 538 L 28 538 Q 16 538 16 526 L 16 66 Q 16 54 28 54 L 40 54" fill="none" stroke="#059669" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-emerald)" />
+                <rect x="4" y="198" width="24" height="114" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1" />
+                <text x="16" y="255" text-anchor="middle" fill="#047857" font-size="10.5" font-weight="600" transform="rotate(-90 16 255)">结果反馈至 OA</text>
+              </g>
+
+              <!-- 5. 智能体总管 -> 权限审计智能体 (路径 B 内部业务 & 路径 D 产线联动共用鉴权入口) -->
+              <g class="arch-edge" data-flows="int-ok int-deny ot">
+                <path d="M 546 200 L 546 218 Q 546 230 534 230 L 440 230 Q 428 230 428 242 L 428 298" fill="none" stroke="#0d9488" stroke-width="2.3" marker-end="url(#arrow-teal)" />
+                <rect x="414" y="218" width="150" height="22" rx="11" fill="#ffffff" stroke="#99f6e4" stroke-width="1.2" />
+                <text x="489" y="233" text-anchor="middle" fill="#0f766e" font-size="10.5" font-weight="600">内部业务 / 产线联动请求</text>
+              </g>
+
+              <!-- 6. 权限审计智能体 -> 权限审核判断 -->
+              <g class="arch-edge" data-flows="int-ok int-deny ot">
+                <path d="M 530 340 L 568 340" fill="none" stroke="#d97706" stroke-width="2.2" marker-end="url(#arrow-amber)" />
+              </g>
+              <!-- 9. 权限审核 -> 本地 AI 服务器 (路径 B & 路径 D 有权限统一放行) -->
+              <g class="arch-edge" data-flows="int-ok ot">
+                <path d="M 626 374 L 626 412" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrow-teal)" />
+                <rect x="636" y="383" width="142" height="20" rx="10" fill="#ccfbf1" stroke="#5eead4" stroke-width="1" />
+                <text x="707" y="397" text-anchor="middle" fill="#0f766e" font-size="10.5" font-weight="700">有权限放行 → AI服务器</text>
+              </g>
+
+              <!-- 10. 智能体总管 -> 本地 AI 服务器 (路径 C 本地查询直连，走 x=972 走廊入上侧 y=436，与路径 D 零交叉) -->
+              <g class="arch-edge" data-flows="local">
+                <path d="M 890 174 L 960 174 Q 972 174 972 186 L 972 424 Q 972 436 960 436 L 890 436" fill="none" stroke="#4f46e5" stroke-width="2.3" marker-end="url(#arrow-indigo)" />
+                <rect x="928" y="218" width="88" height="22" rx="11" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.2" />
+                <text x="972" y="233" text-anchor="middle" fill="#4338ca" font-size="10.5" font-weight="700">本地查询直连</text>
+              </g>
+              <!-- 13. 本地 AI 服务器 -> 底部反馈总线 -> 右侧总线 -> OA系统 (路径 B / C / D 结果回传 OA，零交叉!) -->
+              <g class="arch-edge" data-flows="int-ok local ot">
+                <path d="M 366 456 L 324 456 Q 316 456 316 464 L 316 930 Q 316 940 326 940 L 1314 940 Q 1324 940 1324 930 L 1324 64 Q 1324 54 1314 54 L 1300 54" fill="none" stroke="#059669" stroke-width="2.1" stroke-dasharray="6 4" marker-end="url(#arrow-emerald)" />
+                <rect x="614" y="929" width="350" height="22" rx="11" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.2" />
+                <text x="789" y="944" text-anchor="middle" fill="#047857" font-size="10.5" font-weight="700">本地 AI 服务器生成报表 / 表单 / 产线分析及查询结果反馈 OA</text>
+              </g>
+
+              <!-- 14. 本地 AI 服务器 <-> 产线装备联动 OT (路径 D：权限通过后由本地 AI 服务器下发并反馈设备，走 y=474 -> x=1008 零交叉) -->
+              <g class="arch-edge" data-flows="ot">
+                <path d="M 890 474 L 1008 474" fill="none" stroke="#059669" stroke-width="2.4" marker-start="url(#arrow-emerald)" />
+                <!-- 走廊分支至 4 个产线设备 -->
+                <path d="M 1008 474 L 1008 385 L 1042 385" fill="none" stroke="#059669" stroke-width="2.2" marker-end="url(#arrow-emerald)" />
+                <path d="M 1008 474 L 1008 523 L 1042 523" fill="none" stroke="#059669" stroke-width="2.2" marker-end="url(#arrow-emerald)" />
+                <path d="M 1008 523 L 1008 661 L 1042 661" fill="none" stroke="#059669" stroke-width="2.2" marker-end="url(#arrow-emerald)" />
+                <path d="M 1008 661 L 1008 799 L 1042 799" fill="none" stroke="#059669" stroke-width="2.2" marker-end="url(#arrow-emerald)" />
+                <rect x="894" y="482" width="110" height="22" rx="11" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.2" />
+                <text x="949" y="497" text-anchor="middle" fill="#047857" font-size="10.2" font-weight="700">下发指令 / 反馈设备</text>
+              </g>
+              <!-- 节点 4：权限审计智能体 (路径 B & 路径 D) -->
+              <g class="arch-node" data-id="auth" data-flows="int-ok int-deny ot">
+                <rect class="node-card" x="326" y="302" width="204" height="76" rx="12" fill="url(#grad-security)" stroke="#ea580c" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="428" y="332" text-anchor="middle" fill="#9a3412" font-size="14.5" font-weight="700">权限审计智能体</text>
+                <text x="428" y="353" text-anchor="middle" fill="#c2410c" font-size="11">OA 身份鉴权 · 业务与产线权限审核</text>
+                <text x="428" y="369" text-anchor="middle" fill="#c2410c" font-size="10.5">访问留痕与安全审计日志</text>
+              </g>
+
+              <!-- 节点 5：权限判断节点 (路径 B & 路径 D) -->
+              <g class="arch-node" data-id="auth-gate" data-flows="int-ok int-deny ot">
+                <polygon points="626,306 680,340 626,374 572,340" fill="#fffbeb" stroke="#d97706" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="626" y="337" text-anchor="middle" fill="#92400e" font-size="11.5" font-weight="700">权限</text>
+                <text x="626" y="352" text-anchor="middle" fill="#92400e" font-size="11.5" font-weight="700">是否通过?</text>
+              </g>
+
+              <!-- 节点 6：无权限拦截节点 (路径 B') -->
+              <g class="arch-node" data-id="no-auth" data-flows="int-deny">
+                <rect class="node-card" x="734" y="302" width="216" height="76" rx="12" fill="url(#grad-deny)" stroke="#e11d48" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="842" y="332" text-anchor="middle" fill="#9f1239" font-size="14" font-weight="700">无权限拦截提示</text>
+                <text x="842" y="353" text-anchor="middle" fill="#be123c" font-size="11">拒绝访问内部底座与产线装备</text>
+                <text x="842" y="369" text-anchor="middle" fill="#be123c" font-size="10.5">返回“无权限”信息至 OA 客户端</text>
+              </g>
+
+              <!-- 节点 7：本地 AI 服务器（核心推理与 IT+OT 统一协同引擎！） -->
+              <g class="arch-node" data-id="ai-server" data-flows="int-ok local ot">
+                <rect class="node-card" x="366" y="416" width="520" height="80" rx="14" fill="url(#grad-local)" stroke="#4f46e5" stroke-width="2.2" filter="url(#card-shadow)" />
+                <text x="626" y="444" text-anchor="middle" fill="#312e81" font-size="15.5" font-weight="700">本地 AI 服务器（私有大模型推理与 IT+OT 协同引擎）</text>
+                <text x="626" y="466" text-anchor="middle" fill="#4338ca" font-size="11.5" font-weight="600">权限通过后承接内部业务与产线联动 · 协同十大底座生成报表/表单</text>
+                <text x="626" y="484" text-anchor="middle" fill="#4f46e5" font-size="10.5">向产线装备下发指令并反馈至设备或 OA · 同时支持本地查询直连</text>
+              </g>
+
+              <!-- 10. 智能体总管 -> 本地 AI 服务器 (路径 C 本地查询直连，走 x=972 专属走廊，零交叉) -->
+              <g class="arch-edge" data-flows="local">
+                <path d="M 890 184 L 960 184 Q 972 184 972 196 L 972 444 Q 972 456 960 456 L 890 456" fill="none" stroke="#4f46e5" stroke-width="2.3" marker-end="url(#arrow-indigo)" />
+                <rect x="894" y="424" width="76" height="22" rx="11" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.2" />
+                <text x="932" y="439" text-anchor="middle" fill="#4338ca" font-size="10.5" font-weight="700">本地查询直连</text>
+              </g>
+
+              <!-- 11. 本地 AI 服务器 <-> 智能体基座 (双向协同生成报表/表单 · 核心修正!) -->
+              <g class="arch-edge" data-flows="int-ok">
+                <!-- 下行：调用各系统底座 -->
+                <path d="M 554 496 L 554 544" fill="none" stroke="#4f46e5" stroke-width="2.5" marker-end="url(#arrow-indigo)" />
+                <rect x="412" y="510" width="134" height="22" rx="11" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.2" />
+                <text x="479" y="525" text-anchor="middle" fill="#3730a3" font-size="10.5" font-weight="700">协同调用各业务底座</text>
+                <!-- 上行：数据回传协同生成报表/表单 -->
+                <path d="M 698 548 L 698 500" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrow-teal)" />
+                <rect x="708" y="510" width="146" height="22" rx="11" fill="#ccfbf1" stroke="#5eead4" stroke-width="1.2" />
+                <text x="781" y="525" text-anchor="middle" fill="#0f766e" font-size="10.5" font-weight="700">数据回传生成报表/表单</text>
+              </g>
+
+              <!-- 12. 数据湖 <-> 外联 ERP系统 & 人事系统 -->
+              <g class="arch-edge" data-flows="int-ok">
+                <path d="M 893 764 L 893 790 L 730 790 L 730 832" fill="none" stroke="#475569" stroke-width="2" marker-start="url(#arrow-slate)" marker-end="url(#arrow-slate)" />
+                <path d="M 893 764 L 893 832" fill="none" stroke="#475569" stroke-width="2" marker-start="url(#arrow-slate)" marker-end="url(#arrow-slate)" />
+                <rect x="752" y="780" width="96" height="20" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" />
+                <text x="800" y="794" text-anchor="middle" fill="#334155" font-size="10" font-weight="600">数据湖外联同步</text>
+              </g>
+
+              <!-- 13. 本地 AI 服务器 -> 底部反馈总线 -> 右侧总线 -> OA系统 (路径 B & C 结果回传，零交叉!) -->
+              <g class="arch-edge" data-flows="int-ok local">
+                <path d="M 366 456 L 324 456 Q 316 456 316 464 L 316 930 Q 316 940 326 940 L 1314 940 Q 1324 940 1324 930 L 1324 64 Q 1324 54 1314 54 L 1300 54" fill="none" stroke="#059669" stroke-width="2.1" stroke-dasharray="6 4" marker-end="url(#arrow-emerald)" />
+                <rect x="650" y="929" width="278" height="22" rx="11" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.2" />
+                <text x="789" y="944" text-anchor="middle" fill="#047857" font-size="10.5" font-weight="700">AI 服务器生成报表 / 表单 / 查询结果反馈至 OA</text>
+              </g>
+
+              <!-- 14. 智能体总管 -> 产线装备联动 OT (路径 D，走 x=1008 专属走廊，零交叉) -->
+              <g class="arch-edge" data-flows="ot">
+                <path d="M 890 152 L 996 152 Q 1008 152 1008 164 L 1008 385 L 1042 385" fill="none" stroke="#059669" stroke-width="2.3" marker-end="url(#arrow-emerald)" />
+                <!-- 走廊分支至其余 3 个产线设备 -->
+                <path d="M 1008 385 L 1008 523 L 1042 523" fill="none" stroke="#059669" stroke-width="2.1" marker-end="url(#arrow-emerald)" />
+                <path d="M 1008 523 L 1008 661 L 1042 661" fill="none" stroke="#059669" stroke-width="2.1" marker-end="url(#arrow-emerald)" />
+                <path d="M 1008 661 L 1008 799 L 1042 799" fill="none" stroke="#059669" stroke-width="2.1" marker-end="url(#arrow-emerald)" />
+                <rect x="912" y="141" width="114" height="22" rx="11" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.2" />
+                <text x="969" y="156" text-anchor="middle" fill="#047857" font-size="10.5" font-weight="700">产线 OT 硬件联动</text>
+              </g>
+
+              <!-- 15. 产线装备联动 -> 右侧总线 -> OA系统 (路径 D 反馈) -->
+              <g class="arch-edge" data-flows="ot">
+                <path d="M 1284 592 L 1314 592 Q 1324 592 1324 582 L 1324 64 Q 1324 54 1314 54 L 1300 54" fill="none" stroke="#059669" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-emerald)" />
+                <rect x="1312" y="176" width="24" height="122" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1" />
+                <text x="1324" y="237" text-anchor="middle" fill="#047857" font-size="10.5" font-weight="600" transform="rotate(-90 1324 237)">结果统一反馈 OA</text>
+              </g>
+
+              <!-- ==================== 节点卡片层（可点击查看详情） ==================== -->
+
+              <!-- 节点 0：前端 OA 系统 / OA 客户端 -->
+              <g class="arch-node" data-id="oa-client" data-flows="ext int-ok int-deny local ot">
+                <rect class="node-card" x="44" y="20" width="1252" height="66" rx="14" fill="url(#grad-oa)" stroke="#1e3a8a" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="670" y="48" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700">前端交互层：OA 系统 / OA 客户端</text>
+                <text x="670" y="71" text-anchor="middle" fill="#dbeafe" font-size="12.5" font-weight="500">企业全员 AI 对话统一入口 · 报表/表单可视化回显 · 无权限提示反馈 · 移动端/PC 端协同</text>
+              </g>
+
+              <!-- 节点 1：智能体总管 / 智能体管家 -->
+              <g class="arch-node" data-id="master" data-flows="ext int-ok int-deny local ot">
+                <rect class="node-card" x="450" y="126" width="440" height="74" rx="14" fill="url(#grad-master)" stroke="#3730a3" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="670" y="157" text-anchor="middle" fill="#ffffff" font-size="17" font-weight="700">智能体总管（智能体管家）</text>
+                <text x="670" y="181" text-anchor="middle" fill="#e0e7ff" font-size="12" font-weight="500">意图识别 · 内外分流路由 · 多智能体编排 · 产线硬件联动中枢</text>
+              </g>
+
+              <!-- 节点 2：敏感词过滤智能体 (路径 A) -->
+              <g class="arch-node" data-id="sensitive" data-flows="ext">
+                <rect class="node-card" x="54" y="318" width="210" height="88" rx="12" fill="url(#grad-security)" stroke="#ea580c" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="159" y="349" text-anchor="middle" fill="#9a3412" font-size="14.5" font-weight="700">敏感词过滤智能体</text>
+                <text x="159" y="370" text-anchor="middle" fill="#c2410c" font-size="11">企业机密 / 料号 / 客户名拦截</text>
+                <text x="159" y="388" text-anchor="middle" fill="#c2410c" font-size="11">提示词脱敏与合规审查</text>
+              </g>
+
+              <!-- 节点 3：外部大模型 (路径 A) -->
+              <g class="arch-node" data-id="ext-llm" data-flows="ext">
+                <rect class="node-card" x="54" y="472" width="210" height="134" rx="12" fill="url(#grad-ext)" stroke="#7c3aed" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="159" y="504" text-anchor="middle" fill="#5b21b6" font-size="15" font-weight="700">外部大模型</text>
+                <text x="159" y="526" text-anchor="middle" fill="#6d28d9" font-size="11">承接通用非涉密创意任务</text>
+                <!-- 小标签 -->
+                <rect x="68" y="542" width="58" height="22" rx="6" fill="#ffffff" stroke="#d8b4fe" stroke-width="1" />
+                <text x="97" y="557" text-anchor="middle" fill="#6b21a8" font-size="10.5" font-weight="600">写 PPT</text>
+                <rect x="131" y="542" width="62" height="22" rx="6" fill="#ffffff" stroke="#d8b4fe" stroke-width="1" />
+                <text x="162" y="557" text-anchor="middle" fill="#6b21a8" font-size="10.5" font-weight="600">生成文案</text>
+                <rect x="198" y="542" width="52" height="22" rx="6" fill="#ffffff" stroke="#d8b4fe" stroke-width="1" />
+                <text x="224" y="557" text-anchor="middle" fill="#6b21a8" font-size="10.5" font-weight="600">生图</text>
+                <text x="159" y="588" text-anchor="middle" fill="#7e22ce" font-size="10.5">润色翻译 · 通用百科等</text>
+              </g>
+
+              <!-- 节点 4：权限审计智能体 (路径 B) -->
+              <g class="arch-node" data-id="auth" data-flows="int-ok int-deny">
+                <rect class="node-card" x="326" y="302" width="204" height="76" rx="12" fill="url(#grad-security)" stroke="#ea580c" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="428" y="332" text-anchor="middle" fill="#9a3412" font-size="14.5" font-weight="700">权限审计智能体</text>
+                <text x="428" y="353" text-anchor="middle" fill="#c2410c" font-size="11">OA 身份鉴权 · 数据权限审核</text>
+                <text x="428" y="369" text-anchor="middle" fill="#c2410c" font-size="10.5">访问留痕与安全审计日志</text>
+              </g>
+
+              <!-- 节点 5：权限判断节点 (路径 B) -->
+              <g class="arch-node" data-id="auth-gate" data-flows="int-ok int-deny">
+                <polygon points="626,306 680,340 626,374 572,340" fill="#fffbeb" stroke="#d97706" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="626" y="337" text-anchor="middle" fill="#92400e" font-size="11.5" font-weight="700">权限</text>
+                <text x="626" y="352" text-anchor="middle" fill="#92400e" font-size="11.5" font-weight="700">是否通过?</text>
+              </g>
+
+              <!-- 节点 6：无权限拦截节点 (路径 B') -->
+              <g class="arch-node" data-id="no-auth" data-flows="int-deny">
+                <rect class="node-card" x="734" y="302" width="216" height="76" rx="12" fill="url(#grad-deny)" stroke="#e11d48" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="842" y="332" text-anchor="middle" fill="#9f1239" font-size="14" font-weight="700">无权限拦截提示</text>
+                <text x="842" y="353" text-anchor="middle" fill="#be123c" font-size="11">拒绝访问内部 AI 与底座数据</text>
+                <text x="842" y="369" text-anchor="middle" fill="#be123c" font-size="10.5">返回“无权限”信息至 OA 客户端</text>
+              </g>
+
+              <!-- 节点 7：本地 AI 服务器（核心推理与多系统协同引擎 · 位于权限与基座之间！） -->
+              <g class="arch-node" data-id="ai-server" data-flows="int-ok local">
+                <rect class="node-card" x="366" y="416" width="520" height="80" rx="14" fill="url(#grad-local)" stroke="#4f46e5" stroke-width="2.2" filter="url(#card-shadow)" />
+                <text x="626" y="444" text-anchor="middle" fill="#312e81" font-size="15.5" font-weight="700">本地 AI 服务器（私有大模型推理与多系统协同引擎）</text>
+                <text x="626" y="466" text-anchor="middle" fill="#4338ca" font-size="11.5" font-weight="600">权限通过后承接内部请求 · 协同 10 大智能体底座生成报表、表单与业务分析</text>
+                <text x="626" y="484" text-anchor="middle" fill="#4f46e5" font-size="10.5">同时支持本地查询直连 · 私有化 GPU 算力保障企业核心数据全程不出内网</text>
+              </g>
+
+              <!-- ========== 智能体基座 10 大模块 (2 行 x 5 列) ========== -->
+              <!-- Row 1: SRM, CRM, MES, WMS, PLM -->
+              <g class="arch-node" data-id="srm" data-flows="int-ok">
+                <rect class="node-card" x="350" y="588" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="405" y="619" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">SRM</text>
+                <text x="405" y="640" text-anchor="middle" fill="#475569" font-size="11">供应链与采购</text>
+                <text x="405" y="656" text-anchor="middle" fill="#64748b" font-size="9.5">交期/寻源/绩效</text>
+              </g>
+
+              <g class="arch-node" data-id="crm" data-flows="int-ok">
+                <rect class="node-card" x="472" y="588" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="527" y="619" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">CRM</text>
+                <text x="527" y="640" text-anchor="middle" fill="#475569" font-size="11">客户关系管理</text>
+                <text x="527" y="656" text-anchor="middle" fill="#64748b" font-size="9.5">订单/回款/客诉</text>
+              </g>
+
+              <g class="arch-node" data-id="mes" data-flows="int-ok">
+                <rect class="node-card" x="594" y="588" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="649" y="619" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">MES</text>
+                <text x="649" y="640" text-anchor="middle" fill="#475569" font-size="11">制造执行系统</text>
+                <text x="649" y="656" text-anchor="middle" fill="#64748b" font-size="9.5">排产/OEE/良率</text>
+              </g>
+
+              <g class="arch-node" data-id="wms" data-flows="int-ok">
+                <rect class="node-card" x="716" y="588" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="771" y="619" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">WMS</text>
+                <text x="771" y="640" text-anchor="middle" fill="#475569" font-size="11">仓储管理系统</text>
+                <text x="771" y="656" text-anchor="middle" fill="#64748b" font-size="9.5">库存/库位/呆滞</text>
+              </g>
+
+              <g class="arch-node" data-id="plm" data-flows="int-ok">
+                <rect class="node-card" x="838" y="588" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="893" y="619" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">PLM</text>
+                <text x="893" y="640" text-anchor="middle" fill="#475569" font-size="11">研发生命周期</text>
+                <text x="893" y="656" text-anchor="middle" fill="#64748b" font-size="9.5">图纸/BOM/变更</text>
+              </g>
+
+              <!-- Row 2: OA, BI, 知识库, ERP中间体, 数据湖 -->
+              <g class="arch-node" data-id="oa-base" data-flows="int-ok">
+                <rect class="node-card" x="350" y="684" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="405" y="715" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">OA</text>
+                <text x="405" y="736" text-anchor="middle" fill="#475569" font-size="11">协同办公底座</text>
+                <text x="405" y="752" text-anchor="middle" fill="#64748b" font-size="9.5">表单/审批/待办</text>
+              </g>
+
+              <g class="arch-node" data-id="bi" data-flows="int-ok">
+                <rect class="node-card" x="472" y="684" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="527" y="715" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">BI</text>
+                <text x="527" y="736" text-anchor="middle" fill="#475569" font-size="11">经营决策分析</text>
+                <text x="527" y="752" text-anchor="middle" fill="#64748b" font-size="9.5">对话式报表生成</text>
+              </g>
+
+              <g class="arch-node" data-id="kb" data-flows="int-ok">
+                <rect class="node-card" x="594" y="684" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.5" filter="url(#card-shadow)" />
+                <text x="649" y="715" text-anchor="middle" fill="#0f766e" font-size="14.5" font-weight="700">知识库</text>
+                <text x="649" y="736" text-anchor="middle" fill="#475569" font-size="11">企业RAG知识</text>
+                <text x="649" y="752" text-anchor="middle" fill="#64748b" font-size="9.5">制度/工艺/案例</text>
+              </g>
+
+              <g class="arch-node" data-id="erp-mid" data-flows="int-ok">
+                <rect class="node-card" x="716" y="684" width="110" height="80" rx="10" fill="url(#grad-base)" stroke="#0d9488" stroke-width="1.8" filter="url(#card-shadow)" />
+                <text x="771" y="715" text-anchor="middle" fill="#0f766e" font-size="13.5" font-weight="700">ERP中间体</text>
+                <text x="771" y="736" text-anchor="middle" fill="#475569" font-size="11">业务解耦缓冲</text>
+                <text x="771" y="752" text-anchor="middle" fill="#64748b" font-size="9.5">接口适配/削峰</text>
+              </g>
+
+              <g class="arch-node" data-id="datalake" data-flows="int-ok">
+                <rect class="node-card" x="838" y="684" width="110" height="80" rx="10" fill="url(#grad-datalake)" stroke="#0f766e" stroke-width="2" filter="url(#card-shadow)" />
+                <text x="893" y="715" text-anchor="middle" fill="#115e59" font-size="14.5" font-weight="700">数据湖</text>
+                <text x="893" y="736" text-anchor="middle" fill="#134e4a" font-size="11" font-weight="500">全域数据汇聚</text>
+                <text x="893" y="752" text-anchor="middle" fill="#0f766e" font-size="9.5">外联核心源系统</text>
+              </g>
+
+              <!-- ========== 数据湖外联系统 ========== -->
+              <g class="arch-node" data-id="erp-sys" data-flows="int-ok">
+                <rect class="node-card" x="660" y="836" width="140" height="54" rx="10" fill="#ffffff" stroke="#475569" stroke-width="1.6" filter="url(#card-shadow)" />
+                <text x="730" y="861" text-anchor="middle" fill="#1e293b" font-size="13.5" font-weight="700">ERP 系统</text>
+                <text x="730" y="879" text-anchor="middle" fill="#64748b" font-size="10">财务 / 成本 / 核心主数据</text>
+              </g>
+
+              <g class="arch-node" data-id="hr-sys" data-flows="int-ok">
+                <rect class="node-card" x="816" y="836" width="138" height="54" rx="10" fill="#ffffff" stroke="#475569" stroke-width="1.6" filter="url(#card-shadow)" />
+                <text x="885" y="861" text-anchor="middle" fill="#1e293b" font-size="13.5" font-weight="700">人事系统 (HR)</text>
+                <text x="885" y="879" text-anchor="middle" fill="#64748b" font-size="10">组织架构 / 考勤 / 人效</text>
+              </g>
+
+              <!-- ========== 路径 D：产线与智能装备联动 (OT) ========== -->
+              <g class="arch-node" data-id="cv" data-flows="ot">
+                <rect class="node-card" x="1046" y="330" width="238" height="110" rx="12" fill="url(#grad-ot)" stroke="#059669" stroke-width="1.6" filter="url(#card-shadow)" />
+                <text x="1165" y="366" text-anchor="middle" fill="#065f46" font-size="15" font-weight="700">视觉识别</text>
+                <text x="1165" y="390" text-anchor="middle" fill="#047857" font-size="11">产品外观质检 · 缺陷实时识别</text>
+                <text x="1165" y="410" text-anchor="middle" fill="#059669" font-size="10.2">不良预警推送 · 车间安全生产视觉</text>
+              </g>
+
+              <g class="arch-node" data-id="esop" data-flows="ot">
+                <rect class="node-card" x="1046" y="468" width="238" height="110" rx="12" fill="url(#grad-ot)" stroke="#059669" stroke-width="1.6" filter="url(#card-shadow)" />
+                <text x="1165" y="504" text-anchor="middle" fill="#065f46" font-size="15" font-weight="700">ESOP</text>
+                <text x="1165" y="528" text-anchor="middle" fill="#047857" font-size="11">电子作业指导书 · 工位可视化终端</text>
+                <text x="1165" y="548" text-anchor="middle" fill="#059669" font-size="10.2">工艺变更自动下发 · 换线防呆提示</text>
+              </g>
+
+              <g class="arch-node" data-id="robot" data-flows="ot">
+                <rect class="node-card" x="1046" y="606" width="238" height="110" rx="12" fill="url(#grad-ot)" stroke="#059669" stroke-width="1.6" filter="url(#card-shadow)" />
+                <text x="1165" y="642" text-anchor="middle" fill="#065f46" font-size="15" font-weight="700">机器手</text>
+                <text x="1165" y="666" text-anchor="middle" fill="#047857" font-size="11">工业自动化机械臂 · 产线执行单元</text>
+                <text x="1165" y="686" text-anchor="middle" fill="#059669" font-size="10.2">协同抓取分拣 · 不良品自动剔除</text>
+              </g>
+
+              <g class="arch-node" data-id="agv" data-flows="ot">
+                <rect class="node-card" x="1046" y="744" width="238" height="110" rx="12" fill="url(#grad-ot)" stroke="#059669" stroke-width="1.6" filter="url(#card-shadow)" />
+                <text x="1165" y="780" text-anchor="middle" fill="#065f46" font-size="15" font-weight="700">智能小车</text>
+                <text x="1165" y="804" text-anchor="middle" fill="#047857" font-size="11">AGV / AMR 厂内智能物流搬运</text>
+                <text x="1165" y="824" text-anchor="middle" fill="#059669" font-size="10.2">线边仓精准配送 · 缺料自动叫料调度</text>
+              </g>
+            </svg></div></div>
       <div class="pfoot"><span>第二部分 · 2027年计划</span><span></span></div>
     </div>
   </section>
@@ -821,17 +1309,18 @@
   let cur=0;
   function go(n){
     if(closing && n!==slides.length-1) exitClosing();
-    cur=Math.max(0,Math.min(slides.length-1,n));
+    const prevIx=cur; cur=Math.max(0,Math.min(slides.length-1,n));
     slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
     window.__SLIDE__=cur;
     if(window.__onSlideChange) window.__onSlideChange(cur);
     document.querySelectorAll('video.slidevid').forEach(v=>{ const on=v.closest('.slide').classList.contains('active'); if(on){ v.currentTime=0; v.play().catch(()=>{}); } else if(!v.paused) v.pause(); });
+    if(window.__archReset && prevIx!==cur && slides[cur].querySelector('#architecture-svg')) window.__archReset();
   }
   // Slide 1 is a three-step show (day standby -> night dance -> V finale) driven by
   // the same clicker keys: while on slide 1 the show module gets first claim on
   // next/prev; only when it declines does the deck change slides.
-  function navNext(){ if(closing) return; if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.next()) return; } if(cur===slides.length-1){ enterClosing(); return; } go(cur+1); }
-  function navPrev(){ if(closing){ exitClosing(); return; } if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.prev()) return; } go(cur-1); }
+  function navNext(){ if(closing) return; if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.next()) return; } if(window.__ARCH_NAV__ && slides[cur].querySelector('#architecture-svg') && window.__ARCH_NAV__.next()) return; if(cur===slides.length-1){ enterClosing(); return; } go(cur+1); }
+  function navPrev(){ if(closing){ exitClosing(); return; } if(cur===0){ if(!window.__SHOW_NAV__) return; if(window.__SHOW_NAV__.prev()) return; } if(window.__ARCH_NAV__ && slides[cur].querySelector('#architecture-svg') && window.__ARCH_NAV__.prev()) return; go(cur-1); }
   const NEXT=new Set(['PageDown','ArrowRight','ArrowDown',' ','Spacebar','Enter']);
   const PREV=new Set(['PageUp','ArrowLeft','ArrowUp','Backspace']);
   window.addEventListener('keydown',e=>{
@@ -37394,6 +37883,68 @@ three/build/three.module.js:
       .observe(sec,{attributes:true,attributeFilter:['class']});
     if(sec.classList.contains('active')) start();
   })();
+</script>
+
+<script>
+// 系统架构图页：全景 -> 路径 A/B/B'/C/D 逐级演示（翻页笔驱动，__ARCH_NAV__）
+(function(){
+  const svg=document.getElementById('architecture-svg'); if(!svg) return;
+  const FLOWS=[
+    {key:'all', label:'全景视图', color:'#334155'},
+    {key:'ext', label:'路径 A：外部通用办公', color:'#7c3aed'},
+    {key:'int-ok', label:'路径 B：内部业务', color:'#0f766e'},
+    {key:'int-deny', label:"路径 B'：无权限拦截", color:'#e11d48'},
+    {key:'local', label:'路径 C：本地查询直连', color:'#4f46e5'},
+    {key:'ot', label:'路径 D：产线联动', color:'#059669'}
+  ];
+  let step=0, timers=[], rafId=0;
+  const label=document.getElementById('archStepLabel');
+  const flowsOf=el=>(el.getAttribute('data-flows')||'').split(' ');
+  function setFlow(key){
+    svg.querySelectorAll('.arch-node,.zone-group').forEach(el=>{ el.classList.toggle('dimmed', key!=='all' && !flowsOf(el).includes(key)); });
+    svg.querySelectorAll('.arch-edge').forEach(el=>{
+      const m=key!=='all' && flowsOf(el).includes(key);
+      el.classList.toggle('dimmed', key!=='all' && !m);
+      el.querySelectorAll('path').forEach(p=>{ p.classList.toggle('active-flow', m); p.classList.remove('flow-on'); });
+    });
+  }
+  function clearFx(){ timers.forEach(clearTimeout); timers=[]; cancelAnimationFrame(rafId); svg.querySelectorAll('.arch-pulse').forEach(c=>c.remove()); }
+  function pulse(key){
+    clearFx();
+    if(key==='all') return;
+    const paths=[];
+    svg.querySelectorAll('.arch-edge').forEach(el=>{ if(flowsOf(el).includes(key)) el.querySelectorAll('path').forEach(p=>{ if(p.getTotalLength) paths.push(p); }); });
+    if(!paths.length) return;
+    const lens=paths.map(p=>p.getTotalLength());
+    const total=lens.reduce((a,b)=>a+b,0)||1;
+    let t0=350;
+    const runs=paths.map((p,i)=>{ const dur=Math.max(240, 3000*lens[i]/total); const r={p, len:lens[i], start:t0, dur, dot:null}; t0+=dur*0.85; return r; });
+    timers.push(setTimeout(()=>{ paths.forEach(p=>{ p.classList.remove('active-flow'); p.classList.add('flow-on'); }); svg.querySelectorAll('.arch-pulse').forEach(c=>c.remove()); }, t0+450));
+    const tStart=performance.now();
+    function frame(now){
+      const t=now-tStart; let alive=false;
+      runs.forEach(r=>{
+        if(t<r.start){ alive=true; return; }
+        const k=(t-r.start)/r.dur;
+        if(k>=1){ if(r.dot){ r.dot.remove(); r.dot=null; } return; }
+        alive=true;
+        if(!r.dot){ r.dot=document.createElementNS('http://www.w3.org/2000/svg','circle'); r.dot.setAttribute('class','arch-pulse'); r.dot.setAttribute('r','8'); r.dot.setAttribute('fill','#ffffff'); r.dot.setAttribute('stroke', r.p.getAttribute('stroke')||'#2563eb'); r.dot.setAttribute('stroke-width','4.5'); svg.appendChild(r.dot); }
+        const pt=r.p.getPointAtLength(r.len*k);
+        r.dot.setAttribute('cx',pt.x); r.dot.setAttribute('cy',pt.y);
+      });
+      if(alive) rafId=requestAnimationFrame(frame);
+    }
+    rafId=requestAnimationFrame(frame);
+  }
+  function apply(n){ step=n; const f=FLOWS[step]; setFlow(f.key); if(label){ label.textContent=f.label; label.style.background=f.color; } pulse(f.key); }
+  window.__ARCH_NAV__={
+    next(){ if(step<FLOWS.length-1){ apply(step+1); return true; } return false; },
+    prev(){ if(step>0){ apply(step-1); return true; } return false; }
+  };
+  window.__archReset=()=>{ apply(0); };
+  window.__ARCH__={ get step(){ return step; } };
+  apply(0);
+})();
 </script>
 </body>
 </html>
