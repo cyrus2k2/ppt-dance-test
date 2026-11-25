@@ -162,6 +162,7 @@
 .orgslide .glass{padding-top:2.6vh}
 .orgslide .ticker{margin-top:.15vh}
 .orgslide .ticker b{font-size:1.6vh}
+.reportwrap canvas{width:100%;height:100%;object-fit:contain}
 .orgblank{flex:1;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
   .cols2{display:grid;grid-template-columns:1.05fr 1fr;gap:2vw;flex:1;min-height:0;width:100%}
   .rows.compact{gap:1.05vh}
@@ -1204,7 +1205,10 @@
         <div class="pover">三、计划 · 应用事例</div>
         <h1 class="ptitle neon-w">报表生成</h1>
       </div>
-      <div class="orgblank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6vh"><div style="font-size:3.4vh;color:#8fa3c8;letter-spacing:.6em">事 例 演 示</div></div>
+      <div class="anim-panel reportwrap">
+        <div class="anim-frame"><canvas id="anim-report" width="1160" height="560"></canvas></div>
+        <div class="anim-cap">AI 报表生成演示 · 自然语言提问 → 权限校验 → 数据湖提取 → 一键生成明细表</div>
+      </div>
       <div class="pfoot"><span>第二部分 · 2027年计划</span><span></span></div>
     </div>
   </section>
@@ -38319,6 +38323,137 @@ three/build/three.module.js:
     else if(!defect&&slot>=1.5&&slot<3.4){ st='机器手视觉引导抓取 · 重复定位精度 ±0.1 mm'; sc2='#6bc5ff'; }
     else { st='智能产线运行中 · 机器手 × AGV × VLM 视觉协同作业'; sc2='#9fc3ee'; }
     x.font='700 14.5px '+FONT; x.textAlign='center'; x.fillStyle=sc2; x.fillText(st,380,528); x.textAlign='left';
+  });
+setup('anim-report',(x,W,H,t)=>{
+    const T=21, ph=t%T;
+    const ss=(a,b,v)=>{ const k=Math.min(1,Math.max(0,(v-a)/(b-a))); return k*k*(3-2*k); };
+    const lp=(a,b,k)=>a+(b-a)*k;
+    const bg=x.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#0a1424'); bg.addColorStop(1,'#0d1a30');
+    x.fillStyle=bg; x.fillRect(0,0,W,H);
+    x.strokeStyle='rgba(107,197,255,.05)'; x.lineWidth=1;
+    for(let gx=0; gx<W; gx+=38){ x.beginPath(); x.moveTo(gx,0); x.lineTo(gx,H); x.stroke(); }
+    const stage = ph<2.2?-1 : ph<6.4?0 : ph<9.2?1 : ph<12.6?2 : 3;
+    const node=(cx,cy,w,h,label,c,active,sub)=>{
+      if(active){ x.save(); x.shadowColor=c; x.shadowBlur=18; rr(x,cx-w/2,cy-h/2,w,h,9); x.fillStyle='rgba(20,34,58,.95)'; x.fill(); x.restore(); }
+      rr(x,cx-w/2,cy-h/2,w,h,9); x.fillStyle='rgba(17,29,50,.92)'; x.fill(); x.strokeStyle=active?c:'rgba(120,160,220,.4)'; x.lineWidth=active?2:1.2; x.stroke();
+      x.fillStyle=active?'#fff':'#cfe0f5'; x.font='700 14.5px '+FONT; x.textAlign='center'; x.fillText(label,cx,cy+(sub?0:5));
+      if(sub){ x.fillStyle='#8fb0dd'; x.font='11px '+FONT; x.fillText(sub,cx,cy+17); }
+      x.textAlign='left'; };
+    const edge=(x1,y1,x2,y2,active)=>{ x.strokeStyle=active?'rgba(124,252,152,.85)':'rgba(120,160,220,.30)'; x.lineWidth=active?2.2:1.3;
+      x.beginPath(); x.moveTo(x1,y1); x.lineTo(x2,y2); x.stroke();
+      const a=Math.atan2(y2-y1,x2-x1); x.fillStyle=active?'#7cfc98':'rgba(120,160,220,.5)';
+      x.beginPath(); x.moveTo(x2,y2); x.lineTo(x2-8*Math.cos(a-.42),y2-8*Math.sin(a-.42)); x.lineTo(x2-8*Math.cos(a+.42),y2-8*Math.sin(a+.42)); x.closePath(); x.fill(); };
+    const pulse=(pts,k,c)=>{ if(k<0||k>1) return; let total=0; const seg=[];
+      for(let i=0;i<pts.length-1;i++){ const d=Math.hypot(pts[i+1][0]-pts[i][0],pts[i+1][1]-pts[i][1]); seg.push(d); total+=d; }
+      let dist=k*total;
+      for(let i=0;i<seg.length;i++){ if(dist<=seg[i]){ const kk=seg[i]?dist/seg[i]:0; const px=lp(pts[i][0],pts[i+1][0],kk), py=lp(pts[i][1],pts[i+1][1],kk);
+        x.save(); x.shadowColor=c; x.shadowBlur=14; x.fillStyle=c; x.beginPath(); x.arc(px,py,5,0,7); x.fill(); x.restore(); return; } dist-=seg[i]; } };
+    /* ---------- left: architecture ---------- */
+    rr(x,14,14,470,532,12); x.fillStyle='rgba(10,20,38,.85)'; x.fill(); x.strokeStyle='rgba(110,160,230,.35)'; x.lineWidth=1.2; x.stroke();
+    x.fillStyle='#eaf3ff'; x.font='700 16px '+FONT; x.fillText('系统架构 · 接入示意',32,42);
+    edge(249,111,249,142,stage===0);
+    edge(205,186,152,226,stage===1);
+    edge(206,246,305,246,stage===1);
+    edge(249,186,249,306,stage===2);
+    edge(249,410,249,446,stage===2);
+    x.strokeStyle='rgba(120,160,220,.30)'; x.setLineDash([5,5]); x.beginPath(); x.moveTo(355,246); x.lineTo(384,246); x.lineTo(384,164); x.lineTo(336,164); x.stroke(); x.setLineDash([]);
+    node(249,92,150,38,'OA 客户端','#6bc5ff',stage===0);
+    node(249,164,170,44,'主控智能体','#c39bff',stage===0||stage===3,'请求编排 · 任务分发');
+    node(131,246,150,40,'权限审计智能体','#ffd166',stage===1);
+    const passed=ph>=8.6;
+    x.save(); x.translate(330,246); x.rotate(Math.PI/4);
+    rr(x,-17,-17,34,34,5); x.fillStyle=passed?'rgba(46,120,70,.9)':'rgba(17,29,50,.92)'; x.fill();
+    x.strokeStyle=stage===1?'#ffd166':'rgba(120,160,220,.4)'; x.lineWidth=stage===1?2:1.2; x.stroke(); x.restore();
+    x.fillStyle=passed?'#7cfc98':'#cfe0f5'; x.font='700 15px '+FONT; x.textAlign='center';
+    x.fillText(passed?'✓':'?',330,251); x.fillText('权限判断',330,292); x.textAlign='left';
+    if(stage===1&&!passed){ x.strokeStyle='#ffd166'; x.lineWidth=2.6; x.beginPath(); x.arc(131,246,26,t*4.2%6.3,t*4.2%6.3+4.2); x.stroke(); }
+    if(passed){ rr(x,66,272,130,18,9); x.fillStyle='rgba(124,252,152,.16)'; x.fill(); x.fillStyle='#7cfc98'; x.font='600 11.5px '+FONT; x.textAlign='center'; x.fillText('权限通过 · 国内销售',131,284); x.textAlign='left'; }
+    rr(x,84,306,330,104,10); x.fillStyle='rgba(17,29,50,.92)'; x.fill(); x.strokeStyle=stage===2?'#6bc5ff':'rgba(120,160,220,.4)'; x.lineWidth=stage===2?2:1.2; x.stroke();
+    x.fillStyle='#eaf3ff'; x.font='700 14.5px '+FONT; x.textAlign='center'; x.fillText('AI 底座',249,328); x.textAlign='left';
+    const lakeOn=stage===2;
+    rr(x,100,340,140,52,8); x.fillStyle=lakeOn?'rgba(28,58,96,.95)':'rgba(23,38,64,.9)'; x.fill(); x.strokeStyle=lakeOn?'#6bc5ff':'rgba(120,160,220,.35)'; x.stroke();
+    x.fillStyle='#bfe0ff'; x.font='700 13.5px '+FONT; x.textAlign='center'; x.fillText('数据湖',170,362);
+    x.font='10.5px '+FONT; x.fillStyle='#8fb0dd'; x.fillText('订单 · 客户 · 产品',170,380); x.textAlign='left';
+    if(lakeOn){ const ly=346+((t*30)%40); x.fillStyle='rgba(107,197,255,.35)'; x.fillRect(104,ly,132,2);
+      for(let i=0;i<5;i++){ const py2=386-((t*22+i*9)%34); x.fillStyle='rgba(124,252,152,.8)'; x.beginPath(); x.arc(116+i*26,py2,2.2,0,7); x.fill(); } }
+    rr(x,256,340,140,52,8); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.35)'; x.stroke();
+    x.fillStyle='#cfe0f5'; x.font='700 13.5px '+FONT; x.textAlign='center'; x.fillText('BI 分析',326,362);
+    x.font='10.5px '+FONT; x.fillStyle='#8fb0dd'; x.fillText('汇总 · 口径校验',326,380); x.textAlign='left';
+    node(249,466,190,40,'ERP 业务系统','#ff9db1',stage===2,'销售订单数据源');
+    const steps=['接收请求','权限校验','数据湖提取','生成报表'];
+    steps.forEach((st2,i)=>{ const cx=66+i*112, on=stage===i, done=stage>i;
+      rr(x,cx,502,102,30,15); x.fillStyle=on?'rgba(107,197,255,.22)':(done?'rgba(124,252,152,.14)':'rgba(255,255,255,.05)'); x.fill();
+      x.strokeStyle=on?'#6bc5ff':(done?'rgba(124,252,152,.6)':'rgba(255,255,255,.14)'); x.lineWidth=1; x.stroke();
+      x.fillStyle=on?'#fff':(done?'#7cfc98':'#8fa3c8'); x.font='600 12.5px '+FONT; x.textAlign='center';
+      x.fillText((done?'✓ ':'')+st2,cx+51,521); x.textAlign='left'; });
+    pulse([[500,120],[420,116],[336,150],[336,164]],(ph-5.2)/1.2,'#6bc5ff');
+    pulse([[212,182],[168,222],[152,240]],(ph-6.4)/1.1,'#ffd166');
+    pulse([[249,190],[249,300],[200,338],[176,352]],(ph-9.2)/1.3,'#7cfc98');
+    pulse([[176,352],[240,300],[249,196],[420,116],[500,120]],(ph-12.6)/0.9,'#7cfc98');
+    /* ---------- right: AI chat ---------- */
+    rr(x,498,14,648,532,12); x.fillStyle='rgba(10,20,38,.85)'; x.fill(); x.strokeStyle='rgba(110,160,230,.35)'; x.stroke();
+    x.fillStyle='#5b8def'; x.beginPath(); x.arc(532,44,13,0,7); x.fill();
+    x.fillStyle='#fff'; x.font='700 12px '+FONT; x.textAlign='center'; x.fillText('光',532,48); x.textAlign='left';
+    x.fillStyle='#eaf3ff'; x.font='700 15.5px '+FONT; x.fillText('光智体 · AI 报表助手',554,49);
+    x.fillStyle='#7cfc98'; x.beginPath(); x.arc(1118,44,4.5,0,7); x.fill();
+    x.fillStyle='#8fb0dd'; x.font='12px '+FONT; x.fillText('在线',1082,48);
+    x.strokeStyle='rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(514,64); x.lineTo(1130,64); x.stroke();
+    const Q='生成9月份国内销售订单明细表';
+    if(ph>=5.2){ const bw=252;
+      rr(x,1110-bw,80,bw,40,10); x.fillStyle='#7ed957'; x.fill();
+      x.fillStyle='#12240d'; x.font='14px '+FONT; x.fillText(Q,1110-bw+13,105);
+      x.fillStyle='#3f7fbf'; x.beginPath(); x.arc(1124,100,11,0,7); x.fill(); x.fillStyle='#fff'; x.font='700 11px '+FONT; x.textAlign='center'; x.fillText('我',1124,104); x.textAlign='left'; }
+    if(ph>=5.6){ const hasTable=ph>=12.6, bh=hasTable?296:46;
+      x.fillStyle='#5b8def'; x.beginPath(); x.arc(538,152,11,0,7); x.fill(); x.fillStyle='#fff'; x.font='700 10.5px '+FONT; x.textAlign='center'; x.fillText('光',538,156); x.textAlign='left';
+      rr(x,558,132,552,bh,10); x.fillStyle='rgba(30,46,74,.95)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.lineWidth=1; x.stroke();
+      let status;
+      if(ph<6.4) status='好的，正在为您生成报表…';
+      else if(ph<9.2) status='已接入系统，正在校验数据权限…';
+      else if(ph<12.6) status='权限通过 · 正在从数据湖提取 9 月订单数据…';
+      else status='已生成 · 9 月国内销售订单共 5 笔，合计 ¥525,100';
+      x.fillStyle='#eaf3ff'; x.font='13.5px '+FONT; x.fillText(status,574,160);
+      if(ph>=9.2&&ph<12.6){ rr(x,574,170,300,7,3.5); x.fillStyle='rgba(255,255,255,.14)'; x.fill(); rr(x,574,170,300*((ph-9.2)/3.4),7,3.5); x.fillStyle='#6bc5ff'; x.fill(); }
+      if(ph>=6.4&&ph<9.2){ x.fillStyle='#ffd166'; x.font='12.5px '+FONT; const dots='.'.repeat(1+Math.floor(t*2.4)%3); x.fillText('权限审计中'+dots,574,184); }
+      if(hasTable){
+        x.fillStyle='#fff'; x.font='700 15px '+FONT; x.fillText('9月份国内销售订单明细表',574,204);
+        x.fillStyle='rgba(107,197,255,.20)'; x.fillRect(574,214,522,25);
+        x.fillStyle='#bfe0ff'; x.font='700 11.5px '+FONT;
+        x.fillText('订单号',582,230); x.fillText('日期',668,230); x.fillText('客户',726,230); x.fillText('产品',872,230);
+        x.textAlign='right'; x.fillText('数量',1012,230); x.fillText('金额（元）',1090,230); x.textAlign='left';
+        const rows=[['SO-2509012','09-03','深圳华强电子','面板灯 600×600','1,200','96,000'],
+                    ['SO-2509056','09-08','广州建安工程','路灯 100W','850','127,500'],
+                    ['SO-2509118','09-15','上海明辉贸易','筒灯 12W','3,600','108,000'],
+                    ['SO-2509173','09-21','北京中天科技','洗墙灯 24W','640','83,200'],
+                    ['SO-2509245','09-27','成都瑞光商贸','投光灯 200W','920','110,400']];
+        x.font='12px '+FONT;
+        rows.forEach((r,i)=>{ const ry=239+i*25, a=ss(12.9+i*.45,13.4+i*.45,ph); if(a<=0) return;
+          x.globalAlpha=a; if(i%2===0){ x.fillStyle='rgba(255,255,255,.045)'; x.fillRect(574,ry,522,25); }
+          x.fillStyle='#dbe7ff'; x.fillText(r[0],582,ry+17); x.fillText(r[1],668,ry+17); x.fillText(r[2],726,ry+17); x.fillText(r[3],872,ry+17);
+          x.textAlign='right'; x.fillText(r[4],1012,ry+17); x.fillText(r[5],1090,ry+17); x.textAlign='left'; x.globalAlpha=1; });
+        const ta=ss(15.3,15.8,ph);
+        if(ta>0){ x.globalAlpha=ta; x.strokeStyle='rgba(124,252,152,.5)'; x.beginPath(); x.moveTo(574,366); x.lineTo(1096,366); x.stroke();
+          x.fillStyle='#7cfc98'; x.font='700 12.5px '+FONT; x.fillText('合计',582,385);
+          x.textAlign='right'; x.fillText('7,210',1012,385); x.fillText('¥525,100',1090,385); x.textAlign='left'; x.globalAlpha=1; }
+        if(ph>=17.3){ const btns=[['打开',896],['转发',968],['置顶',1040]];
+          btns.forEach((bn,i)=>{ const ba=ss(17.3+i*.16,17.7+i*.16,ph); if(ba<=0) return;
+            x.globalAlpha=ba; const bw2=64*ba;
+            rr(x,bn[1]+(64-bw2)/2,398,64,26,13); x.fillStyle='rgba(20,40,72,.98)'; x.fill(); x.strokeStyle='rgba(124,252,152,.65)'; x.lineWidth=1.2; x.stroke();
+            x.fillStyle='#7cfc98'; x.font='600 12.5px '+FONT; x.textAlign='center'; x.fillText(bn[0],bn[1]+32,415); x.textAlign='left'; x.globalAlpha=1; });
+          x.strokeStyle='rgba(255,209,102,.75)'; x.setLineDash([4,4]); rr(x,884,392,222,38,8); x.stroke(); x.setLineDash([]); }
+      } }
+    rr(x,514,478,616,52,10); x.fillStyle='rgba(17,29,50,.95)'; x.fill(); x.strokeStyle='rgba(120,160,220,.3)'; x.stroke();
+    const typed = ph<2.2?0 : ph<5.0? Math.floor((ph-2.2)/2.8*Q.length) : (ph<5.2? Q.length : 0);
+    x.font='14px '+FONT;
+    if(ph<5.2){ if(typed>0){ x.fillStyle='#eaf3ff'; x.fillText(Q.slice(0,typed),530,510); }
+      else { x.fillStyle='rgba(160,185,225,.45)'; x.fillText('请输入您的问题…',530,510); }
+      if(Math.floor(t*1.6)%2===0){ x.fillStyle='#6bc5ff'; x.fillRect(532+x.measureText(Q.slice(0,typed)).width+2,497,2,17); } }
+    else { x.fillStyle='rgba(160,185,225,.45)'; x.fillText('请输入您的问题…',530,510); }
+    rr(x,1034,486,84,36,8); x.fillStyle=(ph>=4.9&&ph<5.4)?'#8be04e':'#2f6fd0'; x.fill();
+    x.fillStyle='#fff'; x.font='700 13.5px '+FONT; x.textAlign='center'; x.fillText('发送',1076,508); x.textAlign='left';
+    if(ph>=15.6){ const ck=ss(15.6,17.2,ph), mx=lp(770,1086,ck), my=lp(458,398,ck);
+      if(ph>=17.2){ x.strokeStyle='rgba(255,209,102,.5)'; x.beginPath(); x.arc(1096,388,10+3*Math.sin(t*5),0,7); x.stroke(); }
+      x.save(); x.translate(mx,my); x.fillStyle='#fff'; x.strokeStyle='#222'; x.lineWidth=1.2;
+      x.beginPath(); x.moveTo(0,0); x.lineTo(0,17); x.lineTo(4.6,13.4); x.lineTo(7,19); x.lineTo(9.6,17.6); x.lineTo(7.2,12); x.lineTo(12,12); x.closePath(); x.fill(); x.stroke(); x.restore(); }
   });
 })();
 </script>
