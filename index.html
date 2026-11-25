@@ -124,6 +124,24 @@
   .p6 .ai-band{padding:1.3vh 1.6vw}
   .p6 .ai-band h3{font-size:2.2vh;margin-bottom:.6vh}
   .p6 .kpi-row{margin-bottom:1.1vh}
+  .org-root{display:flex;justify-content:center;margin-bottom:.85vh}
+  .org-root span{background:linear-gradient(90deg,rgba(0,129,204,.38),rgba(235,110,165,.32));border:1px solid rgba(255,255,255,.38);color:#fff;font-size:2.25vh;font-weight:800;padding:.65vh 2.4vw;border-radius:999px;letter-spacing:.18em}
+  .org{display:grid;grid-template-columns:1.1fr .92fr .88fr 1.24fr;gap:1.1vw;flex:1;min-height:0}
+  .orgcol{display:flex;flex-direction:column;gap:.52vh;min-height:0}
+  .orghead{border-radius:10px;padding:.58vh .9vw;font-size:2.05vh;font-weight:800;color:#141824;display:flex;justify-content:space-between;align-items:baseline;flex:none}
+  .orghead small{font-size:1.35vh;font-weight:700;opacity:.72}
+  .pcard{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);border-radius:10px;padding:.48vh .75vw}
+  .pname{font-size:1.76vh;font-weight:700;color:#fff;margin-bottom:.28vh}
+  .pname .tag{font-size:1.2vh;font-weight:700;border-radius:999px;padding:.08vh .55vw;margin-left:.35vw;vertical-align:middle}
+  .tag-out{background:rgba(255,93,93,.16);color:#ff9c9c;border:1px solid rgba(255,93,93,.5)}
+  .tag-move{background:rgba(255,209,102,.13);color:#ffd166;border:1px solid rgba(255,209,102,.5)}
+  .pgrp{font-size:1.42vh;font-weight:700;margin:.42vh 0 .22vh}
+  .ptags{line-height:1.45}
+  .ptags i{font-style:normal;display:inline-block;font-size:1.26vh;color:#c6d4f2;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);border-radius:6px;padding:.05vh .34vw;margin:0 .16vw .24vh 0}
+  .ptags i b{color:#fff}
+  .pstat{font-size:1.45vh;color:#9fb2d8;margin:.08vh 0 .28vh}
+  .pstat b{color:#fff;font-size:1.95vh}
+  .orgfoot{border-radius:10px;padding:.65vh .9vw;font-size:1.55vh;text-align:center;margin-top:auto;flex:none}
   .pac-band{margin-top:auto;background:rgba(6,10,18,.45);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:1.6vh 1.6vw}
   .pac-band canvas{width:100%;height:11vh}
   .pac-line{text-align:center;font-size:2.2vh;color:#cfe0ff;margin-top:1.1vh;letter-spacing:.06em}
@@ -317,7 +335,7 @@
     </div>
   </section>
 
-  <!-- Part 1 · Page 8: org chart (blank, chart to be added by the user later) -->
+  <!-- Part 1 · Page 8: org chart (data: upload.pdf, 2026-11-25) -->
   <section class="slide cslide" data-slide>
     <div class="glass">
       <i class="glass-logo"></i>
@@ -325,7 +343,44 @@
         <div class="pover">三、组织架构</div>
         <h1 class="ptitle neon-w">组织架构图</h1>
       </div>
-      <div class="orgblank"></div>
+      <div class="org-root"><span>数智化创新部</span></div>
+      <div class="org">
+        <div class="orgcol">
+          <div class="orghead" style="background:linear-gradient(90deg,#3ddc84,#2bb673)">梁容坤<small>AI Agent 矩阵</small></div>
+          <div class="pcard">
+            <div class="pgrp" style="color:#3ddc84">AI Agent · 系统框架</div>
+            <div class="ptags"><i>BK PLM 系统</i><i>GL PLM 系统</i><i>SRM 系统</i><i>数据湖框架</i><i>MES 框架</i><i>WMS 框架</i><i>APS 框架</i><i>ERP 框架</i><i>OA 新客户端</i></div>
+            <div class="pgrp" style="color:#3ddc84">AI 应用</div>
+            <div class="ptags"><i>BI 系统</i><i>知识库</i><i>光智体</i><i>安智体</i><i>敏感过滤器</i></div>
+            <div class="pgrp" style="color:#3ddc84">AI Agent · 产品</div>
+            <div class="ptags"><i>Po App</i><i>文档管理器</i><i>More</i></div>
+            <div class="pgrp" style="color:#3ddc84">服务器运维</div>
+            <div class="ptags"><i>数据库</i><i>OA</i><i>ERP 应用</i><i>中转</i><i>虚拟</i></div>
+            <div class="pgrp" style="color:#3ddc84">其他</div>
+            <div class="ptags"><i>行政事务</i></div>
+          </div>
+        </div>
+        <div class="orgcol">
+          <div class="orghead" style="background:linear-gradient(90deg,#ff6b6b,#f0524f)">运维<small>4 人</small></div>
+          <div class="pcard"><div class="pname">刘子均</div><div class="ptags"><i>网络维护</i><i>日常运维</i></div></div>
+          <div class="pcard"><div class="pname">唐毅</div><div class="ptags"><i>服务器维护</i><i>日常运维</i><i>网络账号管理</i></div></div>
+          <div class="pcard"><div class="pname">江世旺</div><div class="ptags"><i>监控维护</i><i>日常运维</i></div></div>
+          <div class="pcard"><div class="pname">董志乾<span class="tag tag-out">已离职</span></div><div class="ptags"><i>光沐运维</i><i>日常运维</i></div></div>
+          <div class="orgfoot" style="border:1px dashed rgba(255,107,107,.55);color:#ffb3b3">全年运维处理 共 <b style="color:#fff;font-size:1.9vh">1971</b> 次</div>
+        </div>
+        <div class="orgcol">
+          <div class="orghead" style="background:linear-gradient(90deg,#ffb35c,#f28c28)">ERP<small>2 人</small></div>
+          <div class="pcard"><div class="pname">温子娟</div><div class="pstat">问题处理 <b>2965</b> 项</div><div class="ptags"><i>ERP 实施 <b>6 项</b></i><i>报表开发 <b>37 项</b></i></div></div>
+          <div class="pcard"><div class="pname">杨晨禹</div><div class="ptags"><i>账号管理</i><i>问题处理 <b>11 项</b></i></div></div>
+        </div>
+        <div class="orgcol">
+          <div class="orghead" style="background:linear-gradient(90deg,#ffd166,#f5b921)">开发<small>4 人</small></div>
+          <div class="pcard"><div class="pname">何金隆<span class="tag tag-move">调往 GL</span></div><div class="pstat">OA 开发 <b>137</b> 项</div><div class="ptags"><i>BK WMS 开发</i><i>GL WMS 开发</i><i>GM WMS 开发</i><i>GL MES 开发</i><i>GM 工资条</i><i>BK 工资条</i><i>报表开发 <b>1 项</b></i><i>ERP 功能 <b>1 项</b></i><i>AI 编程</i></div></div>
+          <div class="pcard"><div class="pname">高嘉桐</div><div class="pstat">OA 开发 <b>40</b> 项</div><div class="ptags"><i>ERP 二开 <b>2 项</b></i><i>BK CRM 开发</i><i>BK SRM 开发</i><i>GM CRM 开发</i><i>Po CMS 开发</i><i>BSW MES 开发</i><i>发票系统开发</i><i>固定资产系统开发</i><i>AI 编程</i></div></div>
+          <div class="pcard"><div class="pname">王旭</div><div class="ptags"><i>报表开发 <b>25 项</b></i><i>ERP 二开 <b>26 项</b></i><i>OA 开发 <b>11 项</b></i><i>OA 接口 <b>23 项</b></i><i>AI 辅助</i></div></div>
+          <div class="pcard"><div class="pname">梁雯科</div><div class="pstat">大屏开发 <b>19</b> 项</div><div class="ptags"><i>GM WMS 开发</i><i>GM MES 开发</i><i>GM MES APP 开发</i><i>GM APS 开发</i><i>BSW WMS 开发</i><i>数据采集开发</i><i>AI 编程</i></div></div>
+        </div>
+      </div>
       <div class="pfoot"><span>第一部分 · 2026年总结</span><span></span></div>
     </div>
   </section>
