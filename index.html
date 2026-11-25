@@ -254,8 +254,8 @@
         <h1 class="ptitle neon-w">项目开发和优化完成情况</h1>
       </div>
       <div class="kpi-row">
-        <div class="kpi"><div class="n">444<small> 项</small></div><div class="t">全年开发与优化总量</div></div>
-        <div class="kpi"><div class="n">425<small> 项</small></div><div class="t">OA 平台（接口 / 流程 / 视图）</div></div>
+        <div class="kpi"><div class="n">463<small> 项</small></div><div class="t">全年开发与优化总量</div></div>
+        <div class="kpi"><div class="n">426<small> 项</small></div><div class="t">OA 平台（接口 / 流程 / 视图 / 客户端）</div></div>
         <div class="kpi"><div class="n">19<small> 项</small></div><div class="t">大屏系统</div></div>
         <div class="kpi"><div class="n">6<small> 个</small></div><div class="t">服务单位 GL · GM · BK · BSW · QY · 公用</div></div>
       </div>
@@ -624,7 +624,7 @@
     x.stroke(); x.shadowBlur=0;
   });
 
-  // --- pac-man eats the token beans; the consumption counter climbs to 2.85W ---
+  // --- pac-man eats the token beans; the consumption counter climbs to 3.15W ---
   regAnim('anim-pac',(x,W,H,t)=>{
     x.clearRect(0,0,W,H);
     const N=44, X0=70, X1=880, Y=60, CYCLE=10.5, TRAVEL=8.6;
@@ -638,7 +638,7 @@
     for(let i=0;i<N;i++){ const dx=X0+(X1-X0)*i/(N-1);
       if(!x._eaten[i]&&px>dx){ x._eaten[i]=true; x._count++;
         const el=document.getElementById('tokenCount');
-        if(el) el.textContent=(2.85*x._count/N).toFixed(2); }
+        if(el) el.textContent=(3.15*x._count/N).toFixed(2); }
       if(!x._eaten[i]){ x.fillStyle='#ffd76b'; x.beginPath(); x.arc(dx,Y,4.5,0,7); x.fill(); } }
     if(tc<TRAVEL){
       const m=0.30*Math.abs(Math.sin(t*11));
