@@ -35984,8 +35984,10 @@ try {
     neon1.visible = true;
     neon2.visible = true;
   }, scheduleAbd = function() {
-    abdWait = abdTaken.size >= 11 ? -1 : 1.2 + Math.random() * 3.5;
+    abdWait = abdTaken.size >= 11 ? -1 : 60 + Math.random() * 120;
   }, startAbductions = function() {
+    if (abdSeries) return;
+    abdSeries = true;
     abdTaken.clear();
     abdK = 0;
     coreTubes.visible = glowTubes.visible = joints.visible = true;
@@ -36012,6 +36014,7 @@ try {
     abd = null;
     abdK = 0;
     abdWait = -1;
+    abdSeries = false;
     abdTaken.clear();
     ufoG.visible = false;
     beamMat.opacity = 0;
@@ -36291,7 +36294,7 @@ try {
     restoreNeons();
     resetAbduction();
   };
-  let abd = null, abdK = 0, abdWait = -1;
+  let abd = null, abdK = 0, abdWait = -1, abdSeries = false;
   const abdTaken = /* @__PURE__ */ new Set();
   const ufoG = new Group();
   const ufoBody = new Mesh(
