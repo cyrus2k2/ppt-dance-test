@@ -36395,34 +36395,35 @@ try {
       const a = Math.random() * Math.PI * 2, sp = 90 + Math.random() * 175;
       sky.sparks.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0, max: R(1.4, 2.4), col, sz: R(1.4, 2.6) });
     }
-  }, drawUFO = function(u) {
+  }, drawUFO = function(u, sc) {
+    const S = sc || 1;
     const W = skyC.width, H = skyC.height;
     const x = u.x * W, y = (u.y + Math.sin(u.t * 2.2) * 4e-3) * H;
-    const gl = skyG.createRadialGradient(x, y + 12, 2, x, y + 12, 48);
+    const gl = skyG.createRadialGradient(x, y + 12 * S, 2, x, y + 12 * S, 48 * S);
     gl.addColorStop(0, "rgba(140,255,190,0.20)");
     gl.addColorStop(1, "rgba(140,255,190,0)");
     skyG.fillStyle = gl;
     skyG.beginPath();
-    skyG.ellipse(x, y + 12, 48, 17, 0, 0, 7);
+    skyG.ellipse(x, y + 12 * S, 48 * S, 17 * S, 0, 0, 7);
     skyG.fill();
     skyG.fillStyle = "rgba(175,225,255,0.92)";
     skyG.beginPath();
-    skyG.ellipse(x, y - 5, 13, 9, 0, Math.PI, 0);
+    skyG.ellipse(x, y - 5 * S, 13 * S, 9 * S, 0, Math.PI, 0);
     skyG.fill();
-    const bg = skyG.createLinearGradient(x, y - 5, x, y + 9);
+    const bg = skyG.createLinearGradient(x, y - 5 * S, x, y + 9 * S);
     bg.addColorStop(0, "#e8eef5");
     bg.addColorStop(0.55, "#aeb9c6");
     bg.addColorStop(1, "#6e7a89");
     skyG.fillStyle = bg;
     skyG.beginPath();
-    skyG.ellipse(x, y + 2, 30, 9, 0, 0, 7);
+    skyG.ellipse(x, y + 2 * S, 30 * S, 9 * S, 0, 0, 7);
     skyG.fill();
     const cols = ["#ff5a5a", "#ffd166", "#7cfc98", "#6bc5ff", "#ff9ff3"];
     for (let i = 0; i < 5; i++) {
       skyG.globalAlpha = Math.sin(u.t * 7 + i * 1.7) > 0 ? 1 : 0.15;
       skyG.fillStyle = cols[i];
       skyG.beginPath();
-      skyG.arc(x - 24 + i * 12, y + 5, 2.6, 0, 7);
+      skyG.arc(x - 24 * S + i * 12 * S, y + 5 * S, 2.6 * S, 0, 7);
       skyG.fill();
     }
     skyG.globalAlpha = 1;
@@ -36430,10 +36431,14 @@ try {
     const W = skyC.width, H = skyC.height;
     skyG.clearRect(0, 0, W, H);
     if (nightAmt < 0.55) {
-      skyPlane.material.opacity = 0;
+      if (fin && fin.amt > 3e-3) {
+        drawFinaleSigns();
+        skyPlane.material.opacity = fin.amt;
+        skyTex.needsUpdate = true;
+      } else skyPlane.material.opacity = 0;
       return;
     }
-    skyPlane.material.opacity = Math.min(1, nightAmt);
+    skyPlane.material.opacity = Math.max(Math.min(1, nightAmt), fin ? fin.amt : 0);
     sky.tMeteor -= dt;
     sky.tFire -= dt;
     sky.tUfo -= dt;
@@ -36528,6 +36533,7 @@ try {
       drawUFO(removal.u1);
       drawUFO(removal.u2);
     }
+    if (fin && fin.amt > 3e-3) drawFinaleSigns();
     skyTex.needsUpdate = true;
   }, startRemoval = function() {
     if (!removal && neon1.visible) {
@@ -36541,7 +36547,7 @@ try {
     neon1.visible = true;
     neon2.visible = true;
   }, scheduleAbd = function() {
-    abdWait = abdTaken.size >= 11 ? -1 : 60 + Math.random() * 120;
+    abdWait = abdTaken.size >= 11 ? -1 : finRush ? 0.05 : 60 + Math.random() * 120;
   }, startAbductions = function() {
     if (abdSeries) return;
     abdSeries = true;
@@ -36613,6 +36619,89 @@ try {
       ufoG.visible = false;
       scheduleAbd();
     }
+  }, finGlass = function(on) {
+    const secs = document.querySelectorAll("[data-slide]");
+    const g = secs.length && secs[secs.length - 1].querySelector(".glass");
+    if (!g) return;
+    g.style.transition = "background 1.4s ease, backdrop-filter 1.4s ease, -webkit-backdrop-filter 1.4s ease";
+    if (on) {
+      g.style.background = "linear-gradient(160deg, rgba(16,24,44,.20), rgba(10,14,28,.13))";
+      g.style.backdropFilter = "blur(5px) saturate(1.35)";
+      g.style.webkitBackdropFilter = "blur(5px) saturate(1.35)";
+    } else {
+      g.style.background = "";
+      g.style.backdropFilter = "";
+      g.style.webkitBackdropFilter = "";
+    }
+  }, finStart = function() {
+    if (!fin) fin = { amt: 0, dir: 1, t: 0, signs: abdTaken.size >= 11 };
+    fin.dir = 1;
+    finGlass(true);
+    if (abdTaken.size < 11) {
+      finRush = true;
+      if (abdWait > 0.05) abdWait = 0.05;
+    }
+    nightTarget = 1;
+  }, finStop = function() {
+    finGlass(false);
+    if (fin) fin.dir = -1;
+    if (finRush) {
+      finRush = false;
+      if (abdSeries && abdTaken.size < 11) scheduleAbd();
+    }
+  }, updFinale = function(dt) {
+    if (!fin) return;
+    fin.t += dt;
+    if (finRush && abdTaken.size >= 11) {
+      finRush = false;
+      fin.signs = true;
+    }
+    if (fin.dir > 0 && fin.signs) fin.amt = Math.min(1, fin.amt + dt / 2.4);
+    else if (fin.dir < 0) {
+      fin.amt = Math.max(0, fin.amt - dt / 0.8);
+      if (fin.amt <= 0) fin = null;
+    }
+  }, neonText = function(txt, cx, cy, px, col, core, alpha) {
+    const W = skyC.width, H = skyC.height;
+    skyG.save();
+    skyG.globalAlpha = alpha;
+    skyG.textAlign = "center";
+    skyG.textBaseline = "middle";
+    skyG.font = "700 " + px + 'px "ZCOOL KuaiLe","PingFang SC","Microsoft YaHei",sans-serif';
+    skyG.shadowColor = col;
+    skyG.shadowBlur = 36;
+    skyG.fillStyle = col;
+    skyG.fillText(txt, cx * W, cy * H);
+    skyG.fillText(txt, cx * W, cy * H);
+    skyG.shadowBlur = 13;
+    skyG.fillStyle = core;
+    skyG.fillText(txt, cx * W, cy * H);
+    skyG.restore();
+  }, drawFinaleSigns = function() {
+    const W = skyC.width, H = skyC.height;
+    const e = easeIO(fin.amt);
+    const yOff = (1 - e) * -0.3;
+    const bob = Math.sin(fin.t * 2.1) * 4e-3 * e;
+    let alpha = fin.amt;
+    if (fin.amt < 0.6) alpha *= Math.sin(fin.t * 34) > -0.3 ? 1 : 0.12;
+    const B = { cx: 0.5825, cy: 0.478, ufoY: 0.392, ufoX: [0.408, 0.757], corX: [0.435, 0.73], corY: 0.45, sc: 1.15 };
+    const Sm = { cx: 0.5825, cy: 0.566, ufoY: 0.5, ufoX: [0.447, 0.718], corX: [0.452, 0.713], corY: 0.544, sc: 0.62 };
+    skyG.save();
+    skyG.strokeStyle = "rgba(205,225,255,0.85)";
+    skyG.lineWidth = 2;
+    for (const cfg of [B, Sm]) {
+      for (let i = 0; i < 2; i++) {
+        skyG.beginPath();
+        skyG.moveTo(cfg.ufoX[i] * W, (cfg.ufoY + yOff + bob + 0.01) * H);
+        skyG.lineTo(cfg.corX[i] * W, (cfg.corY + yOff + bob) * H);
+        skyG.stroke();
+      }
+    }
+    skyG.restore();
+    neonText("\uFF5E\u8C22\u8C22\u89C2\u770B\uFF5E", B.cx, B.cy + yOff + bob, 88, "#eb6ea5", "#ffe3f0", alpha);
+    neonText("\u795D\uFF1A2027\u5E74\u52BF\u5982\u7834\u7AF9", Sm.cx, Sm.cy + yOff + bob, 41, "#ffd166", "#fff3d0", alpha);
+    for (let i = 0; i < 2; i++) drawUFO({ x: B.ufoX[i], y: B.ufoY + yOff + bob, t: fin.t + i * 1.3 }, B.sc);
+    for (let i = 0; i < 2; i++) drawUFO({ x: Sm.ufoX[i], y: Sm.ufoY + yOff + bob, t: fin.t + 0.6 + i * 1.7 }, Sm.sc);
   }, updRemoval = function(dt) {
     if (restoring) {
       const k = Math.min(1, dt * 2.4);
@@ -36850,6 +36939,8 @@ try {
     stageTarget = 1;
     restoreNeons();
     resetAbduction();
+    fin = null;
+    finRush = false;
   };
   let abd = null, abdK = 0, abdWait = -1, abdSeries = false;
   const abdTaken = /* @__PURE__ */ new Set();
@@ -36880,11 +36971,15 @@ try {
   ufoG.add(beamMesh);
   ufoG.visible = false;
   scene.add(ufoG);
+  let finRush = false;
   window.__ABD__ = () => ({ visit: !!abd, di: abd ? abd.di : -1, k: +abdK.toFixed(2), taken: abdTaken.size, wait: +abdWait.toFixed(1), fountAmt: +fountAmt.toFixed(2), removalDone });
   window.__ABD_NOW__ = () => {
     if (!abd) startAbdVisit();
     if (abd && abd.t < 1.8) abd.t = 1.8;
   };
+  let fin = null;
+  window.__finaleCtl = { start: finStart, stop: finStop };
+  window.__FIN__ = () => ({ active: !!fin, amt: fin ? +fin.amt.toFixed(2) : 0, signs: fin ? fin.signs : false, rush: finRush, taken: abdTaken.size });
   const PC = { x: 0.5825, y: 0.4585 }, WC = { x: 0.5825, y: 0.5325 };
   const easeIO = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   const lerp2 = (a, b, e) => ({ x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e });
@@ -36922,7 +37017,8 @@ try {
       }
     }
     tAcc += dt;
-    updAbduction(dt);
+    updAbduction(finRush ? dt * 3 : dt);
+    updFinale(dt);
     updateLEDVisuals(tAcc);
     updRemoval(dt);
     updateFountain(dt);
@@ -37108,6 +37204,11 @@ function ensureAnalyser() {
 window.__onSlideChange = (n) => {
   if (n >= 1 && window.__stageLeave) window.__stageLeave();
   if (n === 0 && window.__stageRestore) window.__stageRestore();
+  if (window.__finaleCtl) {
+    const lastIx = document.querySelectorAll("[data-slide]").length - 1;
+    if (n === lastIx) window.__finaleCtl.start();
+    else window.__finaleCtl.stop();
+  }
   if (n !== 0 && showPhase === "dance" && !bgm.paused) bgm.pause();
   else if (n === 0 && showPhase === "dance" && musicWanted && bgm.paused) bgm.play().catch(() => {
   });
