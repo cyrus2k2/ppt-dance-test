@@ -94,6 +94,7 @@
   .prompt-body{font-size:2.45vh;line-height:1.75;color:#eef3ff}
   .genie{flex:1;min-height:0;display:flex}
   .genie video{width:100%;height:100%;object-fit:contain;background:#000;border-radius:12px}
+  .slide .crit-desc{font-size:1.6vh;line-height:1.5;color:#b9c8e8;margin-top:.9vh}
   .orgblank{flex:1;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
   .cols2{display:grid;grid-template-columns:1.05fr 1fr;gap:2vw;flex:1;min-height:0;width:100%}
   .rows.compact{gap:1.05vh}
@@ -561,13 +562,13 @@
         <div class="pover">二、离散型制造型企业</div>
         <h1 class="ptitle neon-w">智能化落地准则</h1>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:1.8vh 1.6vw;flex:1;min-height:0">
-        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">1</div><h3 style="font-size:2.6vh">基础资料和工艺标准化准确度</h3></div></div>
-        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">2</div><h3 style="font-size:2.6vh">打通信息孤岛</h3></div></div>
-        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">3</div><h3 style="font-size:2.6vh">人机数据准确度</h3></div></div>
-        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">4</div><h3 style="font-size:2.6vh">AI 给建议，人决策</h3></div></div>
-        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">5</div><h3 style="font-size:2.6vh">经验转化为数据</h3></div><p style="font-size:1.9vh;color:#9fb2d8;margin-top:.8vh">工程师经验标签化与人机数据对齐</p></div>
-        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">6</div><h3 style="font-size:2.6vh">先难后易的推进</h3></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:1.3vh 1.6vw;flex:1;min-height:0">
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">1</div><h3 style="font-size:2.3vh">基础资料和工艺标准化准确度</h3></div><p class="crit-desc" data-crit="0">物料、BOM 与工艺路线先统一标准、保证准确——这是智能化的地基，数据不准，后面的分析与建议都会跑偏。</p></div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">2</div><h3 style="font-size:2.3vh">打通信息孤岛</h3></div><p class="crit-desc" data-crit="1">ERP、MES、OA、WMS 等系统互联互通，数据一次录入、全程共享，终结重复录入与各系统口径不一。</p></div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">3</div><h3 style="font-size:2.3vh">人机数据准确度</h3></div><p class="crit-desc" data-crit="2">现场采集及时准确，人录与机采互相校验，让系统里的数据与车间的真实状态始终保持一致。</p></div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">4</div><h3 style="font-size:2.3vh">AI 给建议，人决策</h3></div><p class="crit-desc" data-crit="3">AI 负责分析、预警并给出方案选项；关键判断与最终拍板始终由人负责，责任清晰、风险可控。</p></div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">5</div><h3 style="font-size:2.3vh">经验转化为数据</h3></div><p style="font-size:1.65vh;color:#9fb2d8;margin-top:.7vh">工程师经验标签化与人机数据对齐</p><p class="crit-desc" data-crit="4">把老师傅的经验拆解、标注成可复用的数据资产，让个人经验变成组织能力，新人也能快速上手。</p></div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center"><div style="display:flex;align-items:center;gap:.8vw"><div class="badge">6</div><h3 style="font-size:2.3vh">先难后易的推进</h3></div><p class="crit-desc" data-crit="5">先啃最痛、最难的环节，做出标杆效果再逐步推广——最难的都做成了，后面的推进自然顺畅。</p></div>
       </div>
       <div class="pfoot"><span>第二部分 · 2027年计划</span><span></span></div>
     </div>
@@ -812,9 +813,11 @@
 </div>
 
 
+<script src="content/criteria.js"></script>
 <script>
   // ---------- Slide deck (PPT clicker) ----------
   const slides=[...document.querySelectorAll('[data-slide]')];
+  if(window.__CRITERIA__) document.querySelectorAll('[data-crit]').forEach(el=>{ const t=window.__CRITERIA__[+el.getAttribute('data-crit')]; if(t) el.textContent=t; });
   let cur=0;
   function go(n){
     if(closing && n!==slides.length-1) exitClosing();
