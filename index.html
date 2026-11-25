@@ -105,6 +105,8 @@
   #architecture-svg path.active-flow{stroke-dasharray:9 6;animation:archFlow .7s linear infinite;stroke-width:3.2px !important}
   #architecture-svg path.flow-on{stroke-width:3.2px !important}
   @keyframes archFlow{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
+  #architecture-svg .arch-node.arch-hop{animation:archHop .55s ease}
+  @keyframes archHop{0%{transform:translateY(0)}35%{transform:translateY(-8px)}70%{transform:translateY(2px)}100%{transform:translateY(0)}}
   .orgblank{flex:1;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
   .cols2{display:grid;grid-template-columns:1.05fr 1fr;gap:2vw;flex:1;min-height:0;width:100%}
   .rows.compact{gap:1.05vh}
@@ -647,17 +649,7 @@
                 </marker>
               </defs>
               <!-- 左下角：V1.2 核心协同说明卡片 -->
-              <g class="zone-group" data-flows="all ext int-ok int-deny local ot">
-                <rect x="36" y="754" width="246" height="168" rx="14" fill="#eef2ff" fill-opacity="0.6" stroke="#a5b4fc" stroke-width="1.4" />
-                <rect x="52" y="743" width="154" height="22" rx="11" fill="#4f46e5" />
-                <text x="129" y="758" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="700">V1.2 统一安全协同亮点</text>
-                <text x="50" y="786" fill="#1e1b4b" font-size="11" font-weight="700">权限审核 → 本地 AI 服务器统一中枢</text>
-                <text x="50" y="808" fill="#334155" font-size="10.2">1. 内部业务与产线联动均先过权限审计</text>
-                <text x="50" y="828" fill="#334155" font-size="10.2">2. 放行后由本地 AI 服务器统筹推理</text>
-                <text x="50" y="848" fill="#334155" font-size="10.2">3. 向下协同 10 大底座生成报表/表单</text>
-                <text x="50" y="868" fill="#334155" font-size="10.2">4. 向右联动产线装备并反馈设备或 OA</text>
-                <text x="50" y="894" fill="#4338ca" font-size="10" font-weight="600">IT 业务 + OT 产线全程内网鉴权闭环</text>
-              </g>
+              
 
               <!-- 分区 B：内部业务数据、权限与私有算力闭环 -->
               <g class="zone-group" data-flows="int-ok int-deny local ot">
@@ -752,6 +744,16 @@
               <!-- 6. 权限审计智能体 -> 权限审核判断 -->
               <g class="arch-edge" data-flows="int-ok int-deny ot">
                 <path d="M 530 340 L 568 340" fill="none" stroke="#d97706" stroke-width="2.2" marker-end="url(#arrow-amber)" />
+              </g>
+              <g class="arch-edge" data-flows="int-deny">
+                <path d="M 684 340 L 730 340" fill="none" stroke="#e11d48" stroke-width="2.3" marker-end="url(#arrow-red)" />
+                <rect x="660" y="360" width="72" height="20" rx="10" fill="#fff1f2" stroke="#fecdd3" stroke-width="1" />
+                <text x="696" y="374" text-anchor="middle" fill="#be123c" font-size="10.5" font-weight="600">无权限</text>
+              </g>
+              <g class="arch-edge" data-flows="int-deny">
+                <path d="M 940 378 L 940 458 Q 940 466 948 466 L 1012 466 Q 1020 466 1020 474 L 1020 932 Q 1020 940 1028 940 L 1314 940 Q 1324 940 1324 930 L 1324 64 Q 1324 54 1314 54 L 1300 54" fill="none" stroke="#059669" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-emerald)" />
+                <rect x="800" y="386" width="128" height="20" rx="10" fill="#fff1f2" stroke="#fecdd3" stroke-width="1" />
+                <text x="864" y="400" text-anchor="middle" fill="#be123c" font-size="10.5" font-weight="600">无权限 · 返回 OA 提示</text>
               </g>
               <!-- 9. 权限审核 -> 本地 AI 服务器 (路径 B & 路径 D 有权限统一放行) -->
               <g class="arch-edge" data-flows="int-ok ot">
@@ -37838,26 +37840,34 @@ three/build/three.module.js:
     const paths=[];
     svg.querySelectorAll('.arch-edge').forEach(el=>{ if(flowsOf(el).includes(key)) el.querySelectorAll('path').forEach(p=>{ if(p.getTotalLength) paths.push(p); }); });
     if(!paths.length) return;
+    const nodeBoxes=[...svg.querySelectorAll('.arch-node')].map(el=>{ try{ const b=el.getBBox(); return {el, x0:b.x-16, y0:b.y-16, x1:b.x+b.width+16, y1:b.y+b.height+16}; }catch(e){ return null; } }).filter(Boolean);
+    function hop(el){ el.classList.remove('arch-hop'); void el.getBoundingClientRect(); el.classList.add('arch-hop'); setTimeout(()=>el.classList.remove('arch-hop'), 620); }
+    function hopAt(x, y){ for(const n of nodeBoxes){ if(x>=n.x0 && x<=n.x1 && y>=n.y0 && y<=n.y1){ hop(n.el); return; } } }
     const lens=paths.map(p=>p.getTotalLength());
     const total=lens.reduce((a,b)=>a+b,0)||1;
     let t0=350;
-    const runs=paths.map((p,i)=>{ const dur=Math.max(240, 3000*lens[i]/total); const r={p, len:lens[i], start:t0, dur, dot:null}; t0+=dur*0.85; return r; });
-    timers.push(setTimeout(()=>{ paths.forEach(p=>{ p.classList.remove('active-flow'); p.classList.add('flow-on'); }); svg.querySelectorAll('.arch-pulse').forEach(c=>c.remove()); }, t0+450));
-    const tStart=performance.now();
-    function frame(now){
-      const t=now-tStart; let alive=false;
-      runs.forEach(r=>{
-        if(t<r.start){ alive=true; return; }
-        const k=(t-r.start)/r.dur;
-        if(k>=1){ if(r.dot){ r.dot.remove(); r.dot=null; } return; }
-        alive=true;
-        if(!r.dot){ r.dot=document.createElementNS('http://www.w3.org/2000/svg','circle'); r.dot.setAttribute('class','arch-pulse'); r.dot.setAttribute('r','8'); r.dot.setAttribute('fill','#ffffff'); r.dot.setAttribute('stroke', r.p.getAttribute('stroke')||'#2563eb'); r.dot.setAttribute('stroke-width','4.5'); svg.appendChild(r.dot); }
-        const pt=r.p.getPointAtLength(r.len*k);
-        r.dot.setAttribute('cx',pt.x); r.dot.setAttribute('cy',pt.y);
-      });
-      if(alive) rafId=requestAnimationFrame(frame);
+    const runs=paths.map((p,i)=>{ const dur=Math.max(240, 3000*lens[i]/total); const r={p, len:lens[i], start:t0, dur, dot:null, hopped:false}; t0+=dur*0.85; return r; });
+    const cycleMs=t0+650;
+    function cycle(){
+      runs.forEach(r=>{ r.hopped=false; });
+      const tStart=performance.now();
+      function frame(now){
+        const t=now-tStart; let alive=false;
+        runs.forEach(r=>{
+          if(t<r.start){ alive=true; return; }
+          const k=(t-r.start)/r.dur;
+          if(k>=1){ if(r.dot){ r.dot.remove(); r.dot=null; } if(!r.hopped){ r.hopped=true; const pt=r.p.getPointAtLength(r.len); hopAt(pt.x, pt.y); } return; }
+          alive=true;
+          if(!r.dot){ r.dot=document.createElementNS('http://www.w3.org/2000/svg','circle'); r.dot.setAttribute('class','arch-pulse'); r.dot.setAttribute('r','8'); r.dot.setAttribute('fill','#ffffff'); r.dot.setAttribute('stroke', r.p.getAttribute('stroke')||'#2563eb'); r.dot.setAttribute('stroke-width','4.5'); svg.appendChild(r.dot); const sp=r.p.getPointAtLength(0); hopAt(sp.x, sp.y); }
+          const pt=r.p.getPointAtLength(r.len*k);
+          r.dot.setAttribute('cx',pt.x); r.dot.setAttribute('cy',pt.y);
+        });
+        if(alive) rafId=requestAnimationFrame(frame);
+      }
+      rafId=requestAnimationFrame(frame);
+      timers.push(setTimeout(cycle, cycleMs));
     }
-    rafId=requestAnimationFrame(frame);
+    cycle();
   }
   function apply(n){ step=n; const f=FLOWS[step]; setFlow(f.key); if(label){ label.textContent=f.label; label.style.background=f.color; } pulse(f.key); }
   window.__ARCH_NAV__={
