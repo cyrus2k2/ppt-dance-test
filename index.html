@@ -38648,7 +38648,7 @@ setup('anim-pptgen',(x,W,H,t)=>{
       cursor(mx,my); }
   });
 setup('anim-mailerp',(x,W,H,t)=>{
-    const T=40, ph=t%T;
+    const T=30, ph=t%T;
     const ss=(a,b,v)=>{ const k=Math.min(1,Math.max(0,(v-a)/(b-a))); return k*k*(3-2*k); };
     const lp=(a,b,k)=>a+(b-a)*k;
     const bg=x.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#0a1424'); bg.addColorStop(1,'#0d1a30');
@@ -38659,7 +38659,7 @@ setup('anim-mailerp',(x,W,H,t)=>{
       x.beginPath(); x.moveTo(0,0); x.lineTo(0,17); x.lineTo(4.6,13.4); x.lineTo(7,19); x.lineTo(9.6,17.6); x.lineTo(7.2,12); x.lineTo(12,12); x.closePath(); x.fill(); x.stroke(); x.restore(); };
     const ripple=(cx,cy,t0,c)=>{ if(ph<t0||ph>t0+.6) return; x.strokeStyle=c; x.lineWidth=2; x.globalAlpha=1-(ph-t0)/.6;
       x.beginPath(); x.arc(cx,cy,8+(ph-t0)*38,0,7); x.stroke(); x.globalAlpha=1; };
-    const sIdx = ph<3?0 : ph<6.5?1 : ph<11?2 : ph<18.5?3 : ph<27?4 : ph<35?5 : 6;
+    const sIdx = ph<2?0 : ph<4.5?1 : ph<8?2 : ph<14.2?3 : ph<20?4 : ph<26?5 : 6;
     const sCol=['#6bc5ff','#c39bff','#7cfc98','#ffd166','#ff9db1','#6bc5ff','#7cfc98'];
     const panel=(px,pw,title)=>{ rr(x,px,14,pw,532,12); x.fillStyle='rgba(10,20,38,.85)'; x.fill(); x.strokeStyle='rgba(110,160,230,.35)'; x.lineWidth=1.2; x.stroke();
       x.fillStyle='#eaf3ff'; x.font='700 15px '+FONT; x.fillText(title,px+16,42); };
@@ -38695,10 +38695,10 @@ setup('anim-mailerp',(x,W,H,t)=>{
       let dist=k*total;
       for(let i=0;i<seg.length;i++){ if(dist<=seg[i]){ const kk=seg[i]?dist/seg[i]:0; const px=lp(pts[i][0],pts[i+1][0],kk), py=lp(pts[i][1],pts[i+1][1],kk);
         x.save(); x.shadowColor=c; x.shadowBlur=13; x.fillStyle=c; x.beginPath(); x.arc(px,py,4.6,0,7); x.fill(); x.restore(); return; } dist-=seg[i]; } };
-    const parseOn=ph>=3&&ph<6.5, lakeOn=(ph>=6.5&&ph<11)||(ph>=30.5&&ph<35), rdOn=ph>=15&&ph<16.8,
-          srvOn=ph>=22&&ph<26.5, relayOn=ph>=35&&ph<39.5, erpOn=ph>=37.5, passed=ph>=4;
+    const parseOn=ph>=2&&ph<4.5, lakeOn=(ph>=4.5&&ph<8)||(ph>=22.5&&ph<26), rdOn=ph>=11&&ph<12.6,
+          srvOn=ph>=16.5&&ph<19.5, relayOn=ph>=26&&ph<29.8, erpOn=ph>=28.6, passed=ph>=3;
     medge(481,100,481,120,parseOn); medge(445,156,420,176,sIdx===1); medge(458,192,550,192,sIdx===1);
-    medge(481,156,481,232,lakeOn||srvOn||relayOn); medge(430,348,412,374,ph>=14.3&&ph<16.8); medge(532,348,548,374,relayOn); medge(556,410,522,444,relayOn);
+    medge(481,156,481,232,lakeOn||srvOn||relayOn); medge(430,348,412,374,ph>=10.5&&ph<12.6); medge(532,348,548,374,relayOn); medge(556,410,522,444,relayOn);
     mnode(481,84,124,32,'OA 客户端','#6bc5ff',parseOn);
     mnode(481,138,144,36,'主控智能体','#c39bff',parseOn||lakeOn||srvOn||relayOn,'请求编排');
     mnode(404,192,108,32,'权限审计','#ffd166',sIdx===1);
@@ -38713,21 +38713,21 @@ setup('anim-mailerp',(x,W,H,t)=>{
     if(lakeOn){ const ly=272+((t*26)%30); x.fillStyle='rgba(107,197,255,.35)'; x.fillRect(358,ly,110,2); }
     mnode(549,288,118,44,'内部 AI 服务器','#c39bff',srvOn,'邮件内容生成',11);
     x.fillStyle='#7186a8'; x.font='9.5px '+FONT; x.textAlign='center'; x.fillText('知识库 · BI · 敏感过滤',481,334); x.textAlign='left';
-    mnode(398,392,120,36,'研发部 · 核价','#ffd166',rdOn||(ph>=14.3&&ph<15));
+    mnode(398,392,120,36,'研发部 · 核价','#ffd166',rdOn||(ph>=10.5&&ph<11));
     mnode(556,392,120,36,'ERP 中继体','#7cfc98',relayOn);
     mnode(481,462,150,38,'ERP 系统','#7cfc98',erpOn,'销售订单');
-    pulse([[640,110],[560,100],[520,128],[495,138]],(ph-3.2)/1.2,'#6bc5ff');
-    pulse([[481,156],[481,228],[440,262],[416,282]],(ph-6.8)/1.2,'#7cfc98');
-    pulse([[416,282],[481,228],[481,156],[560,100],[640,110]],(ph-9.6)/1,'#7cfc98');
-    pulse([[481,156],[481,228],[430,262],[410,368],[400,388]],(ph-14.3)/1.1,'#ffd166');
-    pulse([[400,388],[430,262],[481,160]],(ph-16.8)/0.9,'#ffd166');
-    pulse([[481,156],[481,228],[520,262],[546,282]],(ph-22.2)/1.1,'#c39bff');
-    pulse([[481,156],[481,228],[440,262],[416,282]],(ph-30.8)/1.1,'#6bc5ff');
-    pulse([[481,156],[481,228],[532,262],[548,368],[554,388]],(ph-35.2)/1.1,'#7cfc98');
-    pulse([[556,410],[522,440],[492,456]],(ph-36.6)/0.9,'#7cfc98');
-    const mstat = ph<3?'待机 · 等待新邮件' : ph<6.5?'主控编排 · 解析任务中' : ph<11?'数据湖 · 参数匹配中' : ph<15?'等待操作员决策' :
-      ph<18.5?'研发核价中…' : ph<22?'等待操作员指示' : ph<27?'内部 AI 服务器 · 生成邮件' : ph<30.5?'等待客户回复' :
-      ph<35?'数据湖 · 二次复核中' : 'ERP 中继体 · 反写订单中';
+    pulse([[640,110],[560,100],[520,128],[495,138]],(ph-2.2)/1.0,'#6bc5ff');
+    pulse([[481,156],[481,228],[440,262],[416,282]],(ph-4.8)/1.0,'#7cfc98');
+    pulse([[416,282],[481,228],[481,156],[560,100],[640,110]],(ph-7.0)/0.7,'#7cfc98');
+    pulse([[481,156],[481,228],[430,262],[410,368],[400,388]],(ph-10.5)/0.9,'#ffd166');
+    pulse([[400,388],[430,262],[481,160]],(ph-12.6)/0.8,'#ffd166');
+    pulse([[481,156],[481,228],[520,262],[546,282]],(ph-16.7)/0.9,'#c39bff');
+    pulse([[481,156],[481,228],[440,262],[416,282]],(ph-22.8)/0.9,'#6bc5ff');
+    pulse([[481,156],[481,228],[532,262],[548,368],[554,388]],(ph-26.2)/0.9,'#7cfc98');
+    pulse([[556,410],[522,440],[492,456]],(ph-27.4)/0.8,'#7cfc98');
+    const mstat = ph<2?'待机 · 等待新邮件' : ph<4.5?'主控编排 · 解析任务中' : ph<8?'数据湖 · 参数匹配中' : ph<10.6?'等待操作员决策' :
+      ph<12.6?'研发核价中…' : ph<16.5?'等待操作员指示' : ph<20?'内部 AI 服务器 · 生成邮件' : ph<22.5?'等待客户回复' :
+      ph<26?'数据湖 · 二次复核中' : 'ERP 中继体 · 反写订单中';
     x.fillStyle='#8fb0dd'; x.font='11.5px '+FONT; x.textAlign='center'; x.fillText(mstat,481,522); x.textAlign='left';
     /* ---------- RIGHT: OA workspace ---------- */
     panel(656,490,'');
@@ -38750,7 +38750,7 @@ setup('anim-mailerp',(x,W,H,t)=>{
         if(!isP){ x.strokeStyle='rgba(160,185,225,.45)'; x.lineWidth=1.1; x.stroke(); }
         x.fillStyle=isP?'#fff':'#cfe0f5'; x.font=(isP?'700 ':'600 ')+'13px '+FONT; x.textAlign='center'; x.fillText(lb,bx+71,y+27); x.textAlign='left'; }); };
     /* MAIL + PARSE */
-    if(ph<6.5) view(0,()=>{
+    if(ph<4.5) view(0,()=>{
       rr(x,672,74,458,52,10); x.fillStyle='rgba(30,46,74,.9)'; x.fill();
       x.strokeStyle=ph<1.6?'rgba(255,209,102,'+(0.5+0.4*Math.sin(t*5))+')':'rgba(120,160,220,.35)'; x.lineWidth=1.4; x.stroke();
       x.fillStyle='#ffd166'; x.beginPath(); x.arc(690,100,4.5,0,7); x.fill();
@@ -38765,16 +38765,16 @@ setup('anim-mailerp',(x,W,H,t)=>{
       x.font='11.5px '+FONT;
       lines.forEach((ln,i)=>{ const ly=218+i*25;
         if(ph>=3.4){ const blk=i>=1&&i<=2?0:(i>=3&&i<=4?1:-1);
-          if(blk===0&&ph>=3.4&&ph<4.9){ x.fillStyle='rgba(255,209,102,.12)'; x.fillRect(682,224,438,50); }
-          if(blk===1&&ph>=4.9&&ph<6.3){ x.fillStyle='rgba(255,209,102,.12)'; x.fillRect(682,274,438,50); } }
+          if(blk===0&&ph>=2.3&&ph<3.3){ x.fillStyle='rgba(255,209,102,.12)'; x.fillRect(682,224,438,50); }
+          if(blk===1&&ph>=3.3&&ph<4.3){ x.fillStyle='rgba(255,209,102,.12)'; x.fillRect(682,274,438,50); } }
         x.fillStyle='#dbe7ff'; x.fillText(ln,688,ly); });
-      if(ph>=3.4){ const tags=['产品 ×2 已提取','需求：20万 + 5万 Pcs']; let tx=672; x.font='600 11px '+FONT;
-        tags.forEach((tg,i)=>{ const a=ss(4.2+i*1.0,4.7+i*1.0,ph); if(a<=0) return; const w=x.measureText(tg).width+18;
+      if(ph>=2.3){ const tags=['产品 ×2 已提取','需求：20万 + 5万 Pcs']; let tx=672; x.font='600 11px '+FONT;
+        tags.forEach((tg,i)=>{ const a=ss(3.0+i*0.8,3.4+i*0.8,ph); if(a<=0) return; const w=x.measureText(tg).width+18;
           x.globalAlpha=a; rr(x,tx,398,w,24,12); x.fillStyle='rgba(195,155,255,.15)'; x.fill(); x.strokeStyle='rgba(195,155,255,.55)'; x.stroke();
           x.fillStyle='#e6dcff'; x.fillText(tg,tx+9,413); x.globalAlpha=1; tx+=w+8; }); }
     });
     /* MATCH RESULTS + OPTIONS */
-    if(ph>=6.5&&ph<11) view(6.5,()=>{
+    if(ph>=4.5&&ph<8) view(4.5,()=>{
       x.fillStyle='#fff'; x.font='700 14px '+FONT; x.fillText('数据湖匹配结果',688,100);
       rr(x,1028,80,102,24,12); x.fillStyle='rgba(124,252,152,.15)'; x.fill(); x.fillStyle='#7cfc98'; x.font='600 11px '+FONT; x.textAlign='center'; x.fillText('匹配完成',1079,95.5); x.textAlign='left';
       rr(x,672,110,458,84,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(124,252,152,.5)'; x.lineWidth=1.2; x.stroke();
@@ -38789,16 +38789,16 @@ setup('anim-mailerp',(x,W,H,t)=>{
       x.fillStyle='#9fb4dd'; x.font='11.5px '+FONT; x.fillText('对应产品二 · 晶元 蓝光 463-468nm',718,254);
       x.fillStyle='#7cfc98'; x.font='600 11.5px '+FONT; x.fillText('库存 10万 Pcs · 原材料充足',718,273);
       x.fillStyle='#ffd166'; x.font='600 11px '+FONT; x.textAlign='right'; x.fillText('替代型号',1118,233); x.textAlign='left';
-      if(ph>=8.6){ const oa=ss(8.6,9.1,ph); x.save(); x.globalAlpha=oa;
+      if(ph>=6.3){ const oa=ss(6.3,6.7,ph); x.save(); x.globalAlpha=oa;
         x.fillStyle='#ffd166'; x.font='600 11.5px '+FONT; x.fillText('操作员决策点 · 请选择下一步',688,312);
         optRow(320,'生成回复邮件 · 询问替代并报价',0);
-        optRow(364,'发送未匹配参数到研发核价',ph>=10.5?2:(ph>=9.6?1:0));
+        optRow(364,'发送未匹配参数到研发核价',ph>=7.7?2:(ph>=6.9?1:0));
         optRow(408,'回复邮件给客户 · 没货',0);
         x.restore(); }
     });
-    if(ph>=9.4&&ph<11){ const ck=ss(9.4,10.3,ph); cursor(lp(830,905,ck),lp(300,383,ck)); ripple(905,383,10.4,'rgba(124,252,152,.8)'); }
+    if(ph>=6.7&&ph<8){ const ck=ss(6.7,7.5,ph); cursor(lp(830,905,ck),lp(300,383,ck)); ripple(905,383,7.6,'rgba(124,252,152,.8)'); }
     /* PRICING FORM */
-    if(ph>=11&&ph<15) view(11,()=>{
+    if(ph>=8&&ph<11) view(8,()=>{
       rr(x,672,74,458,300,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(255,209,102,.4)'; x.stroke();
       x.fillStyle='#fff'; x.font='700 15px '+FONT; x.fillText('研发核价单',688,106);
       x.fillStyle='#8fa3c8'; x.font='11.5px '+FONT; x.textAlign='right'; x.fillText('HJ-2025-031',1118,106); x.textAlign='left';
@@ -38811,18 +38811,18 @@ setup('anim-mailerp',(x,W,H,t)=>{
       fld(292,'备注','客户询价急 · 请核替代型号单价与交期');
       x.strokeStyle='rgba(255,255,255,.08)'; x.beginPath(); x.moveTo(688,318); x.lineTo(1114,318); x.stroke();
       x.fillStyle='#9fb4dd'; x.font='11.5px '+FONT; x.fillText('发送后由研发部核价并回复单价、交期',688,342);
-      if(ph<14.5) btnRow(386,['发送','暂存','取消'],0);
+      if(ph<10.6) btnRow(386,['发送','暂存','取消'],0);
       else { rr(x,672,386,142,42,9); x.fillStyle='rgba(124,252,152,.2)'; x.fill();
         x.fillStyle='#7cfc98'; x.font='700 13px '+FONT; x.textAlign='center'; x.fillText('已发送 ✓',743,413); x.textAlign='left';
         x.fillStyle='#7cfc98'; x.font='600 11.5px '+FONT; x.fillText('已发送研发部 · 等待核价回复',688,452); }
     });
-    if(ph>=13.4&&ph<15){ const ck=ss(13.4,14.1,ph); cursor(lp(820,743,ck),lp(310,407,ck)); ripple(743,407,14.2,'rgba(124,252,152,.8)'); }
+    if(ph>=9.6&&ph<11){ const ck=ss(9.6,10.3,ph); cursor(lp(820,743,ck),lp(310,407,ck)); ripple(743,407,10.4,'rgba(124,252,152,.8)'); }
     /* R&D REPLY + OPTIONS + OPERATOR TYPES */
-    if(ph>=15&&ph<22) view(15,()=>{
-      if(ph<16.8){ rr(x,672,74,458,110,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
+    if(ph>=11&&ph<16.5) view(11,()=>{
+      if(ph<12.6){ rr(x,672,74,458,110,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
         x.fillStyle='#9fb4dd'; x.font='12.5px '+FONT; x.fillText('等待研发核价回复',688,112);
         for(let i=0;i<3;i++){ x.fillStyle='#ffd166'; x.globalAlpha=.35+.65*Math.abs(Math.sin(t*3.4+i)); x.beginPath(); x.arc(700+i*18,140,3.4,0,7); x.fill(); } x.globalAlpha=1; }
-      else { const ra=ss(16.8,17.3,ph); x.save(); x.globalAlpha=ra;
+      else { const ra=ss(12.6,13.0,ph); x.save(); x.globalAlpha=ra;
         rr(x,672,74,458,110,10); x.fillStyle='rgba(23,38,64,.95)'; x.fill(); x.strokeStyle='rgba(124,252,152,.5)'; x.lineWidth=1.2; x.stroke();
         x.fillStyle='#fff'; x.font='700 13.5px '+FONT; x.fillText('研发核价回复',688,100);
         x.fillStyle='#8fa3c8'; x.font='11px '+FONT; x.textAlign='right'; x.fillText('研发部 · 刚刚',1118,100); x.textAlign='left';
@@ -38831,17 +38831,17 @@ setup('anim-mailerp',(x,W,H,t)=>{
         x.fillText('交期 7 天 · 材料充足',688,148);
         x.fillStyle='#9fb4dd'; x.fillText('产品一 A2835H-W414190 现行价 ¥0.085/Pcs（价格库）',688,170);
         x.restore(); }
-      if(ph>=17.2&&ph<22){ const oa=ss(17.2,17.7,ph); x.save(); x.globalAlpha=oa;
+      if(ph>=13.2&&ph<16.5){ const oa=ss(13.2,13.6,ph); x.save(); x.globalAlpha=oa;
         x.fillStyle='#ffd166'; x.font='600 11.5px '+FONT; x.fillText('操作员决策点 · 请选择下一步',688,216);
         optRow(224,'生成回复邮件附上报价',0);
         optRow(268,'回复邮件给客户 · 没货',0);
         x.restore(); }
-      if(ph>=21.4){ x.font='12px '+FONT; const Q='可以在回复邮件附带第二款替代型号的报价么'; const bw=x.measureText(Q).width+22;
+      if(ph>=16.2){ x.font='12px '+FONT; const Q='可以在回复邮件附带第二款替代型号的报价么'; const bw=x.measureText(Q).width+22;
         rr(x,1130-bw,428,bw,32,9); x.fillStyle='#7ed957'; x.fill();
         x.fillStyle='#12240d'; x.fillText(Q,1130-bw+11,449); }
     });
     /* QUOTE EMAIL */
-    if(ph>=22&&ph<27) view(22,()=>{
+    if(ph>=16.5&&ph<20) view(16.5,()=>{
       rr(x,672,74,458,300,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
       x.fillStyle='#9fb4dd'; x.font='12px '+FONT; x.fillText('收件人：',688,102); x.fillStyle='#eaf3ff'; x.fillText('深圳大大只路灯公司 · 采购部',746,102);
       x.fillStyle='#9fb4dd'; x.fillText('主  题：',688,128); x.fillStyle='#eaf3ff'; x.fillText('Re：询价回复 — 2835 灯珠报价',746,128);
@@ -38852,24 +38852,24 @@ setup('anim-mailerp',(x,W,H,t)=>{
       x.textAlign='right'; x.fillText('数量',986,191); x.fillText('单价',1046,191); x.fillText('金额',1108,191); x.textAlign='left';
       const qr=[['A2835H-W414190','三安 Ra90','20万','0.085','17,000'],['E28351-B0000 · 替代','晶元 蓝光','5万','0.062','3,100']];
       x.font='11px '+FONT;
-      qr.forEach((r,i)=>{ const a=ss(23+i*.7,23.5+i*.7,ph); if(a<=0) return; const ry=198+i*24;
+      qr.forEach((r,i)=>{ const a=ss(17.3+i*.6,17.7+i*.6,ph); if(a<=0) return; const ry=198+i*24;
         x.globalAlpha=a; if(i%2===0){ x.fillStyle='rgba(255,255,255,.045)'; x.fillRect(688,ry,426,24); }
         x.fillStyle='#dbe7ff'; x.fillText(r[0],694,ry+16); x.fillText(r[1],812,ry+16);
         x.textAlign='right'; x.fillText(r[2],986,ry+16); x.fillText(r[3],1046,ry+16); x.fillText(r[4],1108,ry+16); x.textAlign='left'; x.globalAlpha=1; });
-      const ta=ss(24.6,25.1,ph);
+      const ta=ss(18.5,18.9,ph);
       if(ta>0){ x.globalAlpha=ta; x.strokeStyle='rgba(124,252,152,.5)'; x.beginPath(); x.moveTo(688,248); x.lineTo(1114,248); x.stroke();
         x.fillStyle='#7cfc98'; x.font='700 11.5px '+FONT; x.fillText('合计（含税）',694,266);
         x.textAlign='right'; x.fillText('¥20,100',1108,266); x.textAlign='left'; x.globalAlpha=1; }
       x.fillStyle='#ffd166'; x.font='11px '+FONT; x.fillText('注：第二款为替代型号（晶元蓝光），参数相近，请确认可否接受。',688,292);
       x.fillStyle='#9fb4dd'; x.fillText('含税 · 交期 7-10 天 · 账期 30 天',688,316);
       x.fillStyle='#7186a8'; x.font='10.5px '+FONT; x.fillText('—— 由内部 AI 服务器生成 · 光智体',688,352);
-      if(ph<26.3) btnRow(386,['发送','暂存','取消'],0);
+      if(ph<19.5) btnRow(386,['发送','暂存','取消'],0);
       else { rr(x,760,386,282,36,18); x.fillStyle='rgba(28,70,44,.95)'; x.fill(); x.strokeStyle='rgba(124,252,152,.7)'; x.lineWidth=1.2; x.stroke();
         x.fillStyle='#7cfc98'; x.font='700 12.5px '+FONT; x.textAlign='center'; x.fillText('✓ 报价邮件已发送给客户',901,409); x.textAlign='left'; }
     });
-    if(ph>=25.2&&ph<27){ const ck=ss(25.2,26.1,ph); cursor(lp(830,743,ck),lp(320,407,ck)); ripple(743,407,26.2,'rgba(124,252,152,.8)'); }
+    if(ph>=18.6&&ph<20){ const ck=ss(18.6,19.3,ph); cursor(lp(830,743,ck),lp(320,407,ck)); ripple(743,407,19.4,'rgba(124,252,152,.8)'); }
     /* CUSTOMER REPLY */
-    if(ph>=27&&ph<30.5) view(27,()=>{
+    if(ph>=20&&ph<22.5) view(20,()=>{
       rr(x,672,74,458,52,10); x.fillStyle='rgba(30,46,74,.9)'; x.fill(); x.strokeStyle='rgba(124,252,152,.55)'; x.lineWidth=1.4; x.stroke();
       x.fillStyle='#7cfc98'; x.beginPath(); x.arc(690,100,4.5,0,7); x.fill();
       x.fillStyle='#eaf3ff'; x.font='700 13px '+FONT; x.fillText('深圳大大只路灯公司 · 采购部',704,97);
@@ -38885,7 +38885,7 @@ setup('anim-mailerp',(x,W,H,t)=>{
       x.fillStyle='#8fb0dd'; x.font='11.5px '+FONT; x.fillText('AI 正在重新跑数据湖，复核最新库存与价格…',688,348);
     });
     /* FINAL LIST + START ORDER */
-    if(ph>=30.5&&ph<35) view(30.5,()=>{
+    if(ph>=22.5&&ph<26) view(22.5,()=>{
       x.fillStyle='#fff'; x.font='700 14px '+FONT; x.fillText('下单前复核 · 数据湖最新数据',688,100);
       rr(x,1028,80,102,24,12); x.fillStyle='rgba(124,252,152,.15)'; x.fill(); x.fillStyle='#7cfc98'; x.font='600 11px '+FONT; x.textAlign='center'; x.fillText('已复核',1079,95.5); x.textAlign='left';
       x.fillStyle='rgba(107,197,255,.20)'; x.fillRect(672,110,458,24);
@@ -38894,7 +38894,7 @@ setup('anim-mailerp',(x,W,H,t)=>{
       x.textAlign='right'; x.fillText('数量',988,126); x.fillText('单价',1042,126); x.fillText('库存',1092,126); x.textAlign='left'; x.fillText('材料',1098,126);
       const fr=[['A2835H-W414190','2835 三安 Ra90 3950-4490K','20万','¥0.085','15万','充足'],['E28351-B0000','2835 晶元 蓝光 463-468nm','5万','¥0.062','10万','充足']];
       x.font='10.5px '+FONT;
-      fr.forEach((r,i)=>{ const a=ss(31+i*.6,31.5+i*.6,ph); if(a<=0) return; const ry=134+i*34;
+      fr.forEach((r,i)=>{ const a=ss(23.2+i*.5,23.6+i*.5,ph); if(a<=0) return; const ry=134+i*34;
         x.globalAlpha=a; if(i%2===0){ x.fillStyle='rgba(255,255,255,.045)'; x.fillRect(672,ry,458,34); }
         x.fillStyle='#dbe7ff'; x.fillText(r[0],680,ry+21); x.fillText(r[1],794,ry+21);
         x.textAlign='right'; x.fillText(r[2],988,ry+21); x.fillText(r[3],1042,ry+21); x.fillText(r[4],1092,ry+21); x.textAlign='left';
@@ -38905,17 +38905,17 @@ setup('anim-mailerp',(x,W,H,t)=>{
       rr(x,672,310,458,52,10); x.fillStyle='rgba(107,197,255,.07)'; x.fill(); x.strokeStyle='rgba(107,197,255,.25)'; x.stroke();
       x.fillStyle='#9fb4dd'; x.font='11.5px '+FONT; x.fillText('点击「发起订单」后，将经 ERP 中继体在 ERP 生成销售订单',688,341);
     });
-    if(ph>=33.2&&ph<35){ const ck=ss(33.2,34.1,ph); cursor(lp(850,743,ck),lp(330,271,ck)); ripple(743,271,34.2,'rgba(124,252,152,.8)'); }
+    if(ph>=24.6&&ph<26){ const ck=ss(24.6,25.3,ph); cursor(lp(850,743,ck),lp(330,271,ck)); ripple(743,271,25.4,'rgba(124,252,152,.8)'); }
     /* ERP WRITE-BACK */
-    if(ph>=35) view(35,()=>{
+    if(ph>=26) view(26,()=>{
       x.fillStyle='#fff'; x.font='700 14px '+FONT; x.fillText('ERP 反写 · 生成销售订单',688,100);
       const wsteps=['中继体接收','字段映射','写入 ERP','生成订单号'];
       x.font='600 11px '+FONT;
-      wsteps.forEach((ws,i)=>{ const a=ss(35.6+i*.8,36.1+i*.8,ph); const wx=672+i*116;
+      wsteps.forEach((ws,i)=>{ const a=ss(26.5+i*.7,26.9+i*.7,ph); const wx=672+i*116;
         rr(x,wx,112,108,30,8); x.fillStyle=a>0?'rgba(124,252,152,.13)':'rgba(255,255,255,.04)'; x.fill();
         x.strokeStyle=a>0?'rgba(124,252,152,.55)':'rgba(255,255,255,.12)'; x.stroke();
         x.fillStyle=a>0?'#7cfc98':'#8fa3c8'; x.textAlign='center'; x.fillText((a>0?'✓ ':'')+ws,wx+54,131); x.textAlign='left'; });
-      const ra=ss(38,38.6,ph);
+      const ra=ss(28.9,29.4,ph);
       if(ra>0){ x.globalAlpha=ra;
         rr(x,672,158,458,150,10); x.fillStyle='rgba(23,38,64,.95)'; x.fill(); x.strokeStyle='rgba(124,252,152,.5)'; x.lineWidth=1.2; x.stroke();
         x.fillStyle='#fff'; x.font='700 15px '+FONT; x.fillText('ERP 销售订单',688,190);
@@ -38925,20 +38925,20 @@ setup('anim-mailerp',(x,W,H,t)=>{
           x.fillStyle='#8fa3c8'; x.font='12px '+FONT; x.fillText(f[0],688,fy);
           x.fillStyle='#eaf3ff'; x.font='600 12.5px '+FONT; x.fillText(f[1],760,fy); });
         x.globalAlpha=1; }
-      if(ph>=38.6){ const ba=ss(38.6,39.2,ph); x.globalAlpha=ba;
+      if(ph>=29.5){ const ba=ss(29.5,29.9,ph); x.globalAlpha=ba;
         rr(x,672,324,458,46,10); x.fillStyle='rgba(124,252,152,.12)'; x.fill(); x.strokeStyle='rgba(124,252,152,.6)'; x.lineWidth=1.2; x.stroke();
         x.fillStyle='#7cfc98'; x.font='700 14px '+FONT; x.textAlign='center'; x.fillText('✓ 邮件 → 报价 → 订单 · 全流程完成',901,353); x.textAlign='left'; x.globalAlpha=1; }
     });
     /* input bar */
     rr(x,672,478,458,52,10); x.fillStyle='rgba(17,29,50,.95)'; x.fill(); x.strokeStyle='rgba(120,160,220,.3)'; x.stroke();
     const Q='可以在回复邮件附带第二款替代型号的报价么';
-    const typed = ph<18.8?0 : ph<21.4? Math.floor((ph-18.8)/2.4*Q.length) : 0;
+    const typed = ph<14.2?0 : ph<16.0? Math.floor((ph-14.2)/1.8*Q.length) : 0;
     x.font='12.5px '+FONT;
     if(typed>0){ x.fillStyle='#eaf3ff'; x.fillText(Q.slice(0,typed),686,510);
       if(Math.floor(t*1.6)%2===0){ x.fillStyle='#6bc5ff'; x.fillRect(688+x.measureText(Q.slice(0,typed)).width+2,497,2,17); } }
     else { x.fillStyle='rgba(160,185,225,.45)'; x.fillText('与 AI 对话，输入指示…',686,510);
       if(ph<2&&Math.floor(t*1.6)%2===0){ x.fillStyle='#6bc5ff'; x.fillRect(688,497,2,17); } }
-    rr(x,1052,486,66,36,8); x.fillStyle=(ph>=21.1&&ph<21.7)?'#8be04e':'#2f6fd0'; x.fill();
+    rr(x,1052,486,66,36,8); x.fillStyle=(ph>=15.9&&ph<16.4)?'#8be04e':'#2f6fd0'; x.fill();
     x.fillStyle='#fff'; x.font='700 12.5px '+FONT; x.textAlign='center'; x.fillText('发送',1085,508); x.textAlign='left';
   });
 })();
