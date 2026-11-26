@@ -37605,6 +37605,7 @@ try {
   renderer.setAnimationLoop(() => {
     timer.update();
     const dt = Math.min(Math.max(timer.getDelta(), 0), 0.1);
+    if (videoCalm && performance.now() > calmFrom) return;
     for (const mx of mixers) mx.update(dt);
     if (showPhase === "day") {
       for (const d of window.__TEST__.dancerCtl || []) applyStandby(d, tAcc);
@@ -37818,7 +37819,12 @@ function ensureAnalyser() {
     window.__TEST__.errors.push("analyser: " + e);
   }
 }
+var videoCalm = false;
+var calmFrom = 0;
 window.__onSlideChange = (n) => {
+  const slN = document.querySelectorAll("[data-slide]")[n];
+  videoCalm = !!(n > 0 && slN && slN.querySelector("video"));
+  calmFrom = performance.now() + 1200;
   if (n >= 1 && window.__stageLeave) window.__stageLeave();
   if (n === 0 && window.__stageRestore) window.__stageRestore();
   if (window.__finaleCtl) {
