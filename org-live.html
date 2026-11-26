@@ -1252,7 +1252,7 @@
       </div>
       <div class="anim-panel reportwrap">
         <div class="anim-frame"><canvas id="anim-mailerp" width="1160" height="560"></canvas></div>
-        <div class="anim-cap">AI 邮件全流程演示 · 询价解析 → 生成报价 → 上级确认 → 回复客户 → 客户确认 → ERP 中继反写</div>
+        <div class="anim-cap">AI 邮件全流程演示 · 询价解析 → 数据湖匹配 → 研发核价 → 报价回复 → 客户确认 → ERP 生成订单</div>
       </div>
       <div class="pfoot"><span>第二部分 · 2027年计划</span><span></span></div>
     </div>
@@ -38734,7 +38734,7 @@ setup('anim-pptgen',(x,W,H,t)=>{
       cursor(mx,my); }
   });
 setup('anim-mailerp',(x,W,H,t)=>{
-    const T=34, ph=t%T;
+    const T=40, ph=t%T;
     const ss=(a,b,v)=>{ const k=Math.min(1,Math.max(0,(v-a)/(b-a))); return k*k*(3-2*k); };
     const lp=(a,b,k)=>a+(b-a)*k;
     const bg=x.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#0a1424'); bg.addColorStop(1,'#0d1a30');
@@ -38743,161 +38743,289 @@ setup('anim-mailerp',(x,W,H,t)=>{
     for(let gx=0; gx<W; gx+=38){ x.beginPath(); x.moveTo(gx,0); x.lineTo(gx,H); x.stroke(); }
     const cursor=(mx,my)=>{ x.save(); x.translate(mx,my); x.fillStyle='#fff'; x.strokeStyle='#222'; x.lineWidth=1.2;
       x.beginPath(); x.moveTo(0,0); x.lineTo(0,17); x.lineTo(4.6,13.4); x.lineTo(7,19); x.lineTo(9.6,17.6); x.lineTo(7.2,12); x.lineTo(12,12); x.closePath(); x.fill(); x.stroke(); x.restore(); };
-    const sIdx = ph<2.5?0 : ph<6?1 : ph<11?2 : ph<15.5?3 : ph<19.5?4 : 5;
-    const sCol=['#6bc5ff','#c39bff','#ffd166','#ff9db1','#7cfc98','#6bc5ff'];
-    const stages=[['OA 邮箱 · 收到询价邮件','客户来信自动归集'],['AI 解析 · 提取需求','产品 · 数量 · 交期要求'],
-                  ['AI 生成报价单','单价取自 ERP 价格库'],['上级确认 · 决策点','主管批准后才发送'],
-                  ['回复客户 · 发送报价','邮件 + 报价单附件'],['客户确认 · 反写 ERP','经 AI 底座 ERP 中继体']];
-    /* left pipeline */
-    rr(x,14,14,470,532,12); x.fillStyle='rgba(10,20,38,.85)'; x.fill(); x.strokeStyle='rgba(110,160,230,.35)'; x.lineWidth=1.2; x.stroke();
-    x.fillStyle='#eaf3ff'; x.font='700 16px '+FONT; x.fillText('AI 邮件处理 · 全流程',32,42);
-    x.strokeStyle='rgba(120,160,220,.25)'; x.lineWidth=2; x.beginPath(); x.moveTo(66,90); x.lineTo(66,410); x.stroke();
-    x.strokeStyle='rgba(124,252,152,.55)'; x.beginPath(); x.moveTo(66,90); x.lineTo(66,90+320*(sIdx/5)); x.stroke();
-    stages.forEach((st2,i)=>{ const y=62+i*64, on=sIdx===i, done=sIdx>i;
-      rr(x,40,y,418,56,10); x.fillStyle=on?'rgba(28,48,80,.85)':'rgba(17,29,50,.75)'; x.fill();
+    const ripple=(cx,cy,t0,c)=>{ if(ph<t0||ph>t0+.6) return; x.strokeStyle=c; x.lineWidth=2; x.globalAlpha=1-(ph-t0)/.6;
+      x.beginPath(); x.arc(cx,cy,8+(ph-t0)*38,0,7); x.stroke(); x.globalAlpha=1; };
+    const sIdx = ph<3?0 : ph<6.5?1 : ph<11?2 : ph<18.5?3 : ph<27?4 : ph<35?5 : 6;
+    const sCol=['#6bc5ff','#c39bff','#7cfc98','#ffd166','#ff9db1','#6bc5ff','#7cfc98'];
+    const panel=(px,pw,title)=>{ rr(x,px,14,pw,532,12); x.fillStyle='rgba(10,20,38,.85)'; x.fill(); x.strokeStyle='rgba(110,160,230,.35)'; x.lineWidth=1.2; x.stroke();
+      x.fillStyle='#eaf3ff'; x.font='700 15px '+FONT; x.fillText(title,px+16,42); };
+    /* ---------- LEFT: process flow ---------- */
+    panel(14,292,'处理流程');
+    const stages=[['收到询价邮件','深圳大大只路灯公司'],['AI 解析需求','提取两款灯珠参数'],['数据湖参数匹配','型号 · 库存 · 材料'],
+                  ['研发核价','操作员决策 · 发送核价'],['生成报价邮件','操作员对话指示'],['客户确认 · 复核','数据湖二次核验'],['ERP 反写','中继体生成销售订单']];
+    x.strokeStyle='rgba(120,160,220,.25)'; x.lineWidth=2; x.beginPath(); x.moveTo(52,85); x.lineTo(52,451); x.stroke();
+    x.strokeStyle='rgba(124,252,152,.55)'; x.beginPath(); x.moveTo(52,85); x.lineTo(52,85+366*(sIdx/6)); x.stroke();
+    stages.forEach((st2,i)=>{ const y=58+i*61, on=sIdx===i, done=sIdx>i;
+      rr(x,30,y,260,54,10); x.fillStyle=on?'rgba(28,48,80,.85)':'rgba(17,29,50,.75)'; x.fill();
       x.strokeStyle=on?sCol[i]:(done?'rgba(124,252,152,.45)':'rgba(120,160,220,.22)'); x.lineWidth=on?1.8:1.1; x.stroke();
-      x.fillStyle=done?'#2e7d46':(on?sCol[i]:'rgba(90,115,155,.8)'); x.beginPath(); x.arc(66,y+28,13,0,7); x.fill();
-      x.fillStyle='#fff'; x.font='700 12.5px '+FONT; x.textAlign='center'; x.fillText(done?'✓':String(i+1),66,y+32.5); x.textAlign='left';
-      x.fillStyle=on?'#fff':(done?'#cfe8d8':'#9fb4dd'); x.font='700 14.5px '+FONT; x.fillText(st2[0],90,y+25);
-      x.fillStyle='#8fa3c8'; x.font='11px '+FONT; x.fillText(st2[1],90,y+43);
-      if(done){ x.fillStyle='#7cfc98'; x.font='700 15px '+FONT; x.textAlign='right'; x.fillText('✓',446,y+33); x.textAlign='left'; }
-      if(on){ x.fillStyle=sCol[i]; x.globalAlpha=.5+.5*Math.sin(t*4); x.beginPath(); x.arc(438,y+28,4.5,0,7); x.fill(); x.globalAlpha=1; } });
-    const relayOn = ph>=24&&ph<30.5;
-    rr(x,40,452,418,62,10); x.fillStyle=relayOn?'rgba(28,58,96,.9)':'rgba(17,29,50,.85)'; x.fill();
-    x.strokeStyle=relayOn?'#6bc5ff':'rgba(120,160,220,.3)'; x.lineWidth=relayOn?1.8:1.1; x.stroke();
-    x.fillStyle='#eaf3ff'; x.font='700 13.5px '+FONT; x.fillText('AI 底座 · ERP 中继体',56,478);
-    x.fillStyle='#8fb0dd'; x.font='11px '+FONT; x.fillText('字段映射 · 写入 ERP · 回执校验',56,497);
-    rr(x,352,470,90,26,13); x.fillStyle=ph>=28.4?'rgba(124,252,152,.2)':'rgba(107,197,255,.15)'; x.fill();
-    x.fillStyle=ph>=28.4?'#7cfc98':'#bfe0ff'; x.font='600 12px '+FONT; x.textAlign='center'; x.fillText('ERP 系统',397,487); x.textAlign='left';
-    if(relayOn){ for(let i=0;i<3;i++){ const dx=56+((t*70+i*90)%300); x.fillStyle='rgba(124,252,152,.85)'; x.beginPath(); x.arc(dx,506,2.4,0,7); x.fill(); } }
-    /* right workspace */
-    rr(x,498,14,648,532,12); x.fillStyle='rgba(10,20,38,.85)'; x.fill(); x.strokeStyle='rgba(110,160,230,.35)'; x.stroke();
-    x.fillStyle='#5b8def'; x.beginPath(); x.arc(532,44,13,0,7); x.fill();
-    x.fillStyle='#fff'; x.font='700 12px '+FONT; x.textAlign='center'; x.fillText('光',532,48); x.textAlign='left';
-    x.fillStyle='#eaf3ff'; x.font='700 15.5px '+FONT; x.fillText('OA 智能工作台',554,49);
-    const chipTxt=['新邮件到达','AI 解析中','报价生成','待上级确认','发送报价','客户确认 · ERP 反写'][sIdx];
-    x.font='600 12px '+FONT; const cw=x.measureText(chipTxt).width+22;
-    rr(x,1118-cw,31,cw,26,13); x.fillStyle=sCol[sIdx]+'2e'; x.fill(); x.fillStyle=sCol[sIdx]; x.textAlign='center'; x.fillText(chipTxt,1118-cw/2,48); x.textAlign='left';
-    x.strokeStyle='rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(514,64); x.lineTo(1130,64); x.stroke();
+      x.fillStyle=done?'#2e7d46':(on?sCol[i]:'rgba(90,115,155,.8)'); x.beginPath(); x.arc(52,y+27,12,0,7); x.fill();
+      x.fillStyle='#fff'; x.font='700 11.5px '+FONT; x.textAlign='center'; x.fillText(done?'✓':String(i+1),52,y+31); x.textAlign='left';
+      x.fillStyle=on?'#fff':(done?'#cfe8d8':'#9fb4dd'); x.font='700 13px '+FONT; x.fillText(st2[0],72,y+23);
+      x.fillStyle='#8fa3c8'; x.font='10px '+FONT; x.fillText(st2[1],72,y+40);
+      if(done){ x.fillStyle='#7cfc98'; x.font='700 13px '+FONT; x.textAlign='right'; x.fillText('✓',282,y+31); x.textAlign='left'; }
+      if(on){ x.fillStyle=sCol[i]; x.globalAlpha=.5+.5*Math.sin(t*4); x.beginPath(); x.arc(274,y+27,4,0,7); x.fill(); x.globalAlpha=1; } });
+    rr(x,30,492,260,40,10); x.fillStyle='rgba(255,209,102,.08)'; x.fill(); x.strokeStyle='rgba(255,209,102,.35)'; x.lineWidth=1; x.stroke();
+    x.fillStyle='#ffd166'; x.font='600 11px '+FONT; x.textAlign='center'; x.fillText('全程 AI 执行 · 操作员只做决策',160,517); x.textAlign='left';
+    /* ---------- MIDDLE: AI base nodes ---------- */
+    panel(318,326,'AI 底座 · 节点推进');
+    const mnode=(cx,cy,w,h,label,c,active,sub,fs)=>{
+      if(active){ x.save(); x.shadowColor=c; x.shadowBlur=15; rr(x,cx-w/2,cy-h/2,w,h,8); x.fillStyle='rgba(20,34,58,.95)'; x.fill(); x.restore(); }
+      rr(x,cx-w/2,cy-h/2,w,h,8); x.fillStyle='rgba(17,29,50,.92)'; x.fill(); x.strokeStyle=active?c:'rgba(120,160,220,.4)'; x.lineWidth=active?1.8:1.1; x.stroke();
+      x.fillStyle=active?'#fff':'#cfe0f5'; x.font='700 '+(fs||12.5)+'px '+FONT; x.textAlign='center'; x.fillText(label,cx,cy+(sub?-1:4.5));
+      if(sub){ x.fillStyle='#8fb0dd'; x.font='9.5px '+FONT; x.fillText(sub,cx,cy+13); }
+      x.textAlign='left'; };
+    const medge=(x1,y1,x2,y2,active)=>{ x.strokeStyle=active?'rgba(124,252,152,.8)':'rgba(120,160,220,.28)'; x.lineWidth=active?2:1.2;
+      x.beginPath(); x.moveTo(x1,y1); x.lineTo(x2,y2); x.stroke(); };
+    const pulse=(pts,k,c)=>{ if(k<0||k>1) return; let total=0; const seg=[];
+      for(let i=0;i<pts.length-1;i++){ const d=Math.hypot(pts[i+1][0]-pts[i][0],pts[i+1][1]-pts[i][1]); seg.push(d); total+=d; }
+      let dist=k*total;
+      for(let i=0;i<seg.length;i++){ if(dist<=seg[i]){ const kk=seg[i]?dist/seg[i]:0; const px=lp(pts[i][0],pts[i+1][0],kk), py=lp(pts[i][1],pts[i+1][1],kk);
+        x.save(); x.shadowColor=c; x.shadowBlur=13; x.fillStyle=c; x.beginPath(); x.arc(px,py,4.6,0,7); x.fill(); x.restore(); return; } dist-=seg[i]; } };
+    const parseOn=ph>=3&&ph<6.5, lakeOn=(ph>=6.5&&ph<11)||(ph>=30.5&&ph<35), rdOn=ph>=15&&ph<16.8,
+          srvOn=ph>=22&&ph<26.5, relayOn=ph>=35&&ph<39.5, erpOn=ph>=37.5, passed=ph>=4;
+    medge(481,100,481,120,parseOn); medge(445,156,420,176,sIdx===1); medge(458,192,550,192,sIdx===1);
+    medge(481,156,481,232,lakeOn||srvOn||relayOn); medge(430,348,412,374,ph>=14.3&&ph<16.8); medge(532,348,548,374,relayOn); medge(556,410,522,444,relayOn);
+    mnode(481,84,124,32,'OA 客户端','#6bc5ff',parseOn);
+    mnode(481,138,144,36,'主控智能体','#c39bff',parseOn||lakeOn||srvOn||relayOn,'请求编排');
+    mnode(404,192,108,32,'权限审计','#ffd166',sIdx===1);
+    x.save(); x.translate(566,192); x.rotate(Math.PI/4);
+    rr(x,-13,-13,26,26,4); x.fillStyle=passed?'rgba(46,120,70,.9)':'rgba(17,29,50,.92)'; x.fill();
+    x.strokeStyle=sIdx===1?'#ffd166':'rgba(120,160,220,.4)'; x.lineWidth=1.2; x.stroke(); x.restore();
+    x.fillStyle=passed?'#7cfc98':'#cfe0f5'; x.font='700 12px '+FONT; x.textAlign='center'; x.fillText(passed?'✓':'?',566,196);
+    x.fillStyle='#8fa3c8'; x.font='9.5px '+FONT; x.fillText('权限判断',566,222); x.textAlign='left';
+    rr(x,338,232,286,116,10); x.fillStyle='rgba(17,29,50,.92)'; x.fill(); x.strokeStyle=(lakeOn||srvOn||relayOn)?'#6bc5ff':'rgba(120,160,220,.4)'; x.lineWidth=(lakeOn||srvOn||relayOn)?1.8:1.1; x.stroke();
+    x.fillStyle='#eaf3ff'; x.font='700 13px '+FONT; x.textAlign='center'; x.fillText('AI 底座',481,254); x.textAlign='left';
+    mnode(413,288,118,44,'数据湖','#6bc5ff',lakeOn,'参数匹配 · 复核',12);
+    if(lakeOn){ const ly=272+((t*26)%30); x.fillStyle='rgba(107,197,255,.35)'; x.fillRect(358,ly,110,2); }
+    mnode(549,288,118,44,'内部 AI 服务器','#c39bff',srvOn,'邮件内容生成',11);
+    x.fillStyle='#7186a8'; x.font='9.5px '+FONT; x.textAlign='center'; x.fillText('知识库 · BI · 敏感过滤',481,334); x.textAlign='left';
+    mnode(398,392,120,36,'研发部 · 核价','#ffd166',rdOn||(ph>=14.3&&ph<15));
+    mnode(556,392,120,36,'ERP 中继体','#7cfc98',relayOn);
+    mnode(481,462,150,38,'ERP 系统','#7cfc98',erpOn,'销售订单');
+    pulse([[640,110],[560,100],[520,128],[495,138]],(ph-3.2)/1.2,'#6bc5ff');
+    pulse([[481,156],[481,228],[440,262],[416,282]],(ph-6.8)/1.2,'#7cfc98');
+    pulse([[416,282],[481,228],[481,156],[560,100],[640,110]],(ph-9.6)/1,'#7cfc98');
+    pulse([[481,156],[481,228],[430,262],[410,368],[400,388]],(ph-14.3)/1.1,'#ffd166');
+    pulse([[400,388],[430,262],[481,160]],(ph-16.8)/0.9,'#ffd166');
+    pulse([[481,156],[481,228],[520,262],[546,282]],(ph-22.2)/1.1,'#c39bff');
+    pulse([[481,156],[481,228],[440,262],[416,282]],(ph-30.8)/1.1,'#6bc5ff');
+    pulse([[481,156],[481,228],[532,262],[548,368],[554,388]],(ph-35.2)/1.1,'#7cfc98');
+    pulse([[556,410],[522,440],[492,456]],(ph-36.6)/0.9,'#7cfc98');
+    const mstat = ph<3?'待机 · 等待新邮件' : ph<6.5?'主控编排 · 解析任务中' : ph<11?'数据湖 · 参数匹配中' : ph<15?'等待操作员决策' :
+      ph<18.5?'研发核价中…' : ph<22?'等待操作员指示' : ph<27?'内部 AI 服务器 · 生成邮件' : ph<30.5?'等待客户回复' :
+      ph<35?'数据湖 · 二次复核中' : 'ERP 中继体 · 反写订单中';
+    x.fillStyle='#8fb0dd'; x.font='11.5px '+FONT; x.textAlign='center'; x.fillText(mstat,481,522); x.textAlign='left';
+    /* ---------- RIGHT: OA workspace ---------- */
+    panel(656,490,'');
+    x.fillStyle='#5b8def'; x.beginPath(); x.arc(688,44,13,0,7); x.fill();
+    x.fillStyle='#fff'; x.font='700 12px '+FONT; x.textAlign='center'; x.fillText('光',688,48); x.textAlign='left';
+    x.fillStyle='#eaf3ff'; x.font='700 15.5px '+FONT; x.fillText('OA 智能工作台',710,49);
+    const chipTxt=['新邮件到达','AI 解析中','数据湖匹配','研发核价','生成报价邮件','客户确认 · 复核','ERP 反写'][sIdx];
+    x.font='600 11.5px '+FONT; const cw=x.measureText(chipTxt).width+20;
+    rr(x,1130-cw,31,cw,25,12); x.fillStyle=sCol[sIdx]+'2e'; x.fill(); x.fillStyle=sCol[sIdx]; x.textAlign='center'; x.fillText(chipTxt,1130-cw/2,47); x.textAlign='left';
     const view=(a0,fn)=>{ const a=ss(a0,a0+.5,ph); if(a<=0) return; x.save(); x.globalAlpha=a; fn(); x.restore(); };
+    const optRow=(y,label,state)=>{ rr(x,672,y,458,38,9); x.fillStyle=state===2?'rgba(124,252,152,.12)':'rgba(23,38,64,.9)'; x.fill();
+      x.strokeStyle=state===2?'#7cfc98':(state===1?'rgba(255,209,102,.8)':'rgba(120,160,220,.3)'); x.lineWidth=state?1.6:1.1; x.stroke();
+      x.strokeStyle=state===2?'#7cfc98':'rgba(160,185,225,.6)'; x.lineWidth=1.4; x.beginPath(); x.arc(692,y+19,7,0,7); x.stroke();
+      if(state===2){ x.fillStyle='#7cfc98'; x.beginPath(); x.arc(692,y+19,3.4,0,7); x.fill(); }
+      x.fillStyle=state===2?'#eafff0':'#dbe7ff'; x.font='12.5px '+FONT; x.fillText(label,710,y+24);
+      if(state===2){ x.fillStyle='#7cfc98'; x.font='600 11px '+FONT; x.textAlign='right'; x.fillText('已选择',1118,y+24); x.textAlign='left'; } };
+    const btnRow=(y,labels,primary)=>{ labels.forEach((lb,i)=>{ const bx=672+i*154;
+        rr(x,bx,y,142,42,9); const isP=i===primary;
+        x.fillStyle=isP?'#2f9e44':'rgba(255,255,255,.05)'; x.fill();
+        if(!isP){ x.strokeStyle='rgba(160,185,225,.45)'; x.lineWidth=1.1; x.stroke(); }
+        x.fillStyle=isP?'#fff':'#cfe0f5'; x.font=(isP?'700 ':'600 ')+'13px '+FONT; x.textAlign='center'; x.fillText(lb,bx+71,y+27); x.textAlign='left'; }); };
     /* MAIL + PARSE */
-    if(ph<6) view(0,()=>{
-      rr(x,514,74,616,58,10); x.fillStyle='rgba(30,46,74,.9)'; x.fill();
+    if(ph<6.5) view(0,()=>{
+      rr(x,672,74,458,52,10); x.fillStyle='rgba(30,46,74,.9)'; x.fill();
       x.strokeStyle=ph<1.6?'rgba(255,209,102,'+(0.5+0.4*Math.sin(t*5))+')':'rgba(120,160,220,.35)'; x.lineWidth=1.4; x.stroke();
-      x.fillStyle='#ffd166'; x.beginPath(); x.arc(532,103,4.5,0,7); x.fill();
-      x.fillStyle='#eaf3ff'; x.font='700 13.5px '+FONT; x.fillText('深圳华强电子 · 采购部',546,99);
-      x.fillStyle='#9fb4dd'; x.font='12.5px '+FONT; x.fillText('询价：LED 面板灯 600×600 等三项',546,119);
-      x.fillStyle='#8fa3c8'; x.font='12px '+FONT; x.textAlign='right'; x.fillText('09:12',1118,99); x.textAlign='left';
-      rr(x,514,144,616,296,10); x.fillStyle='rgba(23,38,64,.85)'; x.fill(); x.strokeStyle='rgba(120,160,220,.22)'; x.lineWidth=1; x.stroke();
-      x.fillStyle='#fff'; x.font='700 15px '+FONT; x.fillText('询价：LED面板灯 600×600 等三项',534,174);
-      x.fillStyle='#8fa3c8'; x.font='11.5px '+FONT; x.fillText('发件人：深圳华强电子 · 采购部      2026-09-18 09:12',534,196);
-      x.strokeStyle='rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(534,208); x.lineTo(1110,208); x.stroke();
-      const lines=['您好，我司近期项目需要采购以下产品，请报含税到厂价：','1）LED 面板灯 600×600 —— 1,200 套','2）LED 路灯 100W —— 850 套','3）LED 筒灯 12W —— 3,600 套','请一并注明交期与账期，谢谢。'];
-      x.font='13.5px '+FONT;
-      lines.forEach((ln,i)=>{ const ly=234+i*27;
-        if(ph>=2.5){ const w0=2.8+i*1.0;
-          if(i>=1&&i<=3&&ph>=w0&&ph<w0+1.1){ x.fillStyle='rgba(255,209,102,.13)'; x.fillRect(528,ly-19,588,25); x.fillStyle='#ffd166'; x.fillRect(528,ly-19,3,25); } }
-        x.fillStyle='#dbe7ff'; x.fillText(ln,534,ly); });
-      if(ph>=2.5){ const tags=['产品 ×3 已提取','要求：含税到厂价','需注明交期/账期']; let tx=534; x.font='600 11.5px '+FONT;
-        tags.forEach((tg,i)=>{ const a=ss(3.4+i*1.0,3.9+i*1.0,ph); if(a<=0) return; const w=x.measureText(tg).width+18;
-          x.globalAlpha=a; rr(x,tx,398,w,24,12); x.fillStyle='rgba(195,155,255,.15)'; x.fill(); x.strokeStyle='rgba(195,155,255,.55)'; x.lineWidth=1; x.stroke();
-          x.fillStyle='#e6dcff'; x.fillText(tg,tx+9,414); x.globalAlpha=1; tx+=w+8; }); }
+      x.fillStyle='#ffd166'; x.beginPath(); x.arc(690,100,4.5,0,7); x.fill();
+      x.fillStyle='#eaf3ff'; x.font='700 13px '+FONT; x.fillText('深圳大大只路灯公司 · 采购部',704,97);
+      x.fillStyle='#9fb4dd'; x.font='12px '+FONT; x.fillText('询价：2835 灯珠两款（20万 / 5万 Pcs）',704,116);
+      x.fillStyle='#8fa3c8'; x.font='11.5px '+FONT; x.textAlign='right'; x.fillText('09:08',1118,97); x.textAlign='left';
+      rr(x,672,134,458,252,10); x.fillStyle='rgba(23,38,64,.85)'; x.fill(); x.strokeStyle='rgba(120,160,220,.22)'; x.stroke();
+      x.fillStyle='#fff'; x.font='700 13.5px '+FONT; x.fillText('询价：2835 灯珠两款',688,162);
+      x.fillStyle='#8fa3c8'; x.font='10.5px '+FONT; x.fillText('发件人：深圳大大只路灯公司 · 采购部    09:08',688,182);
+      x.strokeStyle='rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(688,192); x.lineTo(1114,192); x.stroke();
+      const lines=['您好，请报以下两款灯珠含税价：','产品一：2835/41WF/三安8*26/Ra90/','3950-4490K/8.8-9.0v/20mA —— 20万 Pcs','产品二：2835/蓝光/晶元8*10/1-2lm/','3.0-3.1v/463-468nm/20mA —— 5万 Pcs','请注明库存与交期，谢谢。'];
+      x.font='11.5px '+FONT;
+      lines.forEach((ln,i)=>{ const ly=218+i*25;
+        if(ph>=3.4){ const blk=i>=1&&i<=2?0:(i>=3&&i<=4?1:-1);
+          if(blk===0&&ph>=3.4&&ph<4.9){ x.fillStyle='rgba(255,209,102,.12)'; x.fillRect(682,224,438,50); }
+          if(blk===1&&ph>=4.9&&ph<6.3){ x.fillStyle='rgba(255,209,102,.12)'; x.fillRect(682,274,438,50); } }
+        x.fillStyle='#dbe7ff'; x.fillText(ln,688,ly); });
+      if(ph>=3.4){ const tags=['产品 ×2 已提取','需求：20万 + 5万 Pcs']; let tx=672; x.font='600 11px '+FONT;
+        tags.forEach((tg,i)=>{ const a=ss(4.2+i*1.0,4.7+i*1.0,ph); if(a<=0) return; const w=x.measureText(tg).width+18;
+          x.globalAlpha=a; rr(x,tx,398,w,24,12); x.fillStyle='rgba(195,155,255,.15)'; x.fill(); x.strokeStyle='rgba(195,155,255,.55)'; x.stroke();
+          x.fillStyle='#e6dcff'; x.fillText(tg,tx+9,413); x.globalAlpha=1; tx+=w+8; }); }
     });
-    /* QUOTE + APPROVAL */
-    if(ph>=6&&ph<15.5) view(6,()=>{
-      rr(x,514,74,616,296,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
-      x.fillStyle='#fff'; x.font='700 16px '+FONT; x.fillText('报价单 Q-2025-0918',534,106);
-      rr(x,1024,84,86,24,12); x.fillStyle='rgba(195,155,255,.18)'; x.fill(); x.fillStyle='#e6dcff'; x.font='600 11.5px '+FONT; x.textAlign='center'; x.fillText('AI 生成',1067,99.5); x.textAlign='left';
-      x.fillStyle='#8fa3c8'; x.font='12px '+FONT; x.fillText('客户：深圳华强电子 · 采购部      有效期 7 天',534,130);
-      x.fillStyle='rgba(107,197,255,.20)'; x.fillRect(534,142,576,26);
-      x.fillStyle='#bfe0ff'; x.font='700 11.5px '+FONT; x.fillText('产品',544,158);
-      x.textAlign='right'; x.fillText('数量',880,158); x.fillText('单价（元）',990,158); x.fillText('金额（元）',1100,158); x.textAlign='left';
-      const rows=[['LED 面板灯 600×600','1,200','80.00','96,000'],['LED 路灯 100W','850','150.00','127,500'],['LED 筒灯 12W','3,600','30.00','108,000']];
-      x.font='12.5px '+FONT;
-      rows.forEach((r,i)=>{ const a=ss(6.5+i*.8,7.1+i*.8,ph); if(a<=0) return; const ry=168+i*30;
-        x.globalAlpha=a; if(i%2===0){ x.fillStyle='rgba(255,255,255,.045)'; x.fillRect(534,ry,576,30); }
-        x.fillStyle='#dbe7ff'; x.fillText(r[0],544,ry+20);
-        x.textAlign='right'; x.fillText(r[1],880,ry+20); x.fillText(r[2],990,ry+20); x.fillText(r[3],1100,ry+20); x.textAlign='left'; x.globalAlpha=1; });
-      const ta=ss(9.2,9.8,ph);
-      if(ta>0){ x.globalAlpha=ta; x.strokeStyle='rgba(124,252,152,.5)'; x.beginPath(); x.moveTo(534,264); x.lineTo(1110,264); x.stroke();
-        x.fillStyle='#7cfc98'; x.font='700 13px '+FONT; x.fillText('合计',544,286);
-        x.textAlign='right'; x.fillText('¥331,500',1100,286); x.textAlign='left'; x.globalAlpha=1; }
-      const ea=ss(10.2,10.8,ph);
-      if(ea>0){ x.globalAlpha=ea; x.fillStyle='#9fb4dd'; x.font='12px '+FONT; x.fillText('含 13% 增值税 · 交期 15 天 · 账期 30 天 · 单价取自 ERP 价格库',534,318); x.globalAlpha=1; }
-      if(ph>=11){ const aa=ss(11,11.5,ph); x.save(); x.globalAlpha=aa;
-        if(ph<14.4){ rr(x,514,386,616,84,10); x.fillStyle='rgba(30,46,74,.95)'; x.fill(); x.strokeStyle='rgba(255,157,177,.5)'; x.lineWidth=1.2; x.stroke();
-          x.fillStyle='#ff9db1'; x.beginPath(); x.arc(542,428,13,0,7); x.fill(); x.fillStyle='#fff'; x.font='700 11.5px '+FONT; x.textAlign='center'; x.fillText('王',542,432); x.textAlign='left';
-          x.fillStyle='#eaf3ff'; x.font='600 13.5px '+FONT; x.fillText('王经理 · 待确认',564,421);
-          x.fillStyle='#8fa3c8'; x.font='12px '+FONT; x.fillText('报价 ¥331,500 · 确认后自动发送客户',564,443);
-          rr(x,852,408,104,38,8); x.fillStyle='rgba(255,255,255,.05)'; x.fill(); x.strokeStyle='rgba(160,185,225,.5)'; x.stroke();
-          x.fillStyle='#cfe0f5'; x.font='600 13px '+FONT; x.textAlign='center'; x.fillText('退回修改',904,432); x.textAlign='left';
-          rr(x,966,408,130,38,8); x.fillStyle='#2f9e44'; x.fill();
-          x.fillStyle='#fff'; x.font='700 13px '+FONT; x.textAlign='center'; x.fillText('批准发送',1031,432); x.textAlign='left'; }
-        else { rr(x,514,386,616,84,10); x.fillStyle='rgba(124,252,152,.12)'; x.fill(); x.strokeStyle='rgba(124,252,152,.6)'; x.lineWidth=1.2; x.stroke();
-          x.fillStyle='#7cfc98'; x.font='700 14.5px '+FONT; x.textAlign='center'; x.fillText('✓ 王经理已批准 · 报价单将发送客户',822,422);
-          x.fillStyle='#8fa3c8'; x.font='11.5px '+FONT; x.fillText('审批时间 14:02 · 操作员决策点',822,444); x.textAlign='left'; }
+    /* MATCH RESULTS + OPTIONS */
+    if(ph>=6.5&&ph<11) view(6.5,()=>{
+      x.fillStyle='#fff'; x.font='700 14px '+FONT; x.fillText('数据湖匹配结果',688,100);
+      rr(x,1028,80,102,24,12); x.fillStyle='rgba(124,252,152,.15)'; x.fill(); x.fillStyle='#7cfc98'; x.font='600 11px '+FONT; x.textAlign='center'; x.fillText('匹配完成',1079,95.5); x.textAlign='left';
+      rr(x,672,110,458,84,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(124,252,152,.5)'; x.lineWidth=1.2; x.stroke();
+      x.fillStyle='#2e7d46'; x.beginPath(); x.arc(698,136,11,0,7); x.fill(); x.fillStyle='#fff'; x.font='700 11px '+FONT; x.textAlign='center'; x.fillText('✓',698,140); x.textAlign='left';
+      x.fillStyle='#fff'; x.font='700 14px '+FONT; x.fillText('A2835H-W414190',718,141);
+      x.fillStyle='#9fb4dd'; x.font='11.5px '+FONT; x.fillText('匹配产品一 · 三安 Ra90 3950-4490K',718,162);
+      x.fillStyle='#7cfc98'; x.font='600 11.5px '+FONT; x.fillText('库存 15万 Pcs · 原材料充足',718,181);
+      x.fillStyle='#7cfc98'; x.font='600 11px '+FONT; x.textAlign='right'; x.fillText('已匹配',1118,141); x.textAlign='left';
+      rr(x,672,202,458,84,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(255,209,102,.55)'; x.lineWidth=1.2; x.stroke();
+      x.fillStyle='#a87b1e'; x.beginPath(); x.arc(698,228,11,0,7); x.fill(); x.fillStyle='#fff'; x.font='700 11px '+FONT; x.textAlign='center'; x.fillText('!',698,232); x.textAlign='left';
+      x.fillStyle='#fff'; x.font='700 13px '+FONT; x.fillText('无直接匹配 → 替代型号 E28351-B0000',718,233);
+      x.fillStyle='#9fb4dd'; x.font='11.5px '+FONT; x.fillText('对应产品二 · 晶元 蓝光 463-468nm',718,254);
+      x.fillStyle='#7cfc98'; x.font='600 11.5px '+FONT; x.fillText('库存 10万 Pcs · 原材料充足',718,273);
+      x.fillStyle='#ffd166'; x.font='600 11px '+FONT; x.textAlign='right'; x.fillText('替代型号',1118,233); x.textAlign='left';
+      if(ph>=8.6){ const oa=ss(8.6,9.1,ph); x.save(); x.globalAlpha=oa;
+        x.fillStyle='#ffd166'; x.font='600 11.5px '+FONT; x.fillText('操作员决策点 · 请选择下一步',688,312);
+        optRow(320,'生成回复邮件 · 询问替代并报价',0);
+        optRow(364,'发送未匹配参数到研发核价',ph>=10.5?2:(ph>=9.6?1:0));
+        optRow(408,'回复邮件给客户 · 没货',0);
         x.restore(); }
     });
-    if(ph>=12.8&&ph<15.5){ const ck=ss(12.8,14,ph); cursor(lp(700,1031,ck),lp(486,427,ck));
-      if(ph>=14.1&&ph<14.7){ x.strokeStyle='rgba(124,252,152,.7)'; x.lineWidth=2; x.beginPath(); x.arc(1031,427,8+(ph-14.1)*36,0,7); x.stroke(); } }
-    /* SEND */
-    if(ph>=15.5&&ph<19.5) view(15.5,()=>{
-      rr(x,514,74,616,296,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
-      x.fillStyle='#9fb4dd'; x.font='12.5px '+FONT; x.fillText('收件人：',534,108); x.fillStyle='#eaf3ff'; x.fillText('深圳华强电子 · 采购部',592,108);
-      x.fillStyle='#9fb4dd'; x.fillText('主  题：',534,136); x.fillStyle='#eaf3ff'; x.fillText('Re：询价回复 — 报价单 Q-2025-0918',592,136);
-      x.strokeStyle='rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(534,150); x.lineTo(1110,150); x.stroke();
-      const bl=['您好，感谢贵司询价。','三项产品报价合计 ¥331,500（含税到厂价），交期 15 天，账期 30 天。','详细报价单见附件，请查收确认。如无异议，我司即安排排产。'];
-      x.font='13.5px '+FONT; x.fillStyle='#dbe7ff';
-      bl.forEach((ln,i)=>x.fillText(ln,534,182+i*27));
-      rr(x,534,276,252,34,8); x.fillStyle='rgba(107,197,255,.12)'; x.fill(); x.strokeStyle='rgba(107,197,255,.45)'; x.lineWidth=1; x.stroke();
-      x.fillStyle='#ffb35c'; x.fillRect(546,285,13,16); x.fillStyle='#0d1a30'; x.font='700 8px '+FONT; x.fillText('P',549,296);
-      x.fillStyle='#bfe0ff'; x.font='600 12px '+FONT; x.fillText('报价单 Q-2025-0918.pdf',568,297);
-      rr(x,1006,88,90,34,8); x.fillStyle=ph>=18.4?'#8be04e':'#2f6fd0'; x.fill();
-      x.fillStyle='#fff'; x.font='700 13.5px '+FONT; x.textAlign='center'; x.fillText('发送',1051,110); x.textAlign='left';
-      if(ph>=18.55){ rr(x,712,386,220,36,18); x.fillStyle='rgba(28,70,44,.95)'; x.fill(); x.strokeStyle='rgba(124,252,152,.7)'; x.lineWidth=1.2; x.stroke();
-        x.fillStyle='#7cfc98'; x.font='700 13px '+FONT; x.textAlign='center'; x.fillText('✓ 邮件已发送给客户',822,409); x.textAlign='left'; }
+    if(ph>=9.4&&ph<11){ const ck=ss(9.4,10.3,ph); cursor(lp(830,905,ck),lp(300,383,ck)); ripple(905,383,10.4,'rgba(124,252,152,.8)'); }
+    /* PRICING FORM */
+    if(ph>=11&&ph<15) view(11,()=>{
+      rr(x,672,74,458,300,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(255,209,102,.4)'; x.stroke();
+      x.fillStyle='#fff'; x.font='700 15px '+FONT; x.fillText('研发核价单',688,106);
+      x.fillStyle='#8fa3c8'; x.font='11.5px '+FONT; x.textAlign='right'; x.fillText('HJ-2025-031',1118,106); x.textAlign='left';
+      const fld=(y,lb,val,val2)=>{ x.fillStyle='#8fa3c8'; x.font='12px '+FONT; x.fillText(lb,688,y);
+        x.fillStyle='#eaf3ff'; x.font='600 12.5px '+FONT; x.fillText(val,772,y); if(val2) x.fillText(val2,772,y+19); };
+      fld(140,'产品参数','2835/蓝光/晶元8*10/1-2lm','3.0-3.1v/463-468nm/20mA');
+      fld(196,'替代型号','E28351-B0000');
+      fld(228,'需求数量','5万 Pcs');
+      fld(260,'客户','深圳大大只路灯公司');
+      fld(292,'备注','客户询价急 · 请核替代型号单价与交期');
+      x.strokeStyle='rgba(255,255,255,.08)'; x.beginPath(); x.moveTo(688,318); x.lineTo(1114,318); x.stroke();
+      x.fillStyle='#9fb4dd'; x.font='11.5px '+FONT; x.fillText('发送后由研发部核价并回复单价、交期',688,342);
+      if(ph<14.5) btnRow(386,['发送','暂存','取消'],0);
+      else { rr(x,672,386,142,42,9); x.fillStyle='rgba(124,252,152,.2)'; x.fill();
+        x.fillStyle='#7cfc98'; x.font='700 13px '+FONT; x.textAlign='center'; x.fillText('已发送 ✓',743,413); x.textAlign='left';
+        x.fillStyle='#7cfc98'; x.font='600 11.5px '+FONT; x.fillText('已发送研发部 · 等待核价回复',688,452); }
     });
-    if(ph>=17.4&&ph<19.5){ const ck=ss(17.4,18.3,ph); cursor(lp(760,1051,ck),lp(440,105,ck));
-      if(ph>=18.35&&ph<18.9){ x.strokeStyle='rgba(139,224,78,.7)'; x.lineWidth=2; x.beginPath(); x.arc(1051,105,8+(ph-18.35)*36,0,7); x.stroke(); } }
+    if(ph>=13.4&&ph<15){ const ck=ss(13.4,14.1,ph); cursor(lp(820,743,ck),lp(310,407,ck)); ripple(743,407,14.2,'rgba(124,252,152,.8)'); }
+    /* R&D REPLY + OPTIONS + OPERATOR TYPES */
+    if(ph>=15&&ph<22) view(15,()=>{
+      if(ph<16.8){ rr(x,672,74,458,110,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
+        x.fillStyle='#9fb4dd'; x.font='12.5px '+FONT; x.fillText('等待研发核价回复',688,112);
+        for(let i=0;i<3;i++){ x.fillStyle='#ffd166'; x.globalAlpha=.35+.65*Math.abs(Math.sin(t*3.4+i)); x.beginPath(); x.arc(700+i*18,140,3.4,0,7); x.fill(); } x.globalAlpha=1; }
+      else { const ra=ss(16.8,17.3,ph); x.save(); x.globalAlpha=ra;
+        rr(x,672,74,458,110,10); x.fillStyle='rgba(23,38,64,.95)'; x.fill(); x.strokeStyle='rgba(124,252,152,.5)'; x.lineWidth=1.2; x.stroke();
+        x.fillStyle='#fff'; x.font='700 13.5px '+FONT; x.fillText('研发核价回复',688,100);
+        x.fillStyle='#8fa3c8'; x.font='11px '+FONT; x.textAlign='right'; x.fillText('研发部 · 刚刚',1118,100); x.textAlign='left';
+        x.fillStyle='#dbe7ff'; x.font='12px '+FONT;
+        x.fillText('替代型号 E28351-B0000：单价 ¥0.062/Pcs · 可供 10万',688,126);
+        x.fillText('交期 7 天 · 材料充足',688,148);
+        x.fillStyle='#9fb4dd'; x.fillText('产品一 A2835H-W414190 现行价 ¥0.085/Pcs（价格库）',688,170);
+        x.restore(); }
+      if(ph>=17.2&&ph<22){ const oa=ss(17.2,17.7,ph); x.save(); x.globalAlpha=oa;
+        x.fillStyle='#ffd166'; x.font='600 11.5px '+FONT; x.fillText('操作员决策点 · 请选择下一步',688,216);
+        optRow(224,'生成回复邮件附上报价',0);
+        optRow(268,'回复邮件给客户 · 没货',0);
+        x.restore(); }
+      if(ph>=21.4){ x.font='12px '+FONT; const Q='可以在回复邮件附带第二款替代型号的报价么'; const bw=x.measureText(Q).width+22;
+        rr(x,1130-bw,428,bw,32,9); x.fillStyle='#7ed957'; x.fill();
+        x.fillStyle='#12240d'; x.fillText(Q,1130-bw+11,449); }
+    });
+    /* QUOTE EMAIL */
+    if(ph>=22&&ph<27) view(22,()=>{
+      rr(x,672,74,458,300,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
+      x.fillStyle='#9fb4dd'; x.font='12px '+FONT; x.fillText('收件人：',688,102); x.fillStyle='#eaf3ff'; x.fillText('深圳大大只路灯公司 · 采购部',746,102);
+      x.fillStyle='#9fb4dd'; x.fillText('主  题：',688,128); x.fillStyle='#eaf3ff'; x.fillText('Re：询价回复 — 2835 灯珠报价',746,128);
+      x.strokeStyle='rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(688,140); x.lineTo(1114,140); x.stroke();
+      x.fillStyle='#dbe7ff'; x.font='12.5px '+FONT; x.fillText('您好，感谢询价。两款灯珠报价如下：',688,164);
+      x.fillStyle='rgba(107,197,255,.20)'; x.fillRect(688,176,426,22);
+      x.fillStyle='#bfe0ff'; x.font='700 10.5px '+FONT; x.fillText('型号',694,191); x.fillText('参数',812,191);
+      x.textAlign='right'; x.fillText('数量',986,191); x.fillText('单价',1046,191); x.fillText('金额',1108,191); x.textAlign='left';
+      const qr=[['A2835H-W414190','三安 Ra90','20万','0.085','17,000'],['E28351-B0000 · 替代','晶元 蓝光','5万','0.062','3,100']];
+      x.font='11px '+FONT;
+      qr.forEach((r,i)=>{ const a=ss(23+i*.7,23.5+i*.7,ph); if(a<=0) return; const ry=198+i*24;
+        x.globalAlpha=a; if(i%2===0){ x.fillStyle='rgba(255,255,255,.045)'; x.fillRect(688,ry,426,24); }
+        x.fillStyle='#dbe7ff'; x.fillText(r[0],694,ry+16); x.fillText(r[1],812,ry+16);
+        x.textAlign='right'; x.fillText(r[2],986,ry+16); x.fillText(r[3],1046,ry+16); x.fillText(r[4],1108,ry+16); x.textAlign='left'; x.globalAlpha=1; });
+      const ta=ss(24.6,25.1,ph);
+      if(ta>0){ x.globalAlpha=ta; x.strokeStyle='rgba(124,252,152,.5)'; x.beginPath(); x.moveTo(688,248); x.lineTo(1114,248); x.stroke();
+        x.fillStyle='#7cfc98'; x.font='700 11.5px '+FONT; x.fillText('合计（含税）',694,266);
+        x.textAlign='right'; x.fillText('¥20,100',1108,266); x.textAlign='left'; x.globalAlpha=1; }
+      x.fillStyle='#ffd166'; x.font='11px '+FONT; x.fillText('注：第二款为替代型号（晶元蓝光），参数相近，请确认可否接受。',688,292);
+      x.fillStyle='#9fb4dd'; x.fillText('含税 · 交期 7-10 天 · 账期 30 天',688,316);
+      x.fillStyle='#7186a8'; x.font='10.5px '+FONT; x.fillText('—— 由内部 AI 服务器生成 · 光智体',688,352);
+      if(ph<26.3) btnRow(386,['发送','暂存','取消'],0);
+      else { rr(x,760,386,282,36,18); x.fillStyle='rgba(28,70,44,.95)'; x.fill(); x.strokeStyle='rgba(124,252,152,.7)'; x.lineWidth=1.2; x.stroke();
+        x.fillStyle='#7cfc98'; x.font='700 12.5px '+FONT; x.textAlign='center'; x.fillText('✓ 报价邮件已发送给客户',901,409); x.textAlign='left'; }
+    });
+    if(ph>=25.2&&ph<27){ const ck=ss(25.2,26.1,ph); cursor(lp(830,743,ck),lp(320,407,ck)); ripple(743,407,26.2,'rgba(124,252,152,.8)'); }
     /* CUSTOMER REPLY */
-    if(ph>=19.5&&ph<24) view(19.5,()=>{
-      rr(x,514,74,616,58,10); x.fillStyle='rgba(30,46,74,.9)'; x.fill(); x.strokeStyle='rgba(124,252,152,.55)'; x.lineWidth=1.4; x.stroke();
-      x.fillStyle='#7cfc98'; x.beginPath(); x.arc(532,103,4.5,0,7); x.fill();
-      x.fillStyle='#eaf3ff'; x.font='700 13.5px '+FONT; x.fillText('深圳华强电子 · 采购部',546,99);
-      x.fillStyle='#9fb4dd'; x.font='12.5px '+FONT; x.fillText('Re：报价确认',546,119);
-      x.fillStyle='#8fa3c8'; x.font='12px '+FONT; x.textAlign='right'; x.fillText('14:26',1118,99); x.textAlign='left';
-      rr(x,514,144,616,240,10); x.fillStyle='rgba(23,38,64,.85)'; x.fill(); x.strokeStyle='rgba(120,160,220,.22)'; x.stroke();
-      x.fillStyle='#fff'; x.font='700 15px '+FONT; x.fillText('Re：报价确认',534,174);
-      x.strokeStyle='rgba(255,255,255,.10)'; x.beginPath(); x.moveTo(534,190); x.lineTo(1110,190); x.stroke();
-      x.font='13.5px '+FONT; x.fillStyle='#dbe7ff';
-      x.fillText('您好，报价已收到，价格接受。',534,224);
-      x.fillText('请按报价安排生产，正式合同随后补签。谢谢！',534,252);
-      x.save(); x.translate(970,330); x.rotate(-.06);
-      rr(x,-95,-21,190,42,8); x.fillStyle='rgba(124,252,152,.10)'; x.fill(); x.strokeStyle='#7cfc98'; x.lineWidth=1.8; x.stroke();
-      x.fillStyle='#7cfc98'; x.font='700 15.5px '+FONT; x.textAlign='center'; x.fillText('客户已确认 ✓',0,6); x.restore(); x.textAlign='left';
+    if(ph>=27&&ph<30.5) view(27,()=>{
+      rr(x,672,74,458,52,10); x.fillStyle='rgba(30,46,74,.9)'; x.fill(); x.strokeStyle='rgba(124,252,152,.55)'; x.lineWidth=1.4; x.stroke();
+      x.fillStyle='#7cfc98'; x.beginPath(); x.arc(690,100,4.5,0,7); x.fill();
+      x.fillStyle='#eaf3ff'; x.font='700 13px '+FONT; x.fillText('深圳大大只路灯公司 · 采购部',704,97);
+      x.fillStyle='#9fb4dd'; x.font='12px '+FONT; x.fillText('Re：报价确认',704,116);
+      x.fillStyle='#8fa3c8'; x.font='11.5px '+FONT; x.textAlign='right'; x.fillText('10:15',1118,97); x.textAlign='left';
+      rr(x,672,134,458,180,10); x.fillStyle='rgba(23,38,64,.85)'; x.fill(); x.strokeStyle='rgba(120,160,220,.22)'; x.stroke();
+      x.font='12.5px '+FONT; x.fillStyle='#dbe7ff';
+      x.fillText('您好，两款都接受，替代型号可以用。',688,172);
+      x.fillText('请下单安排生产，谢谢！',688,198);
+      x.save(); x.translate(1000,262); x.rotate(-.06);
+      rr(x,-88,-20,176,40,8); x.fillStyle='rgba(124,252,152,.10)'; x.fill(); x.strokeStyle='#7cfc98'; x.lineWidth=1.8; x.stroke();
+      x.fillStyle='#7cfc98'; x.font='700 15px '+FONT; x.textAlign='center'; x.fillText('客户已确认 ✓',0,5.5); x.restore(); x.textAlign='left';
+      x.fillStyle='#8fb0dd'; x.font='11.5px '+FONT; x.fillText('AI 正在重新跑数据湖，复核最新库存与价格…',688,348);
     });
+    /* FINAL LIST + START ORDER */
+    if(ph>=30.5&&ph<35) view(30.5,()=>{
+      x.fillStyle='#fff'; x.font='700 14px '+FONT; x.fillText('下单前复核 · 数据湖最新数据',688,100);
+      rr(x,1028,80,102,24,12); x.fillStyle='rgba(124,252,152,.15)'; x.fill(); x.fillStyle='#7cfc98'; x.font='600 11px '+FONT; x.textAlign='center'; x.fillText('已复核',1079,95.5); x.textAlign='left';
+      x.fillStyle='rgba(107,197,255,.20)'; x.fillRect(672,110,458,24);
+      x.fillStyle='#bfe0ff'; x.font='700 10.5px '+FONT;
+      x.fillText('型号',680,126); x.fillText('参数',794,126);
+      x.textAlign='right'; x.fillText('数量',988,126); x.fillText('单价',1042,126); x.fillText('库存',1092,126); x.textAlign='left'; x.fillText('材料',1098,126);
+      const fr=[['A2835H-W414190','2835 三安 Ra90 3950-4490K','20万','¥0.085','15万','充足'],['E28351-B0000','2835 晶元 蓝光 463-468nm','5万','¥0.062','10万','充足']];
+      x.font='10.5px '+FONT;
+      fr.forEach((r,i)=>{ const a=ss(31+i*.6,31.5+i*.6,ph); if(a<=0) return; const ry=134+i*34;
+        x.globalAlpha=a; if(i%2===0){ x.fillStyle='rgba(255,255,255,.045)'; x.fillRect(672,ry,458,34); }
+        x.fillStyle='#dbe7ff'; x.fillText(r[0],680,ry+21); x.fillText(r[1],794,ry+21);
+        x.textAlign='right'; x.fillText(r[2],988,ry+21); x.fillText(r[3],1042,ry+21); x.fillText(r[4],1092,ry+21); x.textAlign='left';
+        x.fillStyle='#7cfc98'; x.fillText(r[5],1098,ry+21); x.globalAlpha=1; });
+      x.fillStyle='#7cfc98'; x.font='700 12.5px '+FONT; x.fillText('总金额 ¥20,100（含税）',688,226);
+      x.fillStyle='#9fb4dd'; x.font='11px '+FONT; x.fillText('数据来源：AI 底座数据湖 · 刚刚复核',880,226);
+      btnRow(250,['发起订单','暂存','取消'],0);
+      rr(x,672,310,458,52,10); x.fillStyle='rgba(107,197,255,.07)'; x.fill(); x.strokeStyle='rgba(107,197,255,.25)'; x.stroke();
+      x.fillStyle='#9fb4dd'; x.font='11.5px '+FONT; x.fillText('点击「发起订单」后，将经 ERP 中继体在 ERP 生成销售订单',688,341);
+    });
+    if(ph>=33.2&&ph<35){ const ck=ss(33.2,34.1,ph); cursor(lp(850,743,ck),lp(330,271,ck)); ripple(743,271,34.2,'rgba(124,252,152,.8)'); }
     /* ERP WRITE-BACK */
-    if(ph>=24) view(24,()=>{
-      rr(x,514,74,616,296,10); x.fillStyle='rgba(23,38,64,.9)'; x.fill(); x.strokeStyle='rgba(120,160,220,.25)'; x.stroke();
-      x.fillStyle='#fff'; x.font='700 16px '+FONT; x.fillText('ERP · 报价单记录',534,106);
-      const doneW=ph>=28.4;
-      rr(x,1024,84,86,24,12); x.fillStyle=doneW?'rgba(124,252,152,.18)':'rgba(255,209,102,.16)'; x.fill();
-      x.fillStyle=doneW?'#7cfc98':'#ffd166'; x.font='600 11.5px '+FONT; x.textAlign='center'; x.fillText(doneW?'已生效':'写入中…',1067,99.5); x.textAlign='left';
-      const fields=[['单号','Q-2025-0918'],['客户','深圳华强电子'],['金额','¥331,500（含税到厂）'],['交期','15 天'],['状态',doneW?'已生效 · 待转销售订单':'经中继体写入中…']];
-      fields.forEach((f,i)=>{ const fy=146+i*33;
-        x.fillStyle='#8fa3c8'; x.font='12.5px '+FONT; x.fillText(f[0],534,fy);
-        x.fillStyle=i===4?(doneW?'#7cfc98':'#ffd166'):'#eaf3ff'; x.font='600 13.5px '+FONT; x.fillText(f[1],620,fy);
-        x.strokeStyle='rgba(255,255,255,.06)'; x.beginPath(); x.moveTo(534,fy+11); x.lineTo(1110,fy+11); x.stroke(); });
-      const wsteps=['中继体接收','字段映射','写入 ERP','回执校验'];
-      x.font='600 11.5px '+FONT;
-      wsteps.forEach((ws,i)=>{ const a=ss(24.8+i*1.2,25.3+i*1.2,ph); const wx=534+i*147;
-        rr(x,wx,318,137,30,8); x.fillStyle=a>0?'rgba(124,252,152,.13)':'rgba(255,255,255,.04)'; x.fill();
-        x.strokeStyle=a>0?'rgba(124,252,152,.55)':'rgba(255,255,255,.12)'; x.lineWidth=1; x.stroke();
-        x.fillStyle=a>0?'#7cfc98':'#8fa3c8'; x.textAlign='center'; x.fillText((a>0?'✓ ':'')+ws,wx+68,337); x.textAlign='left'; });
-      if(ph>=28.6){ const ba=ss(28.6,29.2,ph); x.globalAlpha=ba;
-        rr(x,514,386,616,54,10); x.fillStyle='rgba(124,252,152,.12)'; x.fill(); x.strokeStyle='rgba(124,252,152,.6)'; x.lineWidth=1.2; x.stroke();
-        x.fillStyle='#7cfc98'; x.font='700 14.5px '+FONT; x.textAlign='center'; x.fillText('✓ 已通过 ERP 中继体反写 · 报价单已在 ERP 生效',822,420); x.textAlign='left'; x.globalAlpha=1; }
+    if(ph>=35) view(35,()=>{
+      x.fillStyle='#fff'; x.font='700 14px '+FONT; x.fillText('ERP 反写 · 生成销售订单',688,100);
+      const wsteps=['中继体接收','字段映射','写入 ERP','生成订单号'];
+      x.font='600 11px '+FONT;
+      wsteps.forEach((ws,i)=>{ const a=ss(35.6+i*.8,36.1+i*.8,ph); const wx=672+i*116;
+        rr(x,wx,112,108,30,8); x.fillStyle=a>0?'rgba(124,252,152,.13)':'rgba(255,255,255,.04)'; x.fill();
+        x.strokeStyle=a>0?'rgba(124,252,152,.55)':'rgba(255,255,255,.12)'; x.stroke();
+        x.fillStyle=a>0?'#7cfc98':'#8fa3c8'; x.textAlign='center'; x.fillText((a>0?'✓ ':'')+ws,wx+54,131); x.textAlign='left'; });
+      const ra=ss(38,38.6,ph);
+      if(ra>0){ x.globalAlpha=ra;
+        rr(x,672,158,458,150,10); x.fillStyle='rgba(23,38,64,.95)'; x.fill(); x.strokeStyle='rgba(124,252,152,.5)'; x.lineWidth=1.2; x.stroke();
+        x.fillStyle='#fff'; x.font='700 15px '+FONT; x.fillText('ERP 销售订单',688,190);
+        rr(x,1024,168,86,24,12); x.fillStyle='rgba(124,252,152,.18)'; x.fill(); x.fillStyle='#7cfc98'; x.font='600 11.5px '+FONT; x.textAlign='center'; x.fillText('已生成',1067,183.5); x.textAlign='left';
+        const ef=[['订单号','SO-2025-0926'],['客户','深圳大大只路灯公司'],['明细','2 款灯珠 · 共 25万 Pcs'],['金额','¥20,100（含税）']];
+        ef.forEach((f,i)=>{ const fy=220+i*24;
+          x.fillStyle='#8fa3c8'; x.font='12px '+FONT; x.fillText(f[0],688,fy);
+          x.fillStyle='#eaf3ff'; x.font='600 12.5px '+FONT; x.fillText(f[1],760,fy); });
+        x.globalAlpha=1; }
+      if(ph>=38.6){ const ba=ss(38.6,39.2,ph); x.globalAlpha=ba;
+        rr(x,672,324,458,46,10); x.fillStyle='rgba(124,252,152,.12)'; x.fill(); x.strokeStyle='rgba(124,252,152,.6)'; x.lineWidth=1.2; x.stroke();
+        x.fillStyle='#7cfc98'; x.font='700 14px '+FONT; x.textAlign='center'; x.fillText('✓ 邮件 → 报价 → 订单 · 全流程完成',901,353); x.textAlign='left'; x.globalAlpha=1; }
     });
+    /* input bar */
+    rr(x,672,478,458,52,10); x.fillStyle='rgba(17,29,50,.95)'; x.fill(); x.strokeStyle='rgba(120,160,220,.3)'; x.stroke();
+    const Q='可以在回复邮件附带第二款替代型号的报价么';
+    const typed = ph<18.8?0 : ph<21.4? Math.floor((ph-18.8)/2.4*Q.length) : 0;
+    x.font='12.5px '+FONT;
+    if(typed>0){ x.fillStyle='#eaf3ff'; x.fillText(Q.slice(0,typed),686,510);
+      if(Math.floor(t*1.6)%2===0){ x.fillStyle='#6bc5ff'; x.fillRect(688+x.measureText(Q.slice(0,typed)).width+2,497,2,17); } }
+    else { x.fillStyle='rgba(160,185,225,.45)'; x.fillText('与 AI 对话，输入指示…',686,510);
+      if(ph<2&&Math.floor(t*1.6)%2===0){ x.fillStyle='#6bc5ff'; x.fillRect(688,497,2,17); } }
+    rr(x,1052,486,66,36,8); x.fillStyle=(ph>=21.1&&ph<21.7)?'#8be04e':'#2f6fd0'; x.fill();
+    x.fillStyle='#fff'; x.font='700 12.5px '+FONT; x.textAlign='center'; x.fillText('发送',1085,508); x.textAlign='left';
   });
 })();
 </script>
