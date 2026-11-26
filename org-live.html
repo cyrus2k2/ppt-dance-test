@@ -1458,12 +1458,15 @@
   go(0);
   // ---------- slide animations: small canvas cartoons, drawn only while their slide is active ----------
   const __anims=[];
-  function regAnim(id, draw){ const c=document.getElementById(id); if(c) __anims.push({c, x:c.getContext('2d'), draw}); }
+  function regAnim(id, draw){ const c=document.getElementById(id); if(c) __anims.push({c, x:c.getContext('2d'), draw, acc:0, last:-1, was:false}); }
   (function animLoop(now){
     requestAnimationFrame(animLoop);
     for(const a of __anims){
-      const sl=a.c.closest('.slide'); if(!sl || !sl.classList.contains('active')) continue;
-      a.draw(a.x, a.c.width, a.c.height, now/1000);
+      const sl=a.c.closest('.slide');
+      if(!sl || !sl.classList.contains('active')){ a.was=false; a.last=-1; continue; }
+      if(!a.was){ a.acc=0; a.was=true; a.last=now; }
+      const dt=Math.min(0.1, Math.max(0,(now-a.last)/1000)); a.last=now; a.acc+=dt;
+      a.draw(a.x, a.c.width, a.c.height, a.acc);
     }
   })(performance.now());
   const FONT='"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif';
@@ -38033,7 +38036,12 @@ three/build/three.module.js:
   const FONT='"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif';
   function rr(x,px,py,w,h,r){ x.beginPath(); x.roundRect(px,py,w,h,r); }
   function setup(id, draw){ const c=document.getElementById(id); if(!c) return; const x=c.getContext('2d');
-    (function loop(now){ requestAnimationFrame(loop); const sl=c.closest('.slide'); if(sl && sl.classList.contains('active')) draw(x, c.width, c.height, now/1000); })(performance.now()); }
+    let acc=0, last=-1, was=false;
+    (function loop(now){ requestAnimationFrame(loop); const sl=c.closest('.slide'); const on=sl && sl.classList.contains('active');
+      if(!on){ was=false; last=-1; return; }
+      if(!was){ acc=0; was=true; last=now; }
+      const dt=Math.min(0.1, Math.max(0,(now-last)/1000)); last=now; acc+=dt;
+      draw(x, c.width, c.height, acc); })(performance.now()); }
   function chip(x,cx,cy,w,text,fill,fg){ rr(x,cx-w/2,cy-15,w,30,15); x.fillStyle=fill; x.fill(); x.fillStyle=fg; x.font='600 15px '+FONT; x.textAlign='center'; x.fillText(text,cx,cy+5); }
 
   // ---------- EDR: attack -> detect -> isolate -> remediate ----------
