@@ -38933,7 +38933,7 @@ setup('anim-mailerp',(x,W,H,t)=>{
     x.fillStyle=bg; x.fillRect(0,0,W,H);
     x.strokeStyle='rgba(107,197,255,.05)'; x.lineWidth=1;
     for(let gx=0; gx<W; gx+=38){ x.beginPath(); x.moveTo(gx,0); x.lineTo(gx,H); x.stroke(); }
-    const padL=big?26:18, padR=big?26:18, labelW=big?308:292;
+    const padL=big?26:18, padR=big?26:18, labelW=big?308:336;
     const gx0=padL+labelW, gx1=W-padR, mw=(gx1-gx0)/12;
     const axisY=big?64:52, footY=H-(big?34:28);
     const rowsTop=axisY+(big?28:22), rowsBot=footY-(big?14:10);
@@ -38949,10 +38949,9 @@ setup('anim-mailerp',(x,W,H,t)=>{
     x.strokeStyle='rgba(120,160,220,.13)'; x.beginPath(); x.moveTo(gx1,axisY); x.lineTo(gx1,rowsBot); x.stroke();
     tasks.forEach((tk,i)=>{ const ry=rowsTop+i*rh, cy=ry+rh/2;
       if(i%2===0){ x.fillStyle='rgba(255,255,255,.022)'; x.fillRect(padL,ry,W-padL-padR,rh); }
-      x.fillStyle='#eaf3ff'; x.font='700 '+(big?19:15)+'px '+FONT; x.fillText(tk.name, padL, cy-13);
-      x.fillStyle='#8fd0a8'; x.font='600 '+(big?13.5:12)+'px '+FONT; x.fillText('交付：'+tk.del, padL, cy+10);
-      x.fillStyle='#7186a8'; x.font=(big?12:11)+'px '+FONT; x.fillText('负责人：'+tk.owner, padL, cy+27);
-      if(tk.note){ x.fillStyle='#ffd166'; x.font='600 '+(big?12.5:11.5)+'px '+FONT; x.fillText(tk.note, padL, cy+46); }
+      x.fillStyle='#eaf3ff'; x.font='700 '+(big?23:17.5)+'px '+FONT; x.fillText(tk.name, padL, cy-6);
+      x.fillStyle='#7186a8'; x.font=(big?13.5:12.5)+'px '+FONT; x.fillText('负责人：'+tk.owner, padL, cy+17);
+      if(tk.note){ x.fillStyle='#ffd166'; x.font='600 '+(big?12.5:11.5)+'px '+FONT; x.fillText(tk.note, padL, cy+40); }
       tk.segs.forEach((sg,j)=>{ const sx=gx0+(sg[0]-1)*mw, ex=gx0+sg[1]*mw;
         const grow=ss(0.5+i*0.4+j*0.25, 1.4+i*0.4+j*0.25, ph);
         if(grow<=0) return;
