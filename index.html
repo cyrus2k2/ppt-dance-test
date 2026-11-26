@@ -38933,26 +38933,26 @@ setup('anim-mailerp',(x,W,H,t)=>{
     x.fillStyle=bg; x.fillRect(0,0,W,H);
     x.strokeStyle='rgba(107,197,255,.05)'; x.lineWidth=1;
     for(let gx=0; gx<W; gx+=38){ x.beginPath(); x.moveTo(gx,0); x.lineTo(gx,H); x.stroke(); }
-    const padL=big?26:18, padR=big?26:18, labelW=big?308:236;
+    const padL=big?26:18, padR=big?26:18, labelW=big?308:292;
     const gx0=padL+labelW, gx1=W-padR, mw=(gx1-gx0)/12;
     const axisY=big?64:52, footY=H-(big?34:28);
     const rowsTop=axisY+(big?28:22), rowsBot=footY-(big?14:10);
     const rh=(rowsBot-rowsTop)/tasks.length, barH=Math.min(big?27:30, rh*0.36);
-    x.fillStyle='#eaf3ff'; x.font='700 '+(big?19:16)+'px '+FONT; x.fillText('2027 年 · 月度计划', padL, big?38:32);
-    x.fillStyle='#8fb0dd'; x.font=(big?12:11)+'px '+FONT; x.textAlign='right'; x.fillText('1月 — 12月', gx1, big?38:32); x.textAlign='left';
+    x.fillStyle='#eaf3ff'; x.font='700 '+(big?21:17.5)+'px '+FONT; x.fillText('2027 年 · 月度计划', padL, big?38:32);
+    x.fillStyle='#8fb0dd'; x.font=(big?13:12)+'px '+FONT; x.textAlign='right'; x.fillText('1月 — 12月', gx1, big?38:32); x.textAlign='left';
     for(let m=0;m<12;m++){ const mx=gx0+m*mw;
       if(m%3===0){ x.fillStyle='rgba(107,197,255,.05)'; x.fillRect(mx,axisY,mw*3,rowsBot-axisY);
-        x.fillStyle='#7d94bd'; x.font='600 '+(big?11.5:10.5)+'px '+FONT; x.textAlign='center'; x.fillText('Q'+(m/3+1), mx+mw*1.5, axisY-8); x.textAlign='left'; }
+        x.fillStyle='#7d94bd'; x.font='600 '+(big?12.5:11.5)+'px '+FONT; x.textAlign='center'; x.fillText('Q'+(m/3+1), mx+mw*1.5, axisY-8); x.textAlign='left'; }
       x.strokeStyle='rgba(120,160,220,.13)'; x.beginPath(); x.moveTo(mx,axisY); x.lineTo(mx,rowsBot); x.stroke();
-      x.fillStyle='#9fb4dd'; x.font=(big?11.5:10.5)+'px '+FONT; x.textAlign='center'; x.fillText((m+1)+'月', mx+mw/2, axisY+16); x.textAlign='left';
+      x.fillStyle='#9fb4dd'; x.font=(big?12.5:11.5)+'px '+FONT; x.textAlign='center'; x.fillText((m+1)+'月', mx+mw/2, axisY+16); x.textAlign='left';
     }
     x.strokeStyle='rgba(120,160,220,.13)'; x.beginPath(); x.moveTo(gx1,axisY); x.lineTo(gx1,rowsBot); x.stroke();
     tasks.forEach((tk,i)=>{ const ry=rowsTop+i*rh, cy=ry+rh/2;
       if(i%2===0){ x.fillStyle='rgba(255,255,255,.022)'; x.fillRect(padL,ry,W-padL-padR,rh); }
-      x.fillStyle='#eaf3ff'; x.font='700 '+(big?15.5:12.5)+'px '+FONT; x.fillText(tk.name, padL, cy-11);
-      x.fillStyle='#8fd0a8'; x.font=(big?11.5:10)+'px '+FONT; x.fillText('交付：'+tk.del, padL, cy+8);
-      x.fillStyle='#7186a8'; x.font=(big?10.5:9.5)+'px '+FONT; x.fillText('负责人：'+tk.owner, padL, cy+24);
-      if(tk.note){ x.fillStyle='#ffd166'; x.font='600 '+(big?11:10)+'px '+FONT; x.fillText(tk.note, padL, cy+42); }
+      x.fillStyle='#eaf3ff'; x.font='700 '+(big?19:15)+'px '+FONT; x.fillText(tk.name, padL, cy-13);
+      x.fillStyle='#8fd0a8'; x.font='600 '+(big?13.5:12)+'px '+FONT; x.fillText('交付：'+tk.del, padL, cy+10);
+      x.fillStyle='#7186a8'; x.font=(big?12:11)+'px '+FONT; x.fillText('负责人：'+tk.owner, padL, cy+27);
+      if(tk.note){ x.fillStyle='#ffd166'; x.font='600 '+(big?12.5:11.5)+'px '+FONT; x.fillText(tk.note, padL, cy+46); }
       tk.segs.forEach((sg,j)=>{ const sx=gx0+(sg[0]-1)*mw, ex=gx0+sg[1]*mw;
         const grow=ss(0.5+i*0.4+j*0.25, 1.4+i*0.4+j*0.25, ph);
         if(grow<=0) return;
@@ -38961,7 +38961,7 @@ setup('anim-mailerp',(x,W,H,t)=>{
         rr(x,sx,cy-barH/2,bw,barH,barH/2); x.fillStyle=grd; x.globalAlpha=.94; x.fill(); x.globalAlpha=1;
         x.strokeStyle='rgba(255,255,255,.28)'; x.lineWidth=1; x.stroke();
         if(grow>0.85){ const label=sg[0]===sg[1]? sg[0]+'月' : sg[0]+'–'+sg[1]+'月';
-          x.font='700 '+(big?11.5:10.5)+'px '+FONT; const tw=x.measureText(label).width;
+          x.font='700 '+(big?12.5:11.5)+'px '+FONT; const tw=x.measureText(label).width;
           if(bw>tw+20){ x.fillStyle='rgba(6,12,22,.88)'; x.textAlign='center'; x.fillText(label, sx+bw/2, cy+4); x.textAlign='left'; }
           else { x.fillStyle=tk.color; x.fillText(label, ex+7, cy+4); } }
       });
@@ -38975,7 +38975,7 @@ setup('anim-mailerp',(x,W,H,t)=>{
     }
     const mNow= ph<3?1 : ph>13.8?12 : Math.min(12,Math.floor(swk*12)+1);
     const active=tasks.filter(tk=>tk.segs.some(sg=>mNow>=sg[0]&&mNow<=sg[1])).length;
-    x.fillStyle='#8fb0dd'; x.font=(big?12.5:11.5)+'px '+FONT; x.textAlign='center';
+    x.fillStyle='#8fb0dd'; x.font=(big?13.5:12.5)+'px '+FONT; x.textAlign='center';
     x.fillText(mNow+'月 · '+active+' 项进行中 · 全年共 '+tasks.length+' 项', W/2, footY+18); x.textAlign='left';
   }
   const SYS_TASKS=[
